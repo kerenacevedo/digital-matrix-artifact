@@ -439,7 +439,7 @@ const CONFIG = {
 //  Fin de CONFIG — no es necesario editar debajo de esta línea
 // ════════════════════════════════════════════════════════════════
 
-// ── URL de Google Sheets (https://script.google.com/macros/s/AKfycbxj0v-H9ILtKQurkJ3jh1gfK2lljKT20k2K_BZCPQ8mTY1tsPUBSS2QB_XSu5fjLlcL/exec) ────
+// ── URL de Google Sheets (pega aquí la URL de tu Apps Script) ────
 const SHEETS_URL = 'https://script.google.com/macros/s/AKfycbxj0v-H9ILtKQurkJ3jh1gfK2lljKT20k2K_BZCPQ8mTY1tsPUBSS2QB_XSu5fjLlcL/exec';
 
 const DIMS = CONFIG.dimensions;
@@ -915,30 +915,35 @@ async function sendEmail() {
   }
   const btn = $('btn-email');
   btn.disabled = true;
-  showLoading('Enviando resultados…');
+  showLoading('Preparando resultados…');
   try {
     const scores = selections.map(s => s + 1);
     const avg    = scores.reduce((a, b) => a + b, 0) / scores.length;
+
+    const doc       = await buildPDF();
+    const pdfBase64 = doc.output('datauristring').split(',')[1];
+
     const payload = {
-      to: email,
+      email:   email,
       orgName: orgName || 'Mi organización',
-      score: avg.toFixed(1),
-      stage: getStageLabel(avg),
+      score:   avg.toFixed(1),
+      stage:   getStageLabel(avg),
       dimensions: DIMS.map((d, i) => ({
         title:  d.title,
         level:  d.levels[selections[i]].name,
         detail: d.levels[selections[i]].detail || d.levels[selections[i]].desc,
       })),
-      q1: ($('q1-input').value || '').trim(),
-      q2: ($('q2-input').value || '').trim(),
+      q1:        ($('q1-input').value || '').trim(),
+      q2:        ($('q2-input').value || '').trim(),
+      pdfBase64: pdfBase64,
     };
     await fetch(SHEETS_URL, {
       method: 'POST',
       mode: 'no-cors',
-      headers: { 'Content-Type': 'application/json' },
+      headers: { 'Content-Type': 'text/plain' },
       body: JSON.stringify(payload),
     });
-    showToast('✅ ¡Resultados guardados! Nos estaremos comunicando contigo.');
+    showToast('✅ ¡Resultados enviados! Revisa tu correo en unos minutos.');
     emailInput.value = '';
   } catch (err) {
     console.error(err);
