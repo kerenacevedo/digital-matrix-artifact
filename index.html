@@ -33,7 +33,7 @@
     /* ── Header ── */
     .app-header {
       background: var(--primary-dark); color: #fff;
-      padding: 14px 20px 0; position: sticky; top: 0; z-index: 100;
+      padding: 20px 20px 14px; position: sticky; top: 0; z-index: 100;
       box-shadow: 0 2px 12px rgba(0,0,0,0.25);
     }
     .header-inner { text-align: center; }
@@ -117,7 +117,7 @@
     .score-brand { font-size: 12px; opacity: 0.55; margin-top: 10px; }
     .chart-card { background: #fff; border-radius: 16px; padding: 20px 16px; margin-bottom: 16px; box-shadow: 0 2px 8px rgba(0,0,0,0.06); }
     .card-title { font-size: 15px; font-weight: 700; color: var(--gray-900); margin-bottom: 14px; text-align: center; }
-    .chart-inner { position: relative; width: 100%; max-width: 310px; margin: 0 auto; }
+    .chart-inner { position: relative; width: 100%; margin: 0 auto; height: 300px; }
     .section-heading { font-size: 17px; font-weight: 800; color: var(--gray-900); margin-bottom: 12px; }
     .dim-result { background: #fff; border-radius: 14px; padding: 16px; margin-bottom: 10px; box-shadow: 0 2px 6px rgba(0,0,0,0.05); }
     .dim-result-top { display: flex; align-items: flex-start; justify-content: space-between; gap: 10px; margin-bottom: 12px; }
@@ -135,8 +135,11 @@
     .email-row { display: flex; flex-direction: column; gap: 10px; }
     .email-row input { padding: 15px 16px; border: 2px solid var(--gray-200); border-radius: 12px; font-size: 16px; outline: none; transition: border-color 0.18s; width: 100%; background: #fff; }
     .email-row input:focus { border-color: var(--primary); }
-    .or-divider { display: flex; align-items: center; gap: 10px; color: var(--gray-400); font-size: 13px; margin: 8px 0; }
-    .or-divider::before, .or-divider::after { content: ''; flex: 1; height: 1px; background: var(--gray-200); }
+    .question-block { margin-bottom: 18px; }
+    .question-label { font-size: 14px; font-weight: 700; color: var(--gray-700); margin-bottom: 8px; display: block; line-height: 1.4; }
+    .question-textarea { width: 100%; padding: 14px 16px; border: 2px solid var(--gray-200); border-radius: 12px; font-size: 15px; font-family: inherit; outline: none; resize: vertical; min-height: 90px; transition: border-color 0.18s; background: #fff; color: var(--gray-900); }
+    .question-textarea:focus { border-color: var(--primary); }
+    .email-section-label { font-size: 13px; font-weight: 700; color: var(--gray-500); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 10px; display: block; }
     .branding-footer { text-align: center; margin-top: 28px; padding: 16px; color: var(--gray-400); font-size: 13px; line-height: 1.7; }
 
     /* ── Toast & Loading ── */
@@ -206,7 +209,6 @@
           <span class="score-denom"> / 4.0</span>
         </div>
         <div class="score-stage" id="stage-label">—</div>
-        <div class="score-brand" id="org-name-hero"></div>
       </div>
       <div class="chart-card">
         <div class="card-title" id="cfg-chart-title"></div>
@@ -219,8 +221,15 @@
 
     <div class="actions-section">
       <div class="actions-heading" id="cfg-actions-heading"></div>
-      <button class="btn btn-primary" id="btn-pdf" onclick="downloadPDF()" style="margin-bottom:10px;"></button>
-      <div class="or-divider" id="cfg-or-divider"></div>
+      <div class="question-block">
+        <label class="question-label" for="q1-input">1. ¿Qué tarea te consume más tiempo?</label>
+        <textarea id="q1-input" class="question-textarea" rows="3"></textarea>
+      </div>
+      <div class="question-block">
+        <label class="question-label" for="q2-input">2. Si tuvieras una varita mágica para eliminar una tarea de tu día a día, ¿cuál sería?</label>
+        <textarea id="q2-input" class="question-textarea" rows="3"></textarea>
+      </div>
+      <span class="email-section-label">Recibe tus resultados por correo</span>
       <div class="email-row">
         <input type="email" id="email-input" autocomplete="email" />
         <button class="btn btn-secondary" id="btn-email" onclick="sendEmail()"></button>
@@ -269,10 +278,10 @@ const CONFIG = {
 
   // ── Pantalla de resultados ───────────────────────────────────
   resultsEyebrow:  'Tu nivel de madurez digital y AI',
-  chartTitle:      '📊 Radar de Madurez Digital',
+  chartTitle:      '📊 Resultados de Madurez Digital',
   dimSectionTitle: '📋 Detalle por dimensión',
-  todayLabel:      '📍 Dónde estás hoy',
-  nextStepLabel:   '🚀 Próximo paso',
+  todayLabel:      'Dónde estás hoy',
+  nextStepLabel:   'Próximo paso',
   maxLevelMsg:     'Ya alcanzaste el nivel máximo en esta dimensión. ¡Excelente trabajo!',
   footerQuote:     '"No necesitas transformar toda tu organización hoy. Empieza con un caso de uso que genere valor."',
 
@@ -285,7 +294,7 @@ const CONFIG = {
   ],
 
   // ── Acciones / botones ───────────────────────────────────────
-  actionsTitle: '💾 Guarda tus resultados',
+  actionsTitle: '¿Cuáles son tus necesidades?',
   btnPDF:       '⬇️ Descargar PDF',
   orText:       'o recíbelo por correo electrónico',
   emailPH:      'tu@correo.com',
@@ -316,17 +325,17 @@ const CONFIG = {
           ejemplos: ['Google Forms para registro de participantes', 'Carpetas compartidas en Drive'] },
         { name: 'Integrado',   desc: 'Sistemas para gestión de programas, datos organizados y accesibles.',
           detail: 'Tienes sistemas conectados que permiten ver el estado de tus programas en tiempo real.',
-          ejemplos: ['CRM o plataforma de gestión de casos', 'Reportes automáticos para el equipo'] },
+          ejemplos: ['CRM o plataforma de gestión de casos', 'Integración y manejo automatizado de inventario o activos'] },
         { name: 'Inteligente', desc: 'Predicción de necesidades, personalización de servicios, simulación de resultados.',
           detail: 'AI y datos avanzados guían el diseño y ajuste de tus programas.',
-          ejemplos: ['Modelos predictivos para identificar beneficiarios en riesgo', 'Personalización de servicios con AI'] },
+          ejemplos: ['Modelos predictivos de necesidades de beneficiarios y simulación de resultados', 'Personalización de servicios con AI'] },
       ]
     },
     {
       id: 'impacto', icon: '📊', title: 'Medición de impacto',
       levels: [
         { name: 'Manual',      desc: 'Datos no estructurados, reportes esporádicos.',
-          detail: 'La medición de impacto es reactiva y depende de esfuerzos individuales.',
+          detail: 'La medición de impacto se genera cuando la solicitan.',
           ejemplos: ['Reportes anuales escritos a mano', 'Sin indicadores definidos'] },
         { name: 'Digital',     desc: 'Datos en Excel o herramientas básicas, reportes manuales.',
           detail: 'Recopilas datos digitalmente pero el análisis todavía es manual.',
@@ -336,11 +345,11 @@ const CONFIG = {
           ejemplos: ['Dashboard en tiempo real con KPIs', 'Reuniones mensuales basadas en datos'] },
         { name: 'Inteligente', desc: 'Modelos predictivos, identificación de patrones, automatización de reportes.',
           detail: 'AI analiza tus datos de impacto para encontrar patrones y anticipar resultados.',
-          ejemplos: ['Análisis de correlación entre actividades y resultados', 'Reportes automáticos para donantes'] },
+          ejemplos: ['Análisis de correlación entre actividades y resultados', 'AI identifica qué programas producen mayor impacto y produce reportes automáticos'] },
       ]
     },
     {
-      id: 'campanas', icon: '💙', title: 'Campañas y donantes',
+      id: 'campanas', icon: '💙', title: 'Fundraising: Campañas y donantes',
       levels: [
         { name: 'Manual',      desc: 'Base de datos básica o inexistente, relación reactiva.',
           detail: 'La relación con donantes es informal y no hay sistema para gestionarla.',
@@ -357,24 +366,24 @@ const CONFIG = {
       ]
     },
     {
-      id: 'grants', icon: '📝', title: 'Propuestas y grants',
+      id: 'grants', icon: '📝', title: 'Fundraising: Propuestas y grants',
       levels: [
         { name: 'Manual',      desc: 'Proceso artesanal, sin sistema para rastrear convocatorias.',
-          detail: 'Las propuestas se escriben desde cero cada vez sin procesos estándar.',
-          ejemplos: ['Sin calendario de convocatorias', 'Cada propuesta es un esfuerzo aislado'] },
+          detail: 'Las propuestas se escriben manualmente.',
+          ejemplos: ['Se hacen ad hoc cuando surgen oportunidades y cada propuesta es un esfuerzo aislado.', 'Gestión de cumplimiento es manual'] },
         { name: 'Digital',     desc: 'Base de datos de convocatorias, plantillas básicas.',
-          detail: 'Tienes plantillas y un seguimiento básico de convocatorias.',
-          ejemplos: ['Hoja de seguimiento en Excel', 'Biblioteca de textos institucionales en Drive'] },
+          detail: 'Tienes plantillas y un seguimiento básico de convocatorias y cumplimiento.',
+          ejemplos: ['Hoja de seguimiento en Excel y biblioteca de textos institucionales en Drive', 'Uso básico de ChatGPT o Claude para redacción de propuestas individuales'] },
         { name: 'Integrado',   desc: 'Pipeline de grants con herramientas colaborativas.',
           detail: 'Gestionas el ciclo completo de grants con herramientas colaborativas.',
-          ejemplos: ['Software de gestión de grants (Submittable, Fluxx)', 'Dashboard del pipeline de propuestas'] },
+          ejemplos: ['Software de gestión de grants (Submittable, Fluxx)', 'Dashboard de métricas de propuestas y requerimientos de cumplimiento'] },
         { name: 'Inteligente', desc: 'AI para identificar convocatorias, redactar y personalizar propuestas.',
-          detail: 'AI acelera la búsqueda y redacción de propuestas con alta tasa de éxito.',
+          detail: 'AI acelera la búsqueda, redacción y cumplimiento de propuestas con alta tasa de éxito.',
           ejemplos: ['AI para identificar convocatorias afines a tu misión', 'Asistente de escritura para narrativas de impacto'] },
       ]
     },
     {
-      id: 'voluntarios', icon: '🤝', title: 'Participación y gestión de voluntarios',
+      id: 'voluntarios', icon: '🫱', title: 'Participación y gestión de voluntarios',
       levels: [
         { name: 'Manual',      desc: 'Asignación manual, información limitada.',
           detail: 'La coordinación de voluntarios depende de contactos personales y hojas de cálculo.',
@@ -384,7 +393,7 @@ const CONFIG = {
           ejemplos: ['Formulario de registro en línea', 'Base de datos básica de voluntarios'] },
         { name: 'Integrado',   desc: 'Sistemas de gestión de voluntarios, comunicación estructurada.',
           detail: 'Plataformas dedicadas gestionan el ciclo completo del voluntario.',
-          ejemplos: ['Plataforma como VolunteerHub o Better Impact', 'Comunicaciones automáticas por rol'] },
+          ejemplos: ['Plataforma como VolunteerHub o Better Impact', 'Comunicaciones automáticas y auto-gestión de voluntarios'] },
         { name: 'Inteligente', desc: 'Matching automático voluntario-proyecto, predicción de deserción.',
           detail: 'AI optimiza la asignación y retención de voluntarios.',
           ejemplos: ['Matching automático por habilidades y disponibilidad', 'Alertas de voluntarios en riesgo de deserción'] },
@@ -404,7 +413,7 @@ const CONFIG = {
           ejemplos: ['Plan de contenido trimestral', 'Reportes mensuales de alcance y conversión'] },
         { name: 'Inteligente', desc: 'Segmentación avanzada, optimización basada en datos, generación asistida.',
           detail: 'AI genera, personaliza y optimiza contenido para cada audiencia.',
-          ejemplos: ['Generación de contenido con AI (Copy.ai, Jasper)', 'Optimización automática de tiempo de publicación'] },
+          ejemplos: ['Uso de AI para segmentación de audiencias y optimización de mensajes por audiencia, personalizados por segmento y canal', 'Optimización automática de tiempo de publicación'] },
       ]
     },
     {
@@ -421,7 +430,7 @@ const CONFIG = {
           ejemplos: ['ERP o suite integrada (QuickBooks + HR platform)', 'Flujos de aprobación automatizados'] },
         { name: 'Inteligente', desc: 'Automatización administrativa, análisis para toma de decisiones.',
           detail: 'AI automatiza tareas repetitivas y provee inteligencia operativa.',
-          ejemplos: ['Automatización de informes financieros', 'AI para análisis de eficiencia operativa'] },
+          ejemplos: ['Automatización de informes financieros', 'Agentes de AI automatizando tareas repetitivas'] },
       ]
     },
   ],
@@ -429,6 +438,9 @@ const CONFIG = {
 // ════════════════════════════════════════════════════════════════
 //  Fin de CONFIG — no es necesario editar debajo de esta línea
 // ════════════════════════════════════════════════════════════════
+
+// ── URL de Google Sheets (https://script.google.com/macros/s/AKfycbyNVtgkGq0dHrnxCp6ki-SjF5KNEw3MHoV84ZhVZf49YB2YcCymF8CHhbOwPVTlxmBfYw/exec) ────
+const SHEETS_URL = 'https://script.google.com/macros/s/AKfycbyNVtgkGq0dHrnxCp6ki-SjF5KNEw3MHoV84ZhVZf49YB2YcCymF8CHhbOwPVTlxmBfYw/exec';
 
 const DIMS = CONFIG.dimensions;
 
@@ -491,8 +503,6 @@ function applyConfig() {
   $('cfg-dim-heading').textContent   = CONFIG.dimSectionTitle;
   $('cfg-quote').textContent         = CONFIG.footerQuote;
   $('cfg-actions-heading').textContent = CONFIG.actionsTitle;
-  $('btn-pdf').textContent           = CONFIG.btnPDF;
-  $('cfg-or-divider').textContent    = CONFIG.orText;
   $('email-input').placeholder       = CONFIG.emailPH;
   $('btn-email').textContent         = CONFIG.btnEmail;
   $('cfg-restart-btn').textContent   = CONFIG.btnRestart;
@@ -546,7 +556,7 @@ function restartAssessment() {
 function renderStep() {
   const dim = DIMS[currentStep];
   $('step-icon').textContent    = dim.icon;
-  $('step-counter').textContent = `Dimensión ${currentStep + 1} de ${DIMS.length}`;
+  $('step-counter').textContent = `Dimensión ${getStepLabel(currentStep)}`;
   $('step-title').textContent   = dim.title;
   $('btn-back').textContent     = currentStep === 0 ? CONFIG.btnBack0 : CONFIG.btnBackN;
 
@@ -594,9 +604,6 @@ function renderResults() {
 
   $('overall-score').textContent = avg.toFixed(1);
   $('stage-label').textContent   = getStageLabel(avg);
-  $('org-name-hero').textContent = orgName
-    ? `${orgName} · ${CONFIG.workshop}`
-    : `${CONFIG.brand} · ${CONFIG.workshop}`;
 
   const container = $('dimension-results');
   container.innerHTML = '';
@@ -630,33 +637,46 @@ function renderResults() {
 
   if (radarChart) { radarChart.destroy(); }
   const ctx = $('radar-chart').getContext('2d');
+  const lvlColors = ['rgba(179,72,38,0.85)','rgba(138,82,16,0.85)','rgba(53,96,16,0.85)','rgba(15,77,138,0.85)'];
   radarChart = new Chart(ctx, {
-    type: 'radar',
+    type: 'bar',
     data: {
-      labels: DIMS.map(d => wrapLabel(d.title, 13)),
+      labels: DIMS.map(d => d.title),
       datasets: [{
         data: scores,
-        backgroundColor:      'rgba(24,95,165,0.18)',
-        borderColor:          'rgba(24,95,165,0.9)',
-        pointBackgroundColor: '#185FA5',
-        pointBorderColor:     '#fff',
-        pointRadius: 5, pointBorderWidth: 2, borderWidth: 2.5,
+        backgroundColor: scores.map(s => lvlColors[s - 1]),
+        borderRadius: 5,
+        borderSkipped: false,
       }]
     },
     options: {
+      indexAxis: 'y',
       responsive: true,
+      maintainAspectRatio: false,
       animation: { duration: 700, easing: 'easeOutQuart' },
       scales: {
-        r: {
+        x: {
           min: 0, max: 4,
-          ticks: { stepSize: 1, font: { size: 10 }, color: '#9CA3AF', callback: v => v === 0 ? '' : `N${v}`, backdropColor: 'transparent' },
-          pointLabels: { font: { size: 10, weight: '700' }, color: '#374151' },
-          grid: { color: 'rgba(0,0,0,0.07)' }, angleLines: { color: 'rgba(0,0,0,0.07)' },
+          ticks: { stepSize: 1, font: { size: 11 }, color: '#9CA3AF', callback: v => v === 0 ? '' : `N${v}` },
+          grid: { color: 'rgba(0,0,0,0.07)' },
+        },
+        y: {
+          ticks: { font: { size: 11, weight: '700' }, color: '#374151' },
+          grid: { display: false },
         }
       },
       plugins: { legend: { display: false } }
     }
   });
+}
+
+// ── Step label helper ─────────────────────────────────────────────
+function getStepLabel(step) {
+  const dim = DIMS[step];
+  if (dim.id === 'campanas') return '3a de 6';
+  if (dim.id === 'grants')   return '3b de 6';
+  const n = step < 2 ? step + 1 : step;
+  return `${n} de 6`;
 }
 
 // ── Chart helpers ─────────────────────────────────────────────────
@@ -669,31 +689,34 @@ function wrapLabel(title, maxChars) {
 
 function getHighResChartImage() {
   return new Promise(resolve => {
-    const SIZE = 900;
     const off  = document.createElement('canvas');
-    off.width  = off.height = SIZE;
+    off.width  = 900; off.height = 420;
     const scores = selections.map(s => s + 1);
+    const lvlColors = ['rgba(179,72,38,0.85)','rgba(138,82,16,0.85)','rgba(53,96,16,0.85)','rgba(15,77,138,0.85)'];
     const tmp = new Chart(off.getContext('2d'), {
-      type: 'radar',
+      type: 'bar',
       data: {
-        labels: DIMS.map(d => wrapLabel(d.title, 13)),
+        labels: DIMS.map(d => d.title),
         datasets: [{
           data: scores,
-          backgroundColor:      'rgba(24,95,165,0.18)',
-          borderColor:          'rgba(24,95,165,0.9)',
-          pointBackgroundColor: '#185FA5',
-          pointBorderColor:     '#fff',
-          pointRadius: 10, pointBorderWidth: 4, borderWidth: 5,
+          backgroundColor: scores.map(s => lvlColors[s - 1]),
+          borderRadius: 8,
+          borderSkipped: false,
         }]
       },
       options: {
+        indexAxis: 'y',
         responsive: false, animation: false,
+        maintainAspectRatio: false,
         scales: {
-          r: {
+          x: {
             min: 0, max: 4,
-            ticks: { stepSize: 1, font: { size: 20 }, color: '#9CA3AF', callback: v => v === 0 ? '' : `N${v}`, backdropColor: 'transparent' },
-            pointLabels: { font: { size: 24, weight: '700' }, color: '#374151' },
-            grid: { color: 'rgba(0,0,0,0.07)' }, angleLines: { color: 'rgba(0,0,0,0.07)' },
+            ticks: { stepSize: 1, font: { size: 18 }, color: '#9CA3AF', callback: v => v === 0 ? '' : `N${v}` },
+            grid: { color: 'rgba(0,0,0,0.07)' },
+          },
+          y: {
+            ticks: { font: { size: 18, weight: '700' }, color: '#374151' },
+            grid: { display: false },
           }
         },
         plugins: { legend: { display: false } }
@@ -777,12 +800,12 @@ async function buildPDF() {
   doc.text(stageStr, PW / 2, y + 35.5, { align: 'center' });
   y += heroH + 8;
 
-  ensure(98);
+  ensure(100);
   bold(10); color(...C.g700);
   doc.text(CONFIG.pdfChartTitle, PW / 2, y, { align: 'center' });
   y += 5;
-  doc.addImage(chartImg, 'PNG', (PW - 108) / 2, y, 108, 90);
-  y += 90 + 10;
+  doc.addImage(chartImg, 'PNG', ML, y, USW, USW * 420 / 900);
+  y += USW * 420 / 900 + 10;
 
   ensure(14);
   bold(12); color(...C.g900);
@@ -892,7 +915,7 @@ async function sendEmail() {
   }
   const btn = $('btn-email');
   btn.disabled = true;
-  showLoading('Enviando por email…');
+  showLoading('Enviando resultados…');
   try {
     const scores = selections.map(s => s + 1);
     const avg    = scores.reduce((a, b) => a + b, 0) / scores.length;
@@ -906,18 +929,20 @@ async function sendEmail() {
         level:  d.levels[selections[i]].name,
         detail: d.levels[selections[i]].detail || d.levels[selections[i]].desc,
       })),
+      q1: ($('q1-input').value || '').trim(),
+      q2: ($('q2-input').value || '').trim(),
     };
-    const res = await fetch('/.netlify/functions/send-email', {
+    await fetch(SHEETS_URL, {
       method: 'POST',
+      mode: 'no-cors',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(payload),
     });
-    if (!res.ok) throw new Error(await res.text());
-    showToast('✅ ¡Resultados enviados a ' + email + '!');
+    showToast('✅ ¡Resultados guardados! Nos estaremos comunicando contigo.');
     emailInput.value = '';
   } catch (err) {
     console.error(err);
-    showToast('❌ No se pudo enviar el email. Intenta de nuevo.', 4000);
+    showToast('❌ No se pudo guardar. Intenta de nuevo.', 4000);
   } finally {
     hideLoading();
     btn.disabled = false;
