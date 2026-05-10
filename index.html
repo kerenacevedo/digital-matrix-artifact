@@ -299,7 +299,7 @@ const CONFIG = {
   // ── Pantalla de bienvenida ───────────────────────────────────
   welcomeEmoji:    '🔍',
   welcomeTitle:    '¿Qué tan digital y preparada para AI está tu organización?',
-  welcomeSubtitle: 'Este diagnóstico evalúa el nivel de madurez digital y de inteligencia artificial de tu organización sin fines de lucro en 7 dimensiones clave.',
+  welcomeSubtitle: 'Este diagnóstico evalúa el nivel de madurez digital y de inteligencia artificial de tu organización sin fines de lucro en 6 dimensiones clave.',
   welcomeMeta:     '⏱ Menos de 5 minutos · Resultados inmediatos · Sin registro',
   orgLabel:        'Nombre de tu organización',
   orgPlaceholder:  'Ej. Fundación Esperanza',
@@ -545,13 +545,23 @@ function applyConfig() {
   $('cfg-restart-btn').textContent   = CONFIG.btnRestart;
   $('cfg-branding').innerHTML        = `<strong>${CONFIG.brand}</strong> · We Serve Academy<br>${CONFIG.workshop}`;
 
-  // Lista de dimensiones en bienvenida
+  // Lista de dimensiones en bienvenida (6 grupos, fusionando 3a y 3b)
   const ul = $('cfg-dim-list');
   ul.innerHTML = '';
+  let fundraisingAdded = false;
   DIMS.forEach(d => {
-    const li = document.createElement('li');
-    li.textContent = `${d.icon} ${d.title}`;
-    ul.appendChild(li);
+    if (d.id === 'campanas' || d.id === 'grants') {
+      if (!fundraisingAdded) {
+        const li = document.createElement('li');
+        li.textContent = `💙 Fundraising`;
+        ul.appendChild(li);
+        fundraisingAdded = true;
+      }
+    } else {
+      const li = document.createElement('li');
+      li.textContent = `${d.icon} ${d.title}`;
+      ul.appendChild(li);
+    }
   });
 }
 
@@ -959,7 +969,7 @@ async function buildPDF() {
     const segTotalW = 52, segGap = 1.5, segH = 3.5;
     const segW = (segTotalW - segGap * 3) / 4;
     for (let s = 0; s < 4; s++) {
-      fill(s < score ? lc.t : C.g200);
+      fill(...(s < score ? lc.t : C.g200));
       doc.roundedRect(ML + 9 + s * (segW + segGap), cy, segW, segH, 1, 1, 'F');
     }
     cy += segH + 5;
