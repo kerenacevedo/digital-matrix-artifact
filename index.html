@@ -107,6 +107,11 @@
     .lvl-examples li { font-size: 13px; color: var(--gray-500); line-height: 1.5; margin-bottom: 3px; }
     .step-nav { display: flex; gap: 10px; align-items: stretch; }
     .step-nav .btn-primary { flex: 1; }
+    .btn-na { background:#fff; border:2px solid var(--gray-200); color:var(--gray-500); border-radius:12px; font-size:16px; font-weight:700; padding:15px 16px; min-height:52px; cursor:pointer; white-space:nowrap; transition:background 0.15s,border-color 0.15s,color 0.15s; display:inline-flex; align-items:center; justify-content:center; flex-shrink:0; }
+    .btn-na.active-na { background:var(--gray-100); border-color:var(--gray-400); color:var(--gray-700); }
+    .level-card.na-dimmed { opacity:0.3; pointer-events:none; }
+    .dim-result.na-result { background:#F9FAFB; border:1.5px dashed var(--gray-200); }
+    .na-badge { display:inline-block; background:var(--gray-100); color:var(--gray-500); border-radius:20px; font-size:11px; font-weight:700; padding:2px 10px; letter-spacing:0.05em; }
 
     /* ── Level cards ── */
     .level-card { background: #fff; border: 2.5px solid var(--gray-200); border-radius: 14px; padding: 12px 36px 12px 13px; cursor: pointer; transition: border-color 0.18s, box-shadow 0.18s, background 0.18s; position: relative; -webkit-tap-highlight-color: transparent; user-select: none; }
@@ -221,6 +226,7 @@
     <div class="levels-grid" id="levels-grid"></div>
     <div class="step-nav">
       <button class="btn btn-ghost" id="btn-back" onclick="goBack()"></button>
+      <button class="btn-na" id="btn-na" onclick="selectNA()">No aplica</button>
       <button class="btn btn-primary" id="btn-next" onclick="goNext()" disabled></button>
     </div>
   </div>
@@ -538,12 +544,13 @@ function applyConfig() {
   $('cfg-score-eyebrow').textContent = CONFIG.resultsEyebrow;
   $('cfg-chart-title').textContent   = CONFIG.chartTitle;
   $('cfg-dim-heading').textContent   = CONFIG.dimSectionTitle;
-  $('cfg-quote').textContent         = CONFIG.footerQuote;
+  $('cfg-quote').textContent         = '';
+  $('cfg-quote').closest('.callout-block').style.display = 'none';
   $('cfg-actions-heading').textContent = CONFIG.actionsTitle;
   $('email-input').placeholder       = CONFIG.emailPH;
   $('btn-email').textContent         = CONFIG.btnEmail;
   $('cfg-restart-btn').textContent   = CONFIG.btnRestart;
-  $('cfg-branding').innerHTML        = `<strong>${CONFIG.brand}</strong> · We Serve Academy<br>${CONFIG.workshop}`;
+  $('cfg-branding').innerHTML        = `<strong>${CONFIG.brand}</strong> · v2afoundation.org<br>${CONFIG.workshop}`;
 
   // Lista de dimensiones en bienvenida (6 grupos, fusionando 3a y 3b)
   const ul = $('cfg-dim-list');
@@ -616,13 +623,14 @@ function renderStep() {
 
   setProgress(currentStep);
 
+  const isNA = selections[currentStep] === 'na';
   const grid = $('levels-grid');
   grid.innerHTML = '';
   dim.levels.forEach((lvl, idx) => {
     const cls      = LEVEL_CLS[idx];
     const selected = selections[currentStep] === idx;
     const card     = document.createElement('div');
-    card.className = `level-card${selected ? ' sel-' + cls : ''}`;
+    card.className = `level-card${selected ? ' sel-' + cls : ''}${isNA ? ' na-dimmed' : ''}`;
     card.setAttribute('role', 'radio');
     card.setAttribute('aria-checked', selected ? 'true' : 'false');
     card.setAttribute('tabindex', '0');
@@ -642,12 +650,21 @@ function renderStep() {
     grid.appendChild(card);
   });
 
+  const naBtn = $('btn-na');
+  naBtn.classList.toggle('active-na', isNA);
+
   const nb = $('btn-next');
   nb.disabled    = selections[currentStep] === null;
   nb.textContent = currentStep === DIMS.length - 1 ? CONFIG.btnFinish : CONFIG.btnNext;
 }
 
 function selectLevel(idx) { selections[currentStep] = idx; renderStep(); }
+
+function selectNA() {
+  selections[currentStep] = 'na';
+  renderStep();
+  goNext();
+}
 
 // ── Results ──────────────────────────────────────────────────────
 function showResultsScreen() {
@@ -657,39 +674,54 @@ function showResultsScreen() {
 }
 
 function renderResults() {
-  const scores = selections.map(s => s + 1);
-  const avg    = scores.reduce((a, b) => a + b, 0) / scores.length;
+  const scores    = selections.map(s => s === 'na' ? 0 : s + 1);
+  const appScores = selections.filter(s => s !== 'na').map(s => s + 1);
+  const avg       = appScores.length ? appScores.reduce((a, b) => a + b, 0) / appScores.length : 0;
+  const naCount   = selections.filter(s => s === 'na').length;
 
   $('overall-score').textContent = avg.toFixed(1);
   $('stage-label').textContent   = getStageLabel(avg);
+  if (naCount > 0) {
+    const eyebrow = $('cfg-score-eyebrow');
+    if (eyebrow) eyebrow.textContent = `Basado en ${appScores.length} de ${DIMS.length} dimensiones evaluadas`;
+  }
 
   const container = $('dimension-results');
   container.innerHTML = '';
   DIMS.forEach((dim, i) => {
-    const lvlIdx  = selections[i];
-    const cls     = LEVEL_CLS[lvlIdx];
-    const cols    = LEVEL_COLS[cls];
-    const hasNext = lvlIdx < 3;
-    const todayDesc = dim.levels[lvlIdx].detail || dim.levels[lvlIdx].desc;
-    const nextDesc  = hasNext
-      ? `<strong>N${lvlIdx+2} · ${dim.levels[lvlIdx+1].name}:</strong> ${dim.levels[lvlIdx+1].detail || dim.levels[lvlIdx+1].desc}`
-      : CONFIG.maxLevelMsg;
-
-    const card = document.createElement('div');
-    card.className = 'dim-result';
-    card.innerHTML = `
-      <div class="dim-result-top">
-        <div class="dim-result-name">${dim.icon} ${dim.title}</div>
-        <div class="dim-score-chip" style="background:${cols.bg};color:${cols.text};">
-          N${lvlIdx+1} · ${dim.levels[lvlIdx].name}
+    const lvlIdx = selections[i];
+    const card   = document.createElement('div');
+    if (lvlIdx === 'na') {
+      card.className = 'dim-result na-result';
+      card.innerHTML = `
+        <div class="dim-result-top">
+          <div class="dim-result-name">${dim.icon} ${dim.title}</div>
+          <span class="na-badge">No aplica</span>
         </div>
-      </div>
-      <div class="mini-label">${CONFIG.todayLabel}</div>
-      <div class="mini-text">${todayDesc}</div>
-      <div class="mini-divider"></div>
-      <div class="mini-label">${CONFIG.nextStepLabel}</div>
-      <div class="mini-text">${nextDesc}</div>
-    `;
+        <div class="mini-text" style="color:var(--gray-400);margin-top:6px;">Esta dimensión no aplica a tu organización y fue excluida del cálculo.</div>
+      `;
+    } else {
+      const cls     = LEVEL_COLS[LEVEL_CLS[lvlIdx]];
+      const hasNext = lvlIdx < 3;
+      const todayDesc = dim.levels[lvlIdx].detail || dim.levels[lvlIdx].desc;
+      const nextDesc  = hasNext
+        ? `<strong>N${lvlIdx+2} · ${dim.levels[lvlIdx+1].name}:</strong> ${dim.levels[lvlIdx+1].detail || dim.levels[lvlIdx+1].desc}`
+        : CONFIG.maxLevelMsg;
+      card.className = 'dim-result';
+      card.innerHTML = `
+        <div class="dim-result-top">
+          <div class="dim-result-name">${dim.icon} ${dim.title}</div>
+          <div class="dim-score-chip" style="background:${cls.bg};color:${cls.text};">
+            N${lvlIdx+1} · ${dim.levels[lvlIdx].name}
+          </div>
+        </div>
+        <div class="mini-label">${CONFIG.todayLabel}</div>
+        <div class="mini-text">${todayDesc}</div>
+        <div class="mini-divider"></div>
+        <div class="mini-label">${CONFIG.nextStepLabel}</div>
+        <div class="mini-text">${nextDesc}</div>
+      `;
+    }
     container.appendChild(card);
   });
 
@@ -702,7 +734,7 @@ function renderResults() {
       labels: DIMS.map(d => d.title),
       datasets: [{
         data: scores,
-        backgroundColor: scores.map(s => lvlColors[s - 1]),
+        backgroundColor: scores.map((s, i) => selections[i] === 'na' ? 'rgba(209,213,219,0.7)' : lvlColors[s - 1]),
         borderRadius: 5,
         borderSkipped: false,
       }]
@@ -749,15 +781,15 @@ function getHighResChartImage() {
   return new Promise(resolve => {
     const off  = document.createElement('canvas');
     off.width  = 900; off.height = 420;
-    const scores = selections.map(s => s + 1);
+    const scores = selections.map(s => s === 'na' ? 0 : s + 1);
     const lvlColors = ['rgba(179,72,38,0.85)','rgba(138,82,16,0.85)','rgba(53,96,16,0.85)','rgba(15,77,138,0.85)'];
     const tmp = new Chart(off.getContext('2d'), {
       type: 'bar',
       data: {
-        labels: DIMS.map(d => d.title),
+        labels: DIMS.map((d, i) => selections[i] === 'na' ? d.title + ' (N/A)' : d.title),
         datasets: [{
           data: scores,
-          backgroundColor: scores.map(s => lvlColors[s - 1]),
+          backgroundColor: scores.map((s, i) => selections[i] === 'na' ? 'rgba(209,213,219,0.7)' : lvlColors[s - 1]),
           borderRadius: 8,
           borderSkipped: false,
         }]
@@ -807,8 +839,9 @@ async function buildPDF() {
     { t:[53,96,16],  b:[240,248,230] }, { t:[15,77,138], b:[234,243,252] },
   ];
 
-  const scores     = selections.map(s => s + 1);
-  const avg        = scores.reduce((a, b) => a + b, 0) / scores.length;
+  const scores     = selections.map(s => s === 'na' ? 0 : s + 1);
+  const appScores  = selections.filter(s => s !== 'na').map(s => s + 1);
+  const avg        = appScores.length ? appScores.reduce((a, b) => a + b, 0) / appScores.length : 0;
   const chartImg   = await getHighResChartImage();
   const displayOrg = orgName || 'Mi organizacion';
   const dateStr    = new Date().toLocaleDateString('es-MX', { year:'numeric', month:'long', day:'numeric' });
@@ -857,7 +890,7 @@ async function buildPDF() {
     stroke(...C.g200); doc.setLineWidth(0.2);
     doc.line(ML, PH - 10, PW - MR, PH - 10);
     normal(7); color(...C.g400);
-    doc.text(`${CONFIG.brand}  ·  ${dateStr}`, ML, PH - 6);
+    doc.text(`${CONFIG.brand}  ·  v2afoundation.org  ·  ${dateStr}`, ML, PH - 6);
     doc.text(`${pgNum}`, PW - MR, PH - 6, { align: 'right' });
   }
 
@@ -886,8 +919,9 @@ async function buildPDF() {
   doc.text('PUNTUACION GENERAL', ML + 11, y + 9);
   bold(26); color(...C.primaryDark);
   doc.text(avg.toFixed(1), ML + 11, y + 24);
+  const scoreW = doc.getTextWidth(avg.toFixed(1));
   normal(11); color(...C.g500);
-  doc.text('/ 4.0', ML + 11 + doc.getTextWidth(avg.toFixed(1)) + 2, y + 24);
+  doc.text('/ 4.0', ML + 11 + scoreW + 2, y + 24);
 
   const stageStr = getStageLabel(avg);
   bold(9); color(...avgLvlC.t);
@@ -922,8 +956,27 @@ async function buildPDF() {
   const LH = 4.4;
 
   DIMS.forEach((dim, i) => {
-    const lvlIdx   = selections[i];
-    const score    = scores[i];
+    const lvlIdx = selections[i];
+    const score  = scores[i];
+
+    // ── No aplica card ──────────────────────────────────────────
+    if (lvlIdx === 'na') {
+      const naCardH = 18;
+      ensure(naCardH + 3);
+      fill(...C.g100); stroke(...C.g200); doc.setLineWidth(0.2);
+      doc.roundedRect(ML, y, USW, naCardH, 3, 3, 'FD');
+      fill(...C.g400);
+      doc.roundedRect(ML, y, 4, naCardH, 2, 2, 'F');
+      doc.rect(ML + 2, y, 2, naCardH, 'F');
+      bold(9.5); color(...C.g500);
+      doc.text(dim.title, ML + 9, y + 7);
+      normal(8); color(...C.g400);
+      doc.text('No aplica — excluida del calculo de madurez', ML + 9, y + 13);
+      y += naCardH + 4;
+      return;
+    }
+
+    // ── Regular dimension card ──────────────────────────────────
     const lc       = LVL[lvlIdx];
     const lvlName  = dim.levels[lvlIdx].name;
     const hasNext  = lvlIdx < 3;
@@ -996,17 +1049,6 @@ async function buildPDF() {
     y = cy + 7;
   });
 
-  // ── Quote callout ─────────────────────────────────────────────
-  const quoteLines = doc.splitTextToSize(CONFIG.footerQuote, USW - 20);
-  const quoteH = quoteLines.length * 5.2 + 16;
-  ensure(quoteH + 8);
-  fill(...C.primaryLight);
-  doc.roundedRect(ML, y, USW, quoteH, 4, 4, 'F');
-  fill(...C.primary); doc.rect(ML, y, 4, quoteH, 'F');
-  bital(9.5); color(...C.primaryDark);
-  let qy = y + 10;
-  quoteLines.forEach(l => { doc.text(l, ML + 11, qy); qy += 5.2; });
-  y += quoteH + 6;
 
   // ── Footer on last page ───────────────────────────────────────
   drawFooter(pageNum);
@@ -1042,22 +1084,99 @@ async function sendEmail() {
   btn.disabled = true;
   showLoading('Preparando resultados…');
   try {
-    const scores = selections.map(s => s + 1);
-    const avg    = scores.reduce((a, b) => a + b, 0) / scores.length;
+    const scores    = selections.map(s => s === 'na' ? 0 : s + 1);
+    const appScores = selections.filter(s => s !== 'na').map(s => s + 1);
+    const avg       = appScores.length ? appScores.reduce((a, b) => a + b, 0) / appScores.length : 0;
 
     const doc       = await buildPDF();
     const pdfBase64 = doc.output('datauristring').split(',')[1];
 
+    const displayOrg = orgName || 'Mi organización';
+    const stageLabel = getStageLabel(avg);
+    const naCount    = selections.filter(s => s === 'na').length;
+
+    const dimRows = DIMS.map((d, i) => {
+      const sel = selections[i];
+      if (sel === 'na') {
+        return `<tr>
+          <td style="padding:10px 14px;border-bottom:1px solid #E5E7EB;font-size:14px;color:#374151;">${d.icon} ${d.title}</td>
+          <td style="padding:10px 14px;border-bottom:1px solid #E5E7EB;text-align:center;">
+            <span style="background:#F3F4F6;color:#9CA3AF;border-radius:20px;padding:2px 10px;font-size:12px;font-weight:700;">No aplica</span>
+          </td>
+          <td style="padding:10px 14px;border-bottom:1px solid #E5E7EB;font-size:13px;color:#9CA3AF;">—</td>
+        </tr>`;
+      }
+      const lvl   = d.levels[sel];
+      const cls   = LEVEL_CLS[sel];
+      const cols  = LEVEL_COLS[cls];
+      return `<tr>
+        <td style="padding:10px 14px;border-bottom:1px solid #E5E7EB;font-size:14px;color:#374151;">${d.icon} ${d.title}</td>
+        <td style="padding:10px 14px;border-bottom:1px solid #E5E7EB;text-align:center;">
+          <span style="background:${cols.bg};color:${cols.text};border-radius:20px;padding:2px 10px;font-size:12px;font-weight:700;">N${sel+1} · ${lvl.name}</span>
+        </td>
+        <td style="padding:10px 14px;border-bottom:1px solid #E5E7EB;font-size:13px;color:#6B7280;">${lvl.detail || lvl.desc}</td>
+      </tr>`;
+    }).join('');
+
+    const naNote = naCount > 0
+      ? `<p style="font-size:13px;color:#9CA3AF;margin:0 0 20px;text-align:center;">* Puntuación basada en ${DIMS.length - naCount} de ${DIMS.length} dimensiones evaluadas</p>`
+      : '';
+
+    const preheader = `${displayOrg} obtuvo ${avg.toFixed(1)}/4.0 · ${stageLabel}. Tu reporte completo viene adjunto.`;
+    const emailHtml = `<!DOCTYPE html><html><body style="margin:0;padding:0;background:#F9FAFB;font-family:sans-serif;">
+<span style="display:none;font-size:1px;color:#F9FAFB;max-height:0;overflow:hidden;opacity:0;">${preheader}&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;</span>
+<table width="100%" cellpadding="0" cellspacing="0" style="background:#F9FAFB;padding:32px 16px;">
+<tr><td align="center">
+<table width="600" cellpadding="0" cellspacing="0" style="max-width:600px;width:100%;">
+  <!-- Header -->
+  <tr><td style="background:#18407A;border-radius:12px 12px 0 0;padding:28px 32px;text-align:center;">
+    <p style="margin:0 0 4px;font-size:11px;font-weight:700;color:#A0C8F0;letter-spacing:0.1em;text-transform:uppercase;">${CONFIG.brand.toUpperCase()} · ${CONFIG.workshop.toUpperCase()}</p>
+    <h1 style="margin:0;font-size:22px;font-weight:800;color:#fff;">${CONFIG.pdfTitle}</h1>
+  </td></tr>
+  <!-- Score hero -->
+  <tr><td style="background:#fff;padding:28px 32px 20px;text-align:center;">
+    <p style="margin:0 0 6px;font-size:13px;color:#6B7280;">Resultado para <strong style="color:#111827;">${displayOrg}</strong></p>
+    <div style="display:inline-block;background:#EAF3FC;border-radius:16px;padding:20px 40px;margin:8px 0;">
+      <span style="font-size:52px;font-weight:800;color:#18407A;line-height:1;">${avg.toFixed(1)}</span>
+      <span style="font-size:20px;color:#9CA3AF;font-weight:400;"> / 4.0</span>
+      <p style="margin:8px 0 0;font-size:16px;font-weight:700;color:#185FAB;">${stageLabel}</p>
+    </div>
+    ${naNote}
+  </td></tr>
+  <!-- Dimensions table -->
+  <tr><td style="background:#fff;padding:0 32px 28px;">
+    <p style="margin:0 0 12px;font-size:14px;font-weight:700;color:#111827;">Detalle por dimensión</p>
+    <table width="100%" cellpadding="0" cellspacing="0" style="border:1px solid #E5E7EB;border-radius:8px;overflow:hidden;">
+      <tr style="background:#F9FAFB;">
+        <th style="padding:10px 14px;text-align:left;font-size:12px;color:#6B7280;font-weight:600;border-bottom:1px solid #E5E7EB;">Dimensión</th>
+        <th style="padding:10px 14px;text-align:center;font-size:12px;color:#6B7280;font-weight:600;border-bottom:1px solid #E5E7EB;">Nivel</th>
+        <th style="padding:10px 14px;text-align:left;font-size:12px;color:#6B7280;font-weight:600;border-bottom:1px solid #E5E7EB;">Descripción</th>
+      </tr>
+      ${dimRows}
+    </table>
+  </td></tr>
+  <!-- Footer -->
+  <tr><td style="background:#F3F4F6;border-radius:0 0 12px 12px;padding:16px 32px;text-align:center;">
+    <p style="margin:0;font-size:12px;color:#9CA3AF;">${CONFIG.brand} · <a href="https://v2afoundation.org" style="color:#9CA3AF;">v2afoundation.org</a></p>
+    <p style="margin:4px 0 0;font-size:11px;color:#D1D5DB;">El reporte completo en PDF viene adjunto a este correo.</p>
+  </td></tr>
+</table>
+</td></tr>
+</table>
+</body></html>`;
+
     const payload = {
-      email:   email,
-      orgName: orgName || 'Mi organización',
-      score:   avg.toFixed(1),
-      stage:   getStageLabel(avg),
-      dimensions: DIMS.map((d, i) => ({
-        title:  d.title,
-        level:  d.levels[selections[i]].name,
-        detail: d.levels[selections[i]].detail || d.levels[selections[i]].desc,
-      })),
+      email:     email,
+      orgName:   displayOrg,
+      score:     avg.toFixed(1),
+      stage:     stageLabel,
+      htmlBody:  emailHtml,
+      dimensions: DIMS.map((d, i) => {
+        const sel = selections[i];
+        if (sel === 'na') return { title: d.title, level: 'No aplica', detail: '' };
+        const lvl = d.levels[sel];
+        return { title: d.title, level: lvl.name, detail: lvl.detail || lvl.desc };
+      }),
       q1:        ($('q1-input').value || '').trim(),
       q2:        ($('q2-input').value || '').trim(),
       pdfBase64: pdfBase64,
