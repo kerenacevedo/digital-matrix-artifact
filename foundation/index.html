@@ -1,0 +1,1757 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Fundación V2A fortalece la capacidad organizacional de las OSFLs en Puerto Rico mediante consultoría estratégica, transformación digital y talento especializado." />
+  <title>Fundación V2A — Fortalecemos el sector sin fines de lucro en Puerto Rico</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;0,8..60,700;1,8..60,400&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bahia:       #1D4289;
+      --bahia-dark:  #12295a;
+      --celeste:     #41B6E6;
+      --celeste-bg:  #e8f5fc;
+      --accent:      #FF8D6D;
+      --accent-hov:  #FFA68B;
+      --accent-bg:   #fff3ef;
+      --paper:       #FAFBFC;
+      --white:       #FFFFFF;
+      --soft:        rgba(29,66,137,0.62);
+      --muted:       rgba(29,66,137,0.42);
+      --line:        rgba(29,66,137,0.12);
+      --line-soft:   rgba(29,66,137,0.06);
+      --gray-500:    #6B7280;
+      --gray-700:    #374151;
+      --gray-900:    #111827;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      font-size: 16px;
+      line-height: 1.6;
+      color: var(--gray-900);
+      background: var(--white);
+      -webkit-text-size-adjust: 100%;
+    }
+
+    /* ── BILINGUAL ── */
+    html[lang="es"] [data-en],
+    html[lang="en"] [data-es] { display: none !important; }
+
+    /* ── LAYOUT ── */
+    .container { max-width: 1160px; margin: 0 auto; padding: 0 32px; }
+
+    section { padding: 96px 0; }
+
+    .label {
+      display: block;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 12px;
+    }
+
+    h2.title {
+      font-family: 'Source Serif 4', Georgia, serif;
+      font-size: clamp(28px, 3.6vw, 44px);
+      font-weight: 600;
+      letter-spacing: -0.015em;
+      line-height: 1.12;
+      color: var(--bahia-dark);
+      margin-bottom: 16px;
+    }
+
+    .subtitle {
+      font-size: 17px;
+      color: var(--soft);
+      line-height: 1.65;
+      max-width: 580px;
+    }
+
+    .section-head          { margin-bottom: 56px; }
+    .section-head.center   { text-align: center; }
+    .section-head.center .subtitle { margin: 0 auto; }
+
+    /* ── BUTTONS ── */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 11px 22px;
+      border-radius: 4px;
+      font-family: 'Inter', sans-serif;
+      font-size: 14px;
+      font-weight: 600;
+      text-decoration: none;
+      cursor: pointer;
+      border: none;
+      transition: background .2s, transform .2s, box-shadow .2s, color .2s, border-color .2s;
+    }
+    .btn-lg { padding: 14px 28px; font-size: 15px; }
+
+    .btn-primary {
+      background: var(--accent);
+      color: #fff;
+      box-shadow: 0 1px 3px rgba(255,141,109,.25);
+    }
+    .btn-primary:hover {
+      background: var(--accent-hov);
+      transform: translateY(-1px);
+      box-shadow: 0 6px 20px rgba(255,141,109,.35);
+    }
+
+    .btn-ghost {
+      background: transparent;
+      color: var(--bahia);
+      border: 1px solid var(--line);
+    }
+    .btn-ghost:hover { color: var(--accent); border-color: rgba(255,141,109,.4); }
+
+    .btn-navy { background: var(--bahia); color: #fff; }
+    .btn-navy:hover { background: var(--bahia-dark); transform: translateY(-1px); }
+
+    /* ── LANG TOGGLE ── */
+    .lang-btn {
+      background: transparent;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      padding: 5px 13px;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      color: var(--soft);
+      cursor: pointer;
+      font-family: 'Inter', sans-serif;
+      transition: border-color .2s, color .2s;
+    }
+    .lang-btn:hover { border-color: var(--bahia); color: var(--bahia); }
+
+    /* ── NAV ── */
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 200;
+      height: 68px;
+      display: flex;
+      align-items: center;
+      background: rgba(255,255,255,.93);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--line);
+    }
+
+    .nav-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 32px;
+      width: 100%;
+    }
+
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+    }
+    .nav-logo-text {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--bahia-dark);
+      letter-spacing: -.01em;
+    }
+    .nav-logo-text em { font-style: normal; color: var(--accent); }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 26px;
+      list-style: none;
+    }
+    .nav-links a {
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--soft);
+      text-decoration: none;
+      transition: color .2s;
+    }
+    .nav-links a:hover { color: var(--bahia); }
+
+    .nav-right {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .nav-v2a {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--muted);
+      text-decoration: none;
+      letter-spacing: .07em;
+      text-transform: uppercase;
+      transition: color .2s;
+    }
+    .nav-v2a:hover { color: var(--bahia); }
+
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 4px;
+    }
+    .hamburger span {
+      display: block;
+      width: 22px;
+      height: 2px;
+      background: var(--bahia);
+      border-radius: 2px;
+      transition: all .25s;
+    }
+
+    .mobile-nav {
+      display: none;
+      position: fixed;
+      inset: 68px 0 0;
+      background: var(--white);
+      z-index: 199;
+      flex-direction: column;
+      padding: 16px 32px 32px;
+      border-top: 1px solid var(--line);
+      overflow-y: auto;
+    }
+    .mobile-nav.open { display: flex; }
+    .mobile-nav a {
+      font-size: 16px;
+      font-weight: 500;
+      color: var(--bahia-dark);
+      text-decoration: none;
+      padding: 14px 0;
+      border-bottom: 1px solid var(--line-soft);
+      transition: color .2s;
+    }
+    .mobile-nav a:hover { color: var(--accent); }
+    .mobile-nav .btn { margin-top: 20px; justify-content: center; width: 100%; }
+
+    /* ── HERO ── */
+    .hero {
+      padding: 96px 0 80px;
+      background:
+        radial-gradient(ellipse 70% 55% at 92% 25%, rgba(65,182,230,.13) 0%, transparent 60%),
+        radial-gradient(ellipse 50% 45% at 5%  90%, rgba(255,141,109,.09) 0%, transparent 55%),
+        var(--paper);
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 72px;
+      align-items: center;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 5px 14px;
+      background: var(--celeste-bg);
+      border: 1px solid rgba(65,182,230,.3);
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--bahia);
+      letter-spacing: .05em;
+      text-transform: uppercase;
+      margin-bottom: 24px;
+    }
+    .hero-badge a {
+      color: var(--bahia);
+      text-decoration: underline;
+      text-decoration-color: var(--celeste);
+      text-underline-offset: 2px;
+      transition: color .2s;
+    }
+    .hero-badge a:hover { color: var(--celeste); }
+
+    .hero h1 {
+      font-family: 'Source Serif 4', Georgia, serif;
+      font-size: clamp(36px, 5.5vw, 62px);
+      font-weight: 600;
+      line-height: 1.08;
+      letter-spacing: -.022em;
+      color: var(--bahia-dark);
+      margin-bottom: 24px;
+    }
+    .hero h1 em { font-style: italic; color: var(--bahia); }
+
+    .hero-sub {
+      font-size: 18px;
+      color: var(--soft);
+      line-height: 1.65;
+      max-width: 520px;
+      margin-bottom: 36px;
+    }
+
+    .hero-actions { display: flex; gap: 12px; flex-wrap: wrap; }
+
+    .hero-stats {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-top: 56px;
+    }
+
+    .stat-card {
+      background: var(--white);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 20px 22px;
+      box-shadow: 0 2px 8px rgba(29,66,137,.04);
+    }
+    .stat-card .num {
+      font-family: 'Source Serif 4', Georgia, serif;
+      font-size: 30px;
+      font-weight: 700;
+      color: var(--bahia);
+      line-height: 1;
+      margin-bottom: 4px;
+    }
+    .stat-card .num sup { font-size: 16px; color: var(--accent); }
+    .stat-card .lbl { font-size: 13px; color: var(--gray-500); font-weight: 500; }
+
+    /* Hero visual cards */
+    .hero-visual { display: grid; gap: 12px; }
+
+    .hero-card {
+      border-radius: 10px;
+      padding: 28px;
+      text-decoration: none;
+      display: block;
+      transition: transform .18s, box-shadow .18s;
+    }
+    .hero-card:hover { transform: translateY(-3px); box-shadow: 0 12px 32px rgba(0,0,0,.18); }
+    .hero-card.blue  { background: linear-gradient(135deg, var(--bahia) 0%, #1a5ba8 100%); }
+    .hero-card.navy  { background: linear-gradient(135deg, #12295a 0%, #1D4289 100%); }
+    .hero-card.coral { background: var(--accent-bg); }
+
+    .hc-label {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+    }
+    .hero-card.blue .hc-label  { color: rgba(255,255,255,.65); }
+    .hero-card.navy .hc-label  { color: rgba(255,255,255,.65); }
+    .hero-card.coral .hc-label { color: var(--accent); }
+
+    .hc-title {
+      font-family: 'Source Serif 4', Georgia, serif;
+      font-size: 19px;
+      font-weight: 600;
+      line-height: 1.3;
+      margin-bottom: 14px;
+    }
+    .hero-card.blue .hc-title  { color: #fff; }
+    .hero-card.navy .hc-title  { color: #fff; }
+    .hero-card.coral .hc-title { color: var(--bahia-dark); }
+
+    .hc-chips { display: flex; flex-wrap: wrap; gap: 7px; }
+    .hc-chip {
+      padding: 4px 11px;
+      border-radius: 4px;
+      font-size: 12px;
+      font-weight: 600;
+    }
+    .hero-card.blue .hc-chip  { background: rgba(255,255,255,.15); color: rgba(255,255,255,.9); }
+    .hero-card.navy .hc-chip  { background: rgba(255,255,255,.15); color: rgba(255,255,255,.9); }
+    .hero-card.coral .hc-chip { background: rgba(255,141,109,.15); color: #B34826; }
+
+    /* ── ABOUT ── */
+    .about { background: var(--white); }
+
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: start;
+    }
+
+    .about-text p {
+      color: var(--gray-700);
+      line-height: 1.75;
+      margin-bottom: 16px;
+    }
+    .about-text p:last-of-type { margin-bottom: 0; }
+
+    .about-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      margin-top: 24px;
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--bahia);
+      text-decoration: none;
+      border-bottom: 1.5px solid var(--celeste);
+      padding-bottom: 2px;
+      transition: color .2s, border-color .2s;
+    }
+    .about-link:hover { color: var(--accent); border-color: var(--accent); }
+
+    .focus-areas { margin: 20px 0 24px; }
+    .focus-label { font-size: 11px; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); margin-bottom: 10px; }
+    .focus-chips { display: flex; flex-wrap: wrap; gap: 8px; }
+    .focus-chip {
+      font-size: 13px; font-weight: 500;
+      color: var(--bahia-dark);
+      background: var(--celeste-bg);
+      border: 1px solid rgba(65,182,230,.25);
+      border-radius: 999px;
+      padding: 4px 14px;
+    }
+
+    .model-box {
+      background: var(--paper);
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 32px;
+    }
+    .model-box .label { margin-bottom: 24px; }
+
+    .model-step {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      padding: 16px;
+      border-radius: 8px;
+      transition: background .2s;
+    }
+    .model-step:hover { background: var(--white); }
+    .model-step + .model-step { margin-top: 4px; }
+
+    .step-icon {
+      width: 40px; height: 40px;
+      border-radius: 8px;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+    }
+    .step-icon.blue  { background: var(--celeste-bg);          color: var(--celeste); }
+    .step-icon.coral { background: var(--accent-bg);            color: var(--accent);  }
+    .step-icon.navy  { background: rgba(29,66,137,.08);         color: var(--bahia);   }
+
+    .step-text h4 { font-size: 15px; font-weight: 600; color: var(--bahia-dark); margin-bottom: 4px; }
+    .step-text p  { font-size: 13px; color: var(--gray-500); line-height: 1.55; }
+
+    /* ── PROGRAMS STRIP (below hero) ── */
+    .programs-strip {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin-top: 40px;
+    }
+    .prog-pill {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      background: var(--white);
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 18px 20px;
+      text-decoration: none;
+      box-shadow: 0 2px 8px rgba(29,66,137,.05);
+      transition: box-shadow .2s, border-color .2s, transform .18s;
+    }
+    .prog-pill:hover {
+      border-color: var(--celeste);
+      box-shadow: 0 6px 20px rgba(29,66,137,.10);
+      transform: translateY(-2px);
+    }
+    .prog-pill-icon { width: 22px; height: 22px; flex-shrink: 0; color: var(--bahia); }
+    .prog-pill-name {
+      font-weight: 700;
+      font-size: 14px;
+      color: var(--bahia-dark);
+      margin-bottom: 2px;
+    }
+    .prog-pill-desc { font-size: 12px; color: var(--gray-500); }
+
+    /* ── DIAGNOSTIC CTA ── */
+    .diag-cta { background: var(--celeste-bg); padding: 64px 0; }
+    .diag-cta-inner {
+      display: flex;
+      align-items: center;
+      gap: 28px;
+      background: var(--white);
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      padding: 40px 44px;
+      box-shadow: 0 4px 20px rgba(29,66,137,.07);
+    }
+    .diag-cta-icon { width: 48px; height: 48px; flex-shrink: 0; color: var(--bahia); }
+    .diag-cta-body { flex: 1; }
+    .diag-cta-body h3 {
+      font-family: 'Source Serif 4', Georgia, serif;
+      font-size: clamp(18px, 2.2vw, 24px);
+      font-weight: 600;
+      color: var(--bahia-dark);
+      margin-bottom: 8px;
+      line-height: 1.2;
+    }
+    .diag-cta-body p { font-size: 15px; color: var(--gray-700); max-width: 560px; }
+    .diag-btn { white-space: nowrap; flex-shrink: 0; }
+
+    /* ── IMPACT ── */
+    .impact { background: var(--bahia-dark); padding: 80px 0; }
+    .impact .label    { color: var(--celeste); }
+    .impact h2.title  { color: #fff; }
+    .impact .subtitle { color: rgba(255,255,255,.62); }
+
+    .impact-numbers {
+      display: grid;
+      grid-template-columns: repeat(4,1fr);
+      gap: 2px;
+      background: rgba(255,255,255,.08);
+      border-radius: 12px;
+      overflow: hidden;
+      margin: 48px 0 64px;
+    }
+    .impact-num { background: var(--bahia-dark); padding: 40px 24px; text-align: center; }
+    .impact-num .big {
+      font-family: 'Source Serif 4', Georgia, serif;
+      font-size: clamp(38px,5vw,54px);
+      font-weight: 700;
+      color: var(--celeste);
+      line-height: 1;
+      margin-bottom: 8px;
+    }
+    .impact-num .big sup { font-size: 22px; vertical-align: super; }
+    .impact-num .lbl { font-size: 14px; color: rgba(255,255,255,.62); font-weight: 500; }
+
+    .partners-label {
+      font-size: 11px; font-weight: 600; letter-spacing: .18em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,.38);
+      text-align: center; margin-bottom: 24px;
+    }
+    .partners-wrap { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; }
+    .partner-chip {
+      background: rgba(255,255,255,.07);
+      border: 1px solid rgba(255,255,255,.12);
+      border-radius: 4px;
+      padding: 7px 15px;
+      font-size: 13px; font-weight: 500;
+      color: rgba(255,255,255,.70);
+    }
+
+    /* ── PROGRAMS ── */
+    .programs { background: var(--paper); }
+
+    .programs-grid {
+      display: grid;
+      grid-template-columns: repeat(3,1fr);
+      gap: 24px;
+    }
+
+    .prog-card {
+      background: var(--white);
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      padding: 36px 30px;
+      position: relative;
+      transition: box-shadow .2s, transform .2s;
+    }
+    .prog-card:hover {
+      box-shadow: 0 12px 36px rgba(29,66,137,.09);
+      transform: translateY(-2px);
+    }
+    .prog-card.featured { border-color: var(--celeste); }
+
+    .new-badge {
+      position: absolute; top: 16px; right: 16px;
+      background: var(--accent); color: #fff;
+      font-size: 10px; font-weight: 700;
+      letter-spacing: .1em; text-transform: uppercase;
+      padding: 4px 10px; border-radius: 999px;
+    }
+
+    .prog-icon {
+      width: 48px; height: 48px; border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+      margin-bottom: 20px;
+    }
+    .prog-icon.fellows  { background: var(--celeste-bg);        color: var(--celeste); }
+    .prog-icon.projects { background: rgba(29,66,137,.08);      color: var(--bahia);   }
+    .prog-icon.partners { background: var(--accent-bg);         color: var(--accent);  }
+
+    .prog-sub {
+      font-size: 11px; font-weight: 600;
+      letter-spacing: .14em; text-transform: uppercase;
+      color: var(--celeste); margin-bottom: 10px;
+    }
+
+    .prog-card h3 {
+      font-family: 'Source Serif 4', Georgia, serif;
+      font-size: 21px; font-weight: 600;
+      color: var(--bahia-dark);
+      margin-bottom: 12px;
+      letter-spacing: -.01em; line-height: 1.25;
+    }
+
+    .prog-card p { font-size: 14px; color: var(--gray-500); line-height: 1.65; margin-bottom: 22px; }
+
+    .prog-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 26px; }
+    .tag {
+      background: var(--line-soft); border: 1px solid var(--line);
+      border-radius: 4px; padding: 4px 10px;
+      font-size: 12px; font-weight: 500; color: var(--bahia);
+    }
+
+    .prog-link {
+      display: inline-flex; align-items: center; gap: 5px;
+      font-size: 14px; font-weight: 600;
+      color: var(--bahia); text-decoration: none;
+      transition: color .2s, gap .2s;
+    }
+    .prog-link:hover { color: var(--accent); gap: 9px; }
+
+    /* fellows timeline */
+    .timeline {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      margin: 28px 0 24px;
+    }
+    .tl-item {
+      display: flex;
+      gap: 12px;
+      padding: 10px 0;
+      border-left: 2px solid var(--line);
+      padding-left: 16px;
+      position: relative;
+    }
+    .tl-item::before {
+      content: '';
+      position: absolute;
+      left: -5px; top: 16px;
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      background: var(--celeste);
+    }
+    .tl-month { font-size: 11px; font-weight: 700; color: var(--celeste); min-width: 52px; text-transform: uppercase; letter-spacing: .06em; padding-top: 1px; }
+    .tl-desc  { font-size: 13px; color: var(--gray-500); line-height: 1.45; }
+
+    /* ── SERVICES ── */
+    .services { background: var(--white); }
+
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(3,1fr);
+      gap: 2px;
+      background: var(--line);
+      border-radius: 12px;
+      overflow: hidden;
+    }
+
+    .svc-item { background: var(--white); padding: 30px 26px; transition: background .2s; }
+    .svc-item:hover { background: var(--paper); }
+
+    .svc-icon { width: 26px; height: 26px; margin-bottom: 12px; display: block; color: var(--bahia); }
+    .svc-item h4 { font-size: 15px; font-weight: 700; color: var(--bahia-dark); margin-bottom: 10px; }
+    .svc-item ul { list-style: none; display: flex; flex-direction: column; gap: 5px; }
+    .svc-item ul li { font-size: 13px; color: var(--gray-500); padding-left: 14px; position: relative; }
+    .svc-item ul li::before { content: '›'; position: absolute; left: 0; color: var(--celeste); font-weight: 700; }
+
+    /* ── PARTICIPATE ── */
+    .participate {
+      background:
+        radial-gradient(ellipse 60% 50% at 50% 15%, rgba(255,141,109,.08) 0%, transparent 70%),
+        radial-gradient(ellipse 50% 40% at 50% 85%, rgba(65,182,230,.08) 0%, transparent 70%),
+        var(--paper);
+    }
+
+    .participate-grid {
+      display: grid;
+      grid-template-columns: repeat(3,1fr);
+      gap: 24px;
+    }
+
+    .part-card {
+      background: var(--white);
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      display: flex; flex-direction: column; align-items: center;
+      padding: 40px 28px;
+      text-align: center;
+      transition: box-shadow .2s, transform .2s;
+    }
+    .part-card:hover {
+      box-shadow: 0 12px 36px rgba(29,66,137,.09);
+      transform: translateY(-2px);
+    }
+
+    .part-icon { width: 40px; height: 40px; margin-bottom: 16px; display: block; color: var(--bahia); }
+    .part-card h3 {
+      font-family: 'Source Serif 4', Georgia, serif;
+      font-size: 20px; font-weight: 600;
+      color: var(--bahia-dark); margin-bottom: 12px;
+    }
+    .part-card p { font-size: 14px; color: var(--gray-500); line-height: 1.65; margin-bottom: 28px; flex: 1; }
+    .part-card .btn { margin-top: auto; }
+
+    /* ── CONTACT ── */
+    .contact { background: var(--white); }
+
+    .contact-inner {
+      display: grid;
+      grid-template-columns: 0.85fr 1.15fr;
+      gap: 80px;
+      align-items: start;
+    }
+
+    .contact-lead > p {
+      color: var(--gray-500);
+      line-height: 1.7;
+      margin-bottom: 32px;
+      font-size: 16px;
+    }
+
+    .contact-avatar {
+      width: 64px; height: 64px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--bahia) 0%, var(--celeste) 100%);
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Source Serif 4', Georgia, serif;
+      font-size: 22px; font-weight: 600;
+      color: #fff; flex-shrink: 0;
+    }
+
+    .contact-person-card {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      background: var(--paper);
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      padding: 20px;
+      margin-bottom: 16px;
+    }
+    .contact-person-name {
+      font-family: 'Source Serif 4', Georgia, serif;
+      font-size: 18px; font-weight: 600;
+      color: var(--bahia-dark); margin-bottom: 3px;
+    }
+    .contact-person-role { font-size: 13px; color: var(--gray-500); }
+
+    .contact-meta { display: flex; flex-direction: column; gap: 10px; }
+    .contact-meta-row {
+      display: flex; align-items: center; gap: 10px;
+      font-size: 14px; color: var(--gray-500);
+    }
+    .contact-meta-icon {
+      width: 32px; height: 32px;
+      background: var(--celeste-bg); border-radius: 6px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 14px; flex-shrink: 0;
+    }
+    .contact-meta-row a { color: var(--bahia); text-decoration: none; transition: color .2s; }
+    .contact-meta-row a:hover { color: var(--accent); }
+
+    /* Form card */
+    .form-card {
+      background: var(--paper);
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 36px;
+    }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .form-group { margin-bottom: 18px; }
+    .form-group label {
+      display: block; font-size: 13px; font-weight: 600;
+      color: var(--bahia-dark); margin-bottom: 6px;
+    }
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+      width: 100%; padding: 11px 14px;
+      border: 1px solid var(--line); border-radius: 4px;
+      font-size: 14px; font-family: 'Inter', sans-serif;
+      color: var(--gray-900); background: var(--white);
+      outline: none; transition: border-color .2s, box-shadow .2s;
+      appearance: none;
+    }
+    .form-group input:focus,
+    .form-group select:focus,
+    .form-group textarea:focus {
+      border-color: var(--celeste);
+      box-shadow: 0 0 0 3px rgba(65,182,230,.15);
+    }
+    .form-group textarea { resize: vertical; min-height: 110px; }
+
+    /* ── FOOTER ── */
+    footer { background: var(--bahia-dark); color: #fff; padding: 64px 0 36px; }
+
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 1.5fr 1fr 1fr;
+      gap: 64px;
+      padding-bottom: 48px;
+      border-bottom: 1px solid rgba(255,255,255,.10);
+      margin-bottom: 28px;
+    }
+
+    .footer-brand-name {
+      display: flex; align-items: center; gap: 10px;
+      font-size: 15px; font-weight: 700; color: #fff;
+      margin-bottom: 16px;
+    }
+    .footer-brand p { font-size: 14px; color: rgba(255,255,255,.52); line-height: 1.7; max-width: 280px; }
+
+    .footer-v2a {
+      display: inline-flex; align-items: center; gap: 6px;
+      margin-top: 20px; font-size: 13px; font-weight: 600;
+      color: var(--celeste); text-decoration: none;
+      transition: color .2s;
+    }
+    .footer-v2a:hover { color: #fff; }
+
+    footer h5 {
+      font-size: 11px; font-weight: 600;
+      letter-spacing: .14em; text-transform: uppercase;
+      color: rgba(255,255,255,.38); margin-bottom: 16px;
+    }
+    .footer-links { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+    .footer-links a { font-size: 14px; color: rgba(255,255,255,.62); text-decoration: none; transition: color .2s; }
+    .footer-links a:hover { color: #fff; }
+
+    .footer-bottom {
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .footer-bottom p   { font-size: 13px; color: rgba(255,255,255,.32); }
+    .footer-bottom a   { color: rgba(255,255,255,.32); text-decoration: none; transition: color .2s; }
+    .footer-bottom a:hover { color: rgba(255,255,255,.7); }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 1024px) {
+      .hero-grid        { grid-template-columns: 1fr; }
+      .hero-visual      { display: none; }
+      .about-grid       { grid-template-columns: 1fr; gap: 48px; }
+      .programs-grid    { grid-template-columns: 1fr 1fr; }
+      .services-grid    { grid-template-columns: 1fr 1fr; }
+      .programs-strip   { gap: 8px; }
+      .prog-pill        { padding: 12px 10px; gap: 8px; }
+      .prog-pill-desc   { display: none; }
+      .prog-pill-name   { font-size: 12px; }
+      .participate-grid { grid-template-columns: 1fr 1fr; }
+      .contact-inner    { grid-template-columns: 1fr; gap: 40px; }
+      .impact-numbers   { grid-template-columns: 1fr 1fr; }
+      .footer-grid      { grid-template-columns: 1fr 1fr; gap: 40px; }
+    }
+
+    @media (max-width: 768px) {
+      .container { padding: 0 20px; }
+      section    { padding: 72px 0; }
+      .hero      { padding: 64px 0 56px; }
+
+      .nav-links, .nav-v2a { display: none; }
+      .nav-right .btn      { display: none; }
+      .hamburger           { display: flex; }
+
+      .programs-grid    { grid-template-columns: 1fr; }
+      .services-grid    { grid-template-columns: 1fr; }
+      .participate-grid { grid-template-columns: 1fr; }
+      .footer-grid      { grid-template-columns: 1fr; gap: 32px; }
+      .footer-bottom    { flex-direction: column; gap: 10px; text-align: center; }
+      .diag-cta-inner   { flex-direction: column; padding: 28px 24px; text-align: center; }
+      .diag-btn         { width: 100%; text-align: center; }
+      .impact-numbers   { grid-template-columns: 1fr 1fr; }
+      .form-card        { padding: 24px 20px; }
+      .form-row         { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ══════════════════════════════════
+     NAV
+══════════════════════════════════ -->
+<nav>
+  <div class="container">
+    <div class="nav-inner">
+
+      <a href="#" class="nav-logo">
+        <img src="./logo.jpg" alt="Fundación V2A" height="44" class="nav-logo-img"
+             onerror="this.style.display='none';document.getElementById('logoFallback').style.display='flex';" />
+        <span id="logoFallback" style="display:none;align-items:center;gap:10px;">
+          <svg width="34" height="34" viewBox="0 0 34 34" fill="none" aria-hidden="true">
+            <path d="M17 30s-11-8-11-16.5C6 9.4 9.4 6 13.5 6c2.1 0 4 .9 4.5 2 .5-1.1 2.4-2 4.5-2C26.6 6 30 9.4 30 13.5 30 22 17 30 17 30z" fill="#FF8D6D"/>
+            <path d="M17 26s-8-5.8-8-12c0-2.8 2.2-5 5-5 1.5 0 2.9.7 3.5 1.7.6-1 2-1.7 3.5-1.7 2.8 0 5 2.2 5 5 0 6.2-9 12-9 12z" fill="#1D4289" opacity="0.18"/>
+          </svg>
+          <span class="nav-logo-text">Fundación <em>V2A</em></span>
+        </span>
+      </a>
+
+      <ul class="nav-links">
+        <li><a href="#nosotros"  data-es>Nosotros</a>  <a href="#nosotros"  data-en>About</a></li>
+        <li><a href="#programas" data-es>Programas</a> <a href="#programas" data-en>Programs</a></li>
+        <li><a href="#impacto"   data-es>Impacto</a>   <a href="#impacto"   data-en>Impact</a></li>
+        <li><a href="#servicios" data-es>Servicios</a>  <a href="#servicios" data-en>Services</a></li>
+        <li><a href="#contacto"  data-es>Contacto</a>  <a href="#contacto"  data-en>Contact</a></li>
+      </ul>
+
+      <div class="nav-right">
+        <a href="https://v2aconsulting.com" target="_blank" rel="noopener" class="nav-v2a" data-es>V2A Consulting ↗</a>
+        <a href="https://v2aconsulting.com" target="_blank" rel="noopener" class="nav-v2a" data-en>V2A Consulting ↗</a>
+        <a href="#contacto" class="btn btn-primary" data-es>Solicitar apoyo</a>
+        <a href="#contacto" class="btn btn-primary" data-en>Get support</a>
+        <button class="lang-btn" id="langBtn" aria-label="Switch language">EN</button>
+        <button class="hamburger" id="hamburger" aria-label="Open menu" aria-expanded="false">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+
+    </div>
+  </div>
+</nav>
+
+<!-- Mobile nav -->
+<div class="mobile-nav" id="mobileNav">
+  <a href="#nosotros"  class="mob-link" data-es>Nosotros</a>
+  <a href="#nosotros"  class="mob-link" data-en>About</a>
+  <a href="#programas" class="mob-link" data-es>Programas</a>
+  <a href="#programas" class="mob-link" data-en>Programs</a>
+  <a href="#impacto"   class="mob-link" data-es>Impacto</a>
+  <a href="#impacto"   class="mob-link" data-en>Impact</a>
+  <a href="#servicios" class="mob-link" data-es>Servicios</a>
+  <a href="#servicios" class="mob-link" data-en>Services</a>
+  <a href="#contacto"  class="mob-link" data-es>Contacto</a>
+  <a href="#contacto"  class="mob-link" data-en>Contact</a>
+  <a href="https://v2aconsulting.com" target="_blank" rel="noopener" class="mob-link">V2A Consulting ↗</a>
+  <a href="#contacto" class="btn btn-primary" data-es>Solicitar apoyo</a>
+  <a href="#contacto" class="btn btn-primary" data-en>Get support</a>
+</div>
+
+
+<!-- ══════════════════════════════════
+     HERO
+══════════════════════════════════ -->
+<section class="hero">
+  <div class="container">
+    <div class="hero-grid">
+
+      <div>
+        <div class="hero-badge">
+          <span data-es>Iniciativa social de&nbsp;<a href="https://v2aconsulting.com" target="_blank" rel="noopener">V2A Consulting</a></span>
+          <span data-en>Social initiative by&nbsp;<a href="https://v2aconsulting.com" target="_blank" rel="noopener">V2A Consulting</a></span>
+        </div>
+
+        <h1>
+          <span data-es>Multiplicamos el <em>impacto</em> de las organizaciones sin fines de lucro</span>
+          <span data-en>Multiplying the <em>impact</em> of nonprofit organizations</span>
+        </h1>
+
+        <p class="hero-sub" data-es>Fortalecemos la capacidad organizacional de las OSFLs en Puerto Rico mediante consultoría estratégica, transformación digital y acceso a talento especializado.</p>
+        <p class="hero-sub" data-en>We strengthen the organizational capacity of nonprofits in Puerto Rico through strategic consulting, digital transformation, and access to specialized talent.</p>
+
+        <div class="hero-actions">
+          <a href="#contacto" class="btn btn-primary btn-lg" data-es>Solicitar apoyo</a>
+          <a href="#contacto" class="btn btn-primary btn-lg" data-en>Get support</a>
+          <a href="#programas" class="btn btn-ghost btn-lg" data-es>Ver programas</a>
+          <a href="#programas" class="btn btn-ghost btn-lg" data-en>Our programs</a>
+        </div>
+
+      </div>
+
+      <div class="hero-visual">
+        <a href="#programas" class="hero-card blue">
+          <div class="hc-label" data-es>WeServe Fellows · Verano 2026 · Pro bono</div>
+          <div class="hc-label" data-en>WeServe Fellows · Summer 2026 · Pro bono</div>
+          <div class="hc-title" data-es>Consultoría estratégica pro bono para OSFLs en Puerto Rico, con el apoyo de estudiantes universitarios</div>
+          <div class="hc-title" data-en>Pro bono strategic consulting for nonprofits in Puerto Rico, supported by university students</div>
+        </a>
+        <a href="#programas" class="hero-card navy">
+          <div class="hc-label" data-es>WeServe Projects · Todo el año</div>
+          <div class="hc-label" data-en>WeServe Projects · Year-round</div>
+          <div class="hc-title" data-es>Proyectos de consultoría estratégica con profesionales V2A</div>
+          <div class="hc-title" data-en>Strategic consulting projects with V2A professionals</div>
+        </a>
+        <a href="#programas" class="hero-card coral">
+          <div class="hc-label" data-es>WeServe Partners · Primer cliente activo</div>
+          <div class="hc-label" data-en>WeServe Partners · First client active</div>
+          <div class="hc-title" data-es>Acompañamiento estratégico continuo para tu transformación</div>
+          <div class="hc-title" data-en>Ongoing strategic support for your organizational transformation</div>
+        </a>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════
+     NOSOTROS / ABOUT
+══════════════════════════════════ -->
+<section class="about" id="nosotros">
+  <div class="container">
+    <div class="about-grid">
+
+      <div>
+        <span class="label" data-es>Nuestra historia</span>
+        <span class="label" data-en>Our story</span>
+        <h2 class="title" data-es>Cuando las OSFLs crecen,<br>Puerto Rico crece</h2>
+        <h2 class="title" data-en>When nonprofits grow,<br>Puerto Rico grows</h2>
+        <div class="about-text">
+          <p data-es>Fundación V2A es el brazo de responsabilidad social de <strong>V2A Consulting</strong>, firma de servicios profesionales fundada en 2004, dedicada a ayudar a organizaciones a definir y alcanzar sus metas mediante planificación estratégica, desarrollo organizacional y transformación digital.</p>
+          <p data-en>Fundación V2A is the social responsibility arm of <strong>V2A Consulting</strong>, a professional services firm founded in 2004, dedicated to helping organizations define and achieve their goals through strategic planning, organizational development, and digital transformation.</p>
+          <p data-es>Creemos que las organizaciones sin fines de lucro en Puerto Rico tienen un rol vital en sus comunidades — y que cuando reciben el apoyo estratégico correcto, su impacto se multiplica. Por eso unimos conocimiento profesional con talento universitario emergente para fortalecer la capacidad organizacional, la sostenibilidad y el alcance de las OSFLs.</p>
+          <p data-en>We believe that nonprofits in Puerto Rico play a vital role in their communities — and that when they receive the right strategic support, their impact multiplies. That's why we combine professional expertise with emerging university talent to strengthen the organizational capacity, sustainability, and reach of nonprofits.</p>
+          <div class="focus-areas">
+            <p class="focus-label" data-es>Áreas de enfoque</p>
+            <p class="focus-label" data-en>Focus areas</p>
+            <div class="focus-chips">
+              <span class="focus-chip" data-es>🏥 Salud</span>
+              <span class="focus-chip" data-en>🏥 Health</span>
+              <span class="focus-chip" data-es>📚 Educación</span>
+              <span class="focus-chip" data-en>📚 Education</span>
+              <span class="focus-chip" data-es>🌿 Ambiente</span>
+              <span class="focus-chip" data-en>🌿 Environment</span>
+              <span class="focus-chip" data-es>🤲 Impacto Social</span>
+              <span class="focus-chip" data-en>🤲 Social Impact</span>
+            </div>
+          </div>
+          <a href="https://v2aconsulting.com" target="_blank" rel="noopener" class="about-link" data-es>Conoce V2A Consulting →</a>
+          <a href="https://v2aconsulting.com" target="_blank" rel="noopener" class="about-link" data-en>Visit V2A Consulting →</a>
+        </div>
+      </div>
+
+      <div class="model-box">
+        <span class="label" data-es>Modelo de acompañamiento</span>
+        <span class="label" data-en>Our support model</span>
+
+        <div class="model-step">
+          <div class="step-icon blue"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg></div>
+          <div class="step-text">
+            <h4 data-es>Aplicación práctica</h4>
+            <h4 data-en>Practical application</h4>
+            <p data-es>Estudiantes universitarios trabajan junto a consultores V2A en proyectos pro bono durante el verano.</p>
+            <p data-en>University students work alongside V2A consultants on pro bono projects throughout the summer.</p>
+          </div>
+        </div>
+        <div class="model-step">
+          <div class="step-icon coral"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg></div>
+          <div class="step-text">
+            <h4 data-es>Implementación y sostenibilidad</h4>
+            <h4 data-en>Implementation &amp; sustainability</h4>
+            <p data-es>Consultores profesionales llevan proyectos estratégicos de mayor profundidad durante todo el año.</p>
+            <p data-en>Professional consultants lead deeper strategic projects throughout the year.</p>
+          </div>
+        </div>
+        <div class="model-step">
+          <div class="step-icon navy"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></div>
+          <div class="step-text">
+            <h4 data-es>Acompañamiento continuo</h4>
+            <h4 data-en>Ongoing accompaniment</h4>
+            <p data-es>Evaluación de madurez digital, roadmap de transformación y acompañamiento estratégico personalizado.</p>
+            <p data-en>Digital maturity assessment, transformation roadmap, and personalized strategic accompaniment.</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════
+     IMPACTO / IMPACT
+══════════════════════════════════ -->
+<section class="impact" id="impacto">
+  <div class="container">
+    <div class="section-head center">
+      <span class="label" data-es>WeServe Fellows · Resultados 2020–2025</span>
+      <span class="label" data-en>WeServe Fellows · Results 2020–2025</span>
+      <h2 class="title" data-es>Cinco años de talento universitario al servicio del bien común</h2>
+      <h2 class="title" data-en>Five years of university talent in service of the common good</h2>
+      <p class="subtitle" data-es>A través del programa WeServe Fellows, estudiantes universitarios han generado impacto real para organizaciones sin fines de lucro en Puerto Rico y República Dominicana.</p>
+      <p class="subtitle" data-en>Through the WeServe Fellows program, university students have created real impact for nonprofits across Puerto Rico and the Dominican Republic.</p>
+    </div>
+
+    <div class="impact-numbers">
+      <div class="impact-num">
+        <div class="big">33</div>
+        <div class="lbl" data-es>OSFLs apoyadas</div>
+        <div class="lbl" data-en>Nonprofits supported</div>
+      </div>
+      <div class="impact-num">
+        <div class="big">121</div>
+        <div class="lbl" data-es>Estudiantes universitarios</div>
+        <div class="lbl" data-en>University students</div>
+      </div>
+      <div class="impact-num">
+        <div class="big">25K<sup>+</sup></div>
+        <div class="lbl" data-es>Horas profesionales pro bono</div>
+        <div class="lbl" data-en>Pro bono professional hours</div>
+      </div>
+      <div class="impact-num">
+        <div class="big">$3.75M<sup>+</sup></div>
+        <div class="lbl" data-es>Valor equivalente de mercado</div>
+        <div class="lbl" data-en>Equivalent market value</div>
+      </div>
+    </div>
+
+    <p class="partners-label" data-es>Organizaciones que hemos apoyado</p>
+    <p class="partners-label" data-en>Organizations we have supported</p>
+    <div class="partners-wrap">
+      <div class="partner-chip">ColaborativoPR</div>
+      <div class="partner-chip">Fundación Banco Popular</div>
+      <div class="partner-chip">IPPR</div>
+      <div class="partner-chip">Banco de Alimentos PR</div>
+      <div class="partner-chip">Ecoexploratorio</div>
+      <div class="partner-chip">Kinesis</div>
+      <div class="partner-chip">Vimenti</div>
+      <div class="partner-chip">Para la Naturaleza</div>
+      <div class="partner-chip">Friends of Puerto Rico</div>
+      <div class="partner-chip">Instituto Nueva Escuela</div>
+      <div class="partner-chip">Fundación Hospital Pediátrico</div>
+      <div class="partner-chip">El Comedor de la Kennedy</div>
+      <div class="partner-chip">Causa Local</div>
+      <div class="partner-chip">Fundación Forjadores</div>
+      <div class="partner-chip">Coro de Niños de Puerto Rico</div>
+      <div class="partner-chip">Caras con Causa</div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════
+     PROGRAMAS / PROGRAMS
+══════════════════════════════════ -->
+<section class="programs" id="programas">
+  <div class="container">
+    <div class="section-head">
+      <span class="label" data-es>Nuestros programas</span>
+      <span class="label" data-en>Our programs</span>
+      <h2 class="title" data-es>Un modelo progresivo de<br>fortalecimiento organizacional</h2>
+      <h2 class="title" data-en>A progressive model of<br>organizational strengthening</h2>
+      <p class="subtitle" data-es>Acompañamos a las OSFLs en distintas etapas de su desarrollo, combinando formación, experiencia práctica e implementación estratégica.</p>
+      <p class="subtitle" data-en>We accompany nonprofits at different stages of their development, combining training, hands-on experience, and strategic implementation.</p>
+    </div>
+
+    <div class="programs-grid">
+
+      <!-- WeServe Fellows -->
+      <div class="prog-card">
+        <div class="prog-icon fellows"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg></div>
+        <p class="prog-sub">WeServe Fellows</p>
+        <h3 data-es>Programa de Verano Pro Bono</h3>
+        <h3 data-en>Summer Pro Bono Program</h3>
+        <p data-es>Equipos de estudiantes universitarios, bajo la mentoría directa de consultores V2A, desarrollan proyectos de consultoría pro bono de 8 semanas para OSFLs en Puerto Rico. Los Fellows reciben más de 40 horas de entrenamiento intensivo antes de trabajar directamente con las organizaciones.</p>
+        <p data-en>University student teams, under direct mentorship from V2A consultants, develop 8-week pro bono consulting projects for nonprofits in Puerto Rico. Fellows receive over 40 hours of intensive training before working directly with organizations.</p>
+
+        <div class="timeline">
+          <div class="tl-item">
+            <span class="tl-month" data-es>Enero</span>
+            <span class="tl-month" data-en>January</span>
+            <span class="tl-desc" data-es>Entrevistas a organizaciones sin fines de lucro</span>
+            <span class="tl-desc" data-en>Nonprofit organization interviews</span>
+          </div>
+          <div class="tl-item">
+            <span class="tl-month" data-es>Abril</span>
+            <span class="tl-month" data-en>April</span>
+            <span class="tl-desc" data-es>Notificación de selección de OSFLs</span>
+            <span class="tl-desc" data-en>Nonprofit selection notifications</span>
+          </div>
+          <div class="tl-item">
+            <span class="tl-month" data-es>Mayo</span>
+            <span class="tl-month" data-en>May</span>
+            <span class="tl-desc" data-es>Reuniones con líderes de equipo</span>
+            <span class="tl-desc" data-en>Meetings with team leaders</span>
+          </div>
+          <div class="tl-item">
+            <span class="tl-month" data-es>Jun–Ago</span>
+            <span class="tl-month" data-en>Jun–Aug</span>
+            <span class="tl-desc" data-es>8 semanas de ejecución del programa</span>
+            <span class="tl-desc" data-en>8-week program execution</span>
+          </div>
+        </div>
+
+        <div class="prog-tags">
+          <span class="tag" data-es>Pro bono</span>
+          <span class="tag" data-en>Pro bono</span>
+          <span class="tag" data-es>8 semanas · Verano</span>
+          <span class="tag" data-en>8 weeks · Summer</span>
+          <span class="tag" data-es>Mentoría V2A</span>
+          <span class="tag" data-en>V2A mentorship</span>
+        </div>
+        <a href="#contacto" class="prog-link" data-es>Aplica tu OSFL →</a>
+        <a href="#contacto" class="prog-link" data-en>Apply your nonprofit →</a>
+      </div>
+
+      <!-- WeServe Projects -->
+      <div class="prog-card">
+        <div class="prog-icon projects"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/><line x1="2" y1="20" x2="22" y2="20"/></svg></div>
+        <p class="prog-sub">WeServe Projects</p>
+        <h3 data-es>Proyectos de Consultoría</h3>
+        <h3 data-en>Consulting Projects</h3>
+        <p data-es>Proyectos de consultoría estratégica durante todo el año, ejecutados por consultores actuales y ex-consultores de V2A. Supervisados por directores de V2A y con el respaldo de toda la red de expertos de la firma.</p>
+        <p data-en>Year-round strategic consulting projects executed by current and former V2A consultants. Supervised by V2A directors and backed by the firm's full expert network.</p>
+
+        <div class="prog-tags">
+          <span class="tag" data-es>Todo el año</span>
+          <span class="tag" data-en>Year-round</span>
+          <span class="tag" data-es>Consultores profesionales</span>
+          <span class="tag" data-en>Professional consultants</span>
+        </div>
+
+        <p style="font-size:13px; color:var(--gray-500); margin-bottom:8px; font-weight:600;" data-es>Tipos de proyectos:</p>
+        <p style="font-size:13px; color:var(--gray-500); margin-bottom:8px; font-weight:600;" data-en>Project types:</p>
+        <ul style="list-style:none; display:flex; flex-direction:column; gap:4px; margin-bottom:24px;">
+          <li style="font-size:13px; color:var(--gray-500); padding-left:14px; position:relative;">
+            <span style="position:absolute;left:0;color:var(--celeste);font-weight:700;">›</span>
+            <span data-es>Planificación Estratégica</span>
+            <span data-en>Strategic Planning</span>
+          </li>
+          <li style="font-size:13px; color:var(--gray-500); padding-left:14px; position:relative;">
+            <span style="position:absolute;left:0;color:var(--celeste);font-weight:700;">›</span>
+            <span data-es>Mejora Operacional</span>
+            <span data-en>Operational Improvement</span>
+          </li>
+          <li style="font-size:13px; color:var(--gray-500); padding-left:14px; position:relative;">
+            <span style="position:absolute;left:0;color:var(--celeste);font-weight:700;">›</span>
+            <span data-es>Planificación Financiera</span>
+            <span data-en>Financial Planning</span>
+          </li>
+          <li style="font-size:13px; color:var(--gray-500); padding-left:14px; position:relative;">
+            <span style="position:absolute;left:0;color:var(--celeste);font-weight:700;">›</span>
+            <span data-es>Estrategia de Mercadeo</span>
+            <span data-en>Marketing Strategy</span>
+          </li>
+          <li style="font-size:13px; color:var(--gray-500); padding-left:14px; position:relative;">
+            <span style="position:absolute;left:0;color:var(--celeste);font-weight:700;">›</span>
+            <span data-es>Planes de Negocio</span>
+            <span data-en>Business Plans</span>
+          </li>
+          <li style="font-size:13px; color:var(--gray-500); padding-left:14px; position:relative;">
+            <span style="position:absolute;left:0;color:var(--celeste);font-weight:700;">›</span>
+            <span data-es>Transformación Digital</span>
+            <span data-en>Digital Transformation</span>
+          </li>
+        </ul>
+        <a href="#contacto" class="prog-link" data-es>Conoce más →</a>
+        <a href="#contacto" class="prog-link" data-en>Learn more →</a>
+      </div>
+
+      <!-- WeServe Partners -->
+      <div class="prog-card featured">
+        <span class="new-badge" data-es>Nuevo</span>
+        <span class="new-badge" data-en>New</span>
+        <div class="prog-icon partners"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></div>
+        <p class="prog-sub">WeServe Partners</p>
+        <h3 data-es>Acompañamiento Estratégico Continuo</h3>
+        <h3 data-en>Ongoing Strategic Accompaniment</h3>
+        <p data-es>Modelo de capacity building progresivo que combina evaluación de madurez digital, diseño de roadmap organizacional y acompañamiento continuo para implementar la transformación. Ya acompañamos a nuestro primer cliente.</p>
+        <p data-en>A progressive capacity building model that combines digital maturity assessment, organizational roadmap design, and ongoing support for implementation. We are already working with our first client.</p>
+
+        <div class="prog-tags">
+          <span class="tag" data-es>Capacity building</span>
+          <span class="tag" data-en>Capacity building</span>
+          <span class="tag" data-es>Transformación digital</span>
+          <span class="tag" data-en>Digital transformation</span>
+          <span class="tag" data-es>IA para OSFLs</span>
+          <span class="tag" data-en>AI for nonprofits</span>
+        </div>
+
+        <p style="font-size:13px; color:var(--gray-500); margin-bottom:8px; font-weight:600;" data-es>El proceso incluye:</p>
+        <p style="font-size:13px; color:var(--gray-500); margin-bottom:8px; font-weight:600;" data-en>The process includes:</p>
+        <ul style="list-style:none; display:flex; flex-direction:column; gap:4px; margin-bottom:24px;">
+          <li style="font-size:13px; color:var(--gray-500); padding-left:14px; position:relative;">
+            <span style="position:absolute;left:0;color:var(--celeste);font-weight:700;">›</span>
+            <span data-es>Educación y desarrollo de destrezas digitales</span>
+            <span data-en>Education and digital skills development</span>
+          </li>
+          <li style="font-size:13px; color:var(--gray-500); padding-left:14px; position:relative;">
+            <span style="position:absolute;left:0;color:var(--celeste);font-weight:700;">›</span>
+            <span data-es>Descubrimiento y evaluación organizacional</span>
+            <span data-en>Organizational discovery and assessment</span>
+          </li>
+          <li style="font-size:13px; color:var(--gray-500); padding-left:14px; position:relative;">
+            <span style="position:absolute;left:0;color:var(--celeste);font-weight:700;">›</span>
+            <span data-es>Acompañamiento estratégico personalizado</span>
+            <span data-en>Personalized strategic accompaniment</span>
+          </li>
+        </ul>
+        <a href="#contacto" class="prog-link" data-es>Solicitar información →</a>
+        <a href="#contacto" class="prog-link" data-en>Request information →</a>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════
+     SERVICIOS / SERVICES
+══════════════════════════════════ -->
+<section class="services" id="servicios">
+  <div class="container">
+    <div class="section-head center">
+      <span class="label" data-es>Áreas de servicio</span>
+      <span class="label" data-en>Service areas</span>
+      <h2 class="title" data-es>¿En qué podemos apoyarte?</h2>
+      <h2 class="title" data-en>How can we support you?</h2>
+      <p class="subtitle" data-es>Combinamos experiencia en gestión estratégica, tecnología e inteligencia artificial para fortalecer la capacidad operacional de las OSFLs.</p>
+      <p class="subtitle" data-en>We combine expertise in strategic management, technology, and AI to strengthen the operational capacity of nonprofits.</p>
+    </div>
+
+    <div class="services-grid">
+      <div class="svc-item">
+        <svg class="svc-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>
+        <h4 data-es>Gestión Estratégica e Impacto</h4>
+        <h4 data-en>Strategic Management &amp; Impact</h4>
+        <ul>
+          <li><span data-es>Modelo lógico y teoría de cambio</span><span data-en>Logic model and theory of change</span></li>
+          <li><span data-es>Sistemas de medición: KPIs y OKRs</span><span data-en>Measurement systems: KPIs and OKRs</span></li>
+          <li><span data-es>Gestión de proyectos</span><span data-en>Project management</span></li>
+          <li><span data-es>Planes estratégicos accionables</span><span data-en>Actionable strategic plans</span></li>
+        </ul>
+      </div>
+      <div class="svc-item">
+        <svg class="svc-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+        <h4 data-es>Optimización y Transformación Digital</h4>
+        <h4 data-en>Optimization &amp; Digital Transformation</h4>
+        <ul>
+          <li><span data-es>Diagnóstico y estrategia digital</span><span data-en>Digital diagnosis and strategy</span></li>
+          <li><span data-es>Herramientas de productividad</span><span data-en>Productivity tools</span></li>
+          <li><span data-es>Presencia digital y redes sociales</span><span data-en>Digital presence and social media</span></li>
+          <li><span data-es>Automatización de procesos</span><span data-en>Process automation</span></li>
+        </ul>
+      </div>
+      <div class="svc-item">
+        <svg class="svc-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="4" width="16" height="16" rx="2"/><rect x="9" y="9" width="6" height="6"/><line x1="9" y1="1" x2="9" y2="4"/><line x1="15" y1="1" x2="15" y2="4"/><line x1="9" y1="20" x2="9" y2="23"/><line x1="15" y1="20" x2="15" y2="23"/><line x1="20" y1="9" x2="23" y2="9"/><line x1="20" y1="14" x2="23" y2="14"/><line x1="1" y1="9" x2="4" y2="9"/><line x1="1" y1="14" x2="4" y2="14"/></svg>
+        <h4 data-es>Inteligencia Artificial para OSFLs</h4>
+        <h4 data-en>Artificial Intelligence for Nonprofits</h4>
+        <ul>
+          <li><span data-es>IA para tareas administrativas</span><span data-en>AI for administrative tasks</span></li>
+          <li><span data-es>IA para fundraising y comunicaciones</span><span data-en>AI for fundraising and communications</span></li>
+          <li><span data-es>Agentes de IA y chatbots</span><span data-en>AI agents and chatbots</span></li>
+          <li><span data-es>Analítica aplicada</span><span data-en>Applied analytics</span></li>
+        </ul>
+      </div>
+      <div class="svc-item">
+        <svg class="svc-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+        <h4 data-es>Comunicación y Narrativas de Impacto</h4>
+        <h4 data-en>Communication &amp; Impact Narratives</h4>
+        <ul>
+          <li><span data-es>Storytelling y narrativas de impacto</span><span data-en>Storytelling and impact narratives</span></li>
+          <li><span data-es>Uso de datos para contar historias</span><span data-en>Data-driven storytelling</span></li>
+          <li><span data-es>Estrategia de contenido</span><span data-en>Content strategy</span></li>
+          <li><span data-es>Reportes de impacto</span><span data-en>Impact reports</span></li>
+        </ul>
+      </div>
+      <div class="svc-item">
+        <svg class="svc-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+        <h4 data-es>Sostenibilidad Financiera</h4>
+        <h4 data-en>Financial Sustainability</h4>
+        <ul>
+          <li><span data-es>Gestión financiera y presupuestal</span><span data-en>Financial and budget management</span></li>
+          <li><span data-es>Estrategias de fundraising</span><span data-en>Fundraising strategies</span></li>
+          <li><span data-es>Diversificación de ingresos</span><span data-en>Revenue diversification</span></li>
+          <li><span data-es>Planificación financiera</span><span data-en>Financial planning</span></li>
+        </ul>
+      </div>
+      <div class="svc-item">
+        <svg class="svc-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+        <h4 data-es>Recursos Humanos</h4>
+        <h4 data-en>Human Resources</h4>
+        <ul>
+          <li><span data-es>Reclutamiento y retención de talento</span><span data-en>Talent recruitment and retention</span></li>
+          <li><span data-es>Gestión de desempeño</span><span data-en>Performance management</span></li>
+          <li><span data-es>Gestión de voluntarios</span><span data-en>Volunteer management</span></li>
+          <li><span data-es>Cultura organizacional</span><span data-en>Organizational culture</span></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════
+     DIAGNÓSTICO CTA
+══════════════════════════════════ -->
+<section class="diag-cta">
+  <div class="container">
+    <div class="diag-cta-inner">
+      <svg class="diag-cta-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"/></svg>
+      <div class="diag-cta-body">
+        <h3 data-es>¿Qué tan lista está tu organización para la era digital?</h3>
+        <h3 data-en>How ready is your organization for the digital age?</h3>
+        <p data-es>Completa nuestro diagnóstico gratuito de madurez digital e inteligencia artificial. En 10 minutos obtendrás una radiografía de tu organización y recomendaciones concretas para avanzar.</p>
+        <p data-en>Complete our free digital maturity and AI diagnostic. In 10 minutes you'll get a full picture of your organization and concrete recommendations to move forward.</p>
+      </div>
+      <a href="https://diagnostico.v2afoundation.org" target="_blank" rel="noopener" class="btn btn-accent diag-btn" data-es>Hacer el diagnóstico gratis ↗</a>
+      <a href="https://diagnostico.v2afoundation.org" target="_blank" rel="noopener" class="btn btn-accent diag-btn" data-en>Take the free diagnostic ↗</a>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════
+     PARTICIPA / PARTICIPATE
+══════════════════════════════════ -->
+<section class="participate" id="participa">
+  <div class="container">
+    <div class="section-head center">
+      <span class="label" data-es>¿Cómo participar?</span>
+      <span class="label" data-en>How to participate</span>
+      <h2 class="title" data-es>Únete al movimiento</h2>
+      <h2 class="title" data-en>Join the movement</h2>
+      <p class="subtitle" data-es>Hay un lugar para ti en Fundación V2A, ya seas una organización sin fines de lucro, un estudiante universitario, o una entidad que quiere amplificar su impacto social.</p>
+      <p class="subtitle" data-en>There is a place for you in Fundación V2A, whether you are a nonprofit, a university student, or an entity that wants to amplify its social impact.</p>
+    </div>
+
+    <div class="participate-grid">
+      <div class="part-card">
+        <svg class="part-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="10" width="18" height="12" rx="1"/><path d="M3 10l9-7 9 7"/><line x1="9" y1="22" x2="9" y2="15"/><line x1="15" y1="22" x2="15" y2="15"/><line x1="9" y1="15" x2="15" y2="15"/></svg>
+        <h3 data-es>Soy una OSFL</h3>
+        <h3 data-en>I represent a nonprofit</h3>
+        <p data-es>¿Tu organización necesita apoyo estratégico, tecnológico o de comunicación? Aplica al programa de verano WeServe Fellows (pro bono) o trabaja con nosotros a través de WeServe Projects o WeServe Partners.</p>
+        <p data-en>Does your organization need strategic, technological, or communication support? Apply to the WeServe Fellows summer program (pro bono) or work with us through WeServe Projects or WeServe Partners.</p>
+        <a href="#contacto" class="btn btn-navy" data-es>Aplica ahora</a>
+        <a href="#contacto" class="btn btn-navy" data-en>Apply now</a>
+      </div>
+      <div class="part-card">
+        <svg class="part-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>
+        <h3 data-es>Soy estudiante universitario</h3>
+        <h3 data-en>I'm a university student</h3>
+        <p data-es>¿Quieres ganar experiencia profesional real mientras generas impacto social? Únete como WeServe Fellow en nuestro programa de verano 2026. Buscamos estudiantes enérgicos, analíticos y con vocación de servicio.</p>
+        <p data-en>Do you want to gain real professional experience while creating social impact? Join as a WeServe Fellow in our Summer 2026 program. We look for energetic, analytical students with a calling to serve.</p>
+        <a href="https://v2aconsulting.com/we-serve-fellows/" target="_blank" rel="noopener" class="btn btn-navy" data-es>Aplicar a Fellows ↗</a>
+        <a href="https://v2aconsulting.com/we-serve-fellows/" target="_blank" rel="noopener" class="btn btn-navy" data-en>Apply to Fellows ↗</a>
+      </div>
+      <div class="part-card">
+        <svg class="part-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+        <h3 data-es>Quiero apoyar la misión</h3>
+        <h3 data-en>I want to support the mission</h3>
+        <p data-es>¿Tu fundación o empresa quiere fortalecer el sector sin fines de lucro en Puerto Rico? Conversemos sobre cómo colaborar para multiplicar el impacto en nuestras comunidades.</p>
+        <p data-en>Does your foundation or company want to strengthen the nonprofit sector in Puerto Rico? Let's talk about how to collaborate and multiply impact in our communities.</p>
+        <a href="#contacto" class="btn btn-navy" data-es>Conversemos</a>
+        <a href="#contacto" class="btn btn-navy" data-en>Let's talk</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════
+     CONTACTO / CONTACT
+══════════════════════════════════ -->
+<section class="contact" id="contacto">
+  <div class="container">
+    <div class="contact-inner">
+
+      <!-- Left: header + contact info -->
+      <div class="contact-lead">
+        <span class="label" data-es>Contacto</span>
+        <span class="label" data-en>Contact</span>
+        <h2 class="title" data-es>¿Listo para fortalecer tu organización?</h2>
+        <h2 class="title" data-en>Ready to strengthen your organization?</h2>
+        <p data-es>Completa el formulario y nuestro equipo estará en contacto contigo pronto.</p>
+        <p data-en>Fill out the form and our team will be in touch with you shortly.</p>
+
+        <div class="contact-meta">
+          <div class="contact-meta-row">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;color:var(--bahia)" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+            <span data-es>Iniciativa de <a href="https://v2aconsulting.com" target="_blank" rel="noopener">V2A Consulting</a>, firma de servicios profesionales en Puerto Rico</span>
+            <span data-en>An initiative of <a href="https://v2aconsulting.com" target="_blank" rel="noopener">V2A Consulting</a>, a professional services firm in Puerto Rico</span>
+          </div>
+          <div class="contact-meta-row">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;color:var(--bahia)" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            <span>San Juan, Puerto Rico</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right: form -->
+      <div class="form-card">
+
+        <!-- Fellows redirect panel (hidden by default) -->
+        <div id="fellowsPanel" style="display:none; text-align:center; padding:40px 24px;">
+          <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="var(--bahia)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="margin-bottom:16px;" aria-hidden="true"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>
+          <h3 style="font-family:'Source Serif 4',Georgia,serif; font-size:22px; color:var(--bahia-dark); margin-bottom:12px;" data-es>Programa WeServe Fellows</h3>
+          <h3 style="font-family:'Source Serif 4',Georgia,serif; font-size:22px; color:var(--bahia-dark); margin-bottom:12px;" data-en>WeServe Fellows Program</h3>
+          <p style="font-size:14px; color:var(--gray-500); line-height:1.65; margin-bottom:28px;" data-es>Para aplicar al programa de verano o conocer más información, visita la página oficial de WeServe Fellows.</p>
+          <p style="font-size:14px; color:var(--gray-500); line-height:1.65; margin-bottom:28px;" data-en>To apply for the summer program or learn more, visit the official WeServe Fellows page.</p>
+          <a href="https://v2aconsulting.com/we-serve-fellows/" target="_blank" rel="noopener" class="btn btn-primary btn-lg" data-es>Ir a WeServe Fellows ↗</a>
+          <a href="https://v2aconsulting.com/we-serve-fellows/" target="_blank" rel="noopener" class="btn btn-primary btn-lg" data-en>Go to WeServe Fellows ↗</a>
+          <br><br>
+          <button onclick="showForm()" style="background:none;border:none;font-size:13px;color:var(--gray-500);cursor:pointer;text-decoration:underline;" data-es>← Volver al formulario</button>
+          <button onclick="showForm()" style="background:none;border:none;font-size:13px;color:var(--gray-500);cursor:pointer;text-decoration:underline;" data-en>← Back to form</button>
+        </div>
+
+        <!-- Main form -->
+        <form id="contactForm">
+          <div class="form-row">
+            <div class="form-group">
+              <label for="ctName" data-es>Nombre *</label>
+              <label for="ctName" data-en>Name *</label>
+              <input type="text" id="ctName" name="name" required
+                     data-placeholder-es="Tu nombre" data-placeholder-en="Your name" />
+            </div>
+            <div class="form-group">
+              <label for="ctEmail">Email *</label>
+              <input type="email" id="ctEmail" name="email" required
+                     data-placeholder-es="tu@email.com" data-placeholder-en="you@email.com" />
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="ctOrg" data-es>Organización</label>
+            <label for="ctOrg" data-en>Organization</label>
+            <input type="text" id="ctOrg" name="organization"
+                   data-placeholder-es="Nombre de tu organización (opcional)"
+                   data-placeholder-en="Your organization name (optional)" />
+          </div>
+
+          <div class="form-group">
+            <label for="ctType" data-es>¿Cómo quieres participar? *</label>
+            <label for="ctType" data-en>How do you want to participate? *</label>
+            <select id="ctType" name="type" required>
+              <option value="" disabled selected data-es>Selecciona una opción</option>
+              <option value="" disabled selected data-en>Select an option</option>
+              <option value="osfl-fellows"  data-es>OSFL — Apoyo vía WeServe Fellows</option>
+              <option value="osfl-fellows"  data-en>Nonprofit — Support via WeServe Fellows</option>
+              <option value="osfl-projects" data-es>OSFL — Apoyo vía WeServe Projects</option>
+              <option value="osfl-projects" data-en>Nonprofit — Support via WeServe Projects</option>
+              <option value="osfl-partners" data-es>OSFL — WeServe Partners (acompañamiento)</option>
+              <option value="osfl-partners" data-en>Nonprofit — WeServe Partners (accompaniment)</option>
+              <option value="fellow"        data-es>Estudiante universitario — Ser WeServe Fellow</option>
+              <option value="fellow"        data-en>University student — Become a WeServe Fellow</option>
+              <option value="funder"        data-es>Fundación o empresa — Apoyar la misión</option>
+              <option value="funder"        data-en>Foundation or company — Support the mission</option>
+              <option value="otro"          data-es>Otro</option>
+              <option value="otro"          data-en>Other</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="ctMsg" data-es>Mensaje *</label>
+            <label for="ctMsg" data-en>Message *</label>
+            <textarea id="ctMsg" name="message" rows="4" required
+                      data-placeholder-es="Cuéntanos sobre tu organización y los retos que enfrentas..."
+                      data-placeholder-en="Tell us about your organization and the challenges you face..."></textarea>
+          </div>
+
+          <button type="submit" class="btn btn-primary" id="submitBtn"
+                  style="width:100%;justify-content:center;padding:14px;">
+            <span data-es>Enviar mensaje →</span>
+            <span data-en>Send message →</span>
+          </button>
+        </form>
+
+        <!-- Success state -->
+        <div id="formSuccess" style="display:none; text-align:center; padding:56px 24px;">
+          <svg width="56" height="56" viewBox="0 0 24 24" fill="none" stroke="var(--celeste)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="margin-bottom:16px;" aria-hidden="true"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+          <h3 style="font-family:'Source Serif 4',Georgia,serif; font-size:24px; color:var(--bahia-dark); margin-bottom:10px;" data-es>¡Mensaje recibido!</h3>
+          <h3 style="font-family:'Source Serif 4',Georgia,serif; font-size:24px; color:var(--bahia-dark); margin-bottom:10px;" data-en>Message received!</h3>
+          <p style="font-size:15px; color:var(--gray-500);" data-es>Gracias por contactarnos. Nuestro equipo estará en contacto contigo pronto.</p>
+          <p style="font-size:15px; color:var(--gray-500);" data-en>Thank you for reaching out. Our team will be in touch with you shortly.</p>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════
+     FOOTER
+══════════════════════════════════ -->
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+
+      <div class="footer-brand">
+        <div class="footer-brand-name">
+          <img src="./logo.jpg" alt="Fundación V2A" height="36" style="border-radius:4px;"
+               onerror="this.style.display='none'" />
+        </div>
+        <p data-es>Fortalecemos la capacidad organizacional de las OSFLs en Puerto Rico mediante consultoría estratégica, transformación digital y acceso a talento especializado.</p>
+        <p data-en>We strengthen the organizational capacity of nonprofits in Puerto Rico through strategic consulting, digital transformation, and access to specialized talent.</p>
+        <a href="https://v2aconsulting.com" target="_blank" rel="noopener" class="footer-v2a">
+          <span data-es>Una iniciativa de V2A Consulting →</span>
+          <span data-en>An initiative of V2A Consulting →</span>
+        </a>
+      </div>
+
+      <div>
+        <h5 data-es>Programas</h5>
+        <h5 data-en>Programs</h5>
+        <ul class="footer-links">
+          <li><a href="#programas">WeServe Fellows</a></li>
+          <li><a href="#programas">WeServe Projects</a></li>
+          <li><a href="#programas">WeServe Partners</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h5 data-es>Organización</h5>
+        <h5 data-en>Organization</h5>
+        <ul class="footer-links">
+          <li><a href="#nosotros" data-es>Nosotros</a><a href="#nosotros" data-en>About</a></li>
+          <li><a href="#impacto" data-es>Impacto</a><a href="#impacto" data-en>Impact</a></li>
+          <li><a href="#servicios" data-es>Servicios</a><a href="#servicios" data-en>Services</a></li>
+          <li><a href="#contacto" data-es>Contacto</a><a href="#contacto" data-en>Contact</a></li>
+          <li><a href="https://v2aconsulting.com" target="_blank" rel="noopener">V2A Consulting ↗</a></li>
+        </ul>
+      </div>
+
+    </div>
+
+    <div class="footer-bottom">
+      <p>© <span id="copyrightYear"></span> Fundación V2A · Puerto Rico</p>
+      <p><span data-es>Una iniciativa de</span><span data-en>An initiative of</span> <a href="https://v2aconsulting.com" target="_blank" rel="noopener">V2A Consulting</a></p>
+    </div>
+  </div>
+</footer>
+
+
+<script>
+  // ── Copyright year (always current) ──
+  document.getElementById('copyrightYear').textContent = new Date().getFullYear();
+
+  const html    = document.documentElement;
+  const langBtn = document.getElementById('langBtn');
+
+  // ── Language toggle ──
+  function applyLang(lang) {
+    html.lang = lang;
+    langBtn.textContent = lang === 'es' ? 'EN' : 'ES';
+    langBtn.setAttribute('aria-label', lang === 'es' ? 'Switch to English' : 'Cambiar a español');
+    // Update bilingual placeholders
+    document.querySelectorAll('[data-placeholder-es]').forEach(el => {
+      el.placeholder = lang === 'es'
+        ? el.dataset.placeholderEs
+        : el.dataset.placeholderEn;
+    });
+    // Sync select duplicated options: show only matching lang options
+    syncSelect();
+  }
+
+  langBtn.addEventListener('click', () => {
+    applyLang(html.lang === 'es' ? 'en' : 'es');
+  });
+
+  // ── Select: deduplicate bilingual options ──
+  // The select has duplicate option values (one per lang). We hide the wrong-lang ones.
+  function syncSelect() {
+    const lang = html.lang;
+    const sel = document.getElementById('ctType');
+    if (!sel) return;
+    // Reset to placeholder
+    sel.value = '';
+    Array.from(sel.options).forEach(opt => {
+      if (!opt.value) {
+        // placeholder options — show only current lang
+        opt.hidden = opt.dataset && opt.dataset.en
+          ? lang !== 'en'
+          : lang !== 'es';
+      }
+    });
+  }
+
+  // ── Fellows redirect ──
+  const ctType = document.getElementById('ctType');
+  if (ctType) {
+    ctType.addEventListener('change', () => {
+      if (ctType.value === 'fellow') {
+        document.getElementById('contactForm').style.display    = 'none';
+        document.getElementById('fellowsPanel').style.display   = 'block';
+        document.getElementById('formSuccess').style.display    = 'none';
+      }
+    });
+  }
+
+  function showForm() {
+    document.getElementById('contactForm').style.display   = '';
+    document.getElementById('fellowsPanel').style.display  = 'none';
+    document.getElementById('formSuccess').style.display   = 'none';
+    if (ctType) ctType.value = '';
+  }
+
+  // ── Form submission ──
+  const form       = document.getElementById('contactForm');
+  const submitBtn  = document.getElementById('submitBtn');
+  const successEl  = document.getElementById('formSuccess');
+
+  if (form) {
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const lang = html.lang;
+
+      submitBtn.disabled = true;
+      submitBtn.querySelector('[data-es]').textContent = lang === 'es' ? 'Enviando…' : 'Sending…';
+      submitBtn.querySelector('[data-en]').textContent = lang === 'es' ? 'Enviando…' : 'Sending…';
+
+      const payload = {
+        name:         document.getElementById('ctName').value.trim(),
+        email:        document.getElementById('ctEmail').value.trim(),
+        organization: document.getElementById('ctOrg').value.trim(),
+        type:         document.getElementById('ctType').value,
+        message:      document.getElementById('ctMsg').value.trim(),
+        lang,
+      };
+
+      try {
+        const res = await fetch('/.netlify/functions/contact-foundation', {
+          method:  'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body:    JSON.stringify(payload),
+        });
+        if (!res.ok) throw new Error();
+        form.style.display    = 'none';
+        successEl.style.display = 'block';
+      } catch {
+        submitBtn.disabled = false;
+        submitBtn.querySelector('[data-es]').textContent = lang === 'es' ? 'Error — intenta de nuevo' : 'Error — please try again';
+        submitBtn.querySelector('[data-en]').textContent = lang === 'es' ? 'Error — intenta de nuevo' : 'Error — please try again';
+      }
+    });
+  }
+
+  // ── Mobile nav ──
+  const hamburger = document.getElementById('hamburger');
+  const mobileNav = document.getElementById('mobileNav');
+
+  hamburger.addEventListener('click', () => {
+    const open = mobileNav.classList.toggle('open');
+    hamburger.setAttribute('aria-expanded', open);
+    hamburger.setAttribute('aria-label', open ? 'Cerrar menú' : 'Abrir menú');
+  });
+
+  document.querySelectorAll('.mob-link').forEach(link => {
+    link.addEventListener('click', () => {
+      mobileNav.classList.remove('open');
+      hamburger.setAttribute('aria-expanded', 'false');
+    });
+  });
+
+  // ── Init ──
+  applyLang('es');
+</script>
+
+</body>
+</html>
