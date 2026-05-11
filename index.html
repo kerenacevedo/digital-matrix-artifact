@@ -89,22 +89,26 @@
       .levels-grid { grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 16px; }
     }
 
+    /* Base (mobile) card text sizes — must come BEFORE the desktop media query */
+    .lvl-name { font-size: 14px; font-weight: 700; color: var(--gray-900); margin-bottom: 3px; }
+    .lvl-desc { font-size: 13px; color: var(--gray-700); line-height: 1.45; }
+    .lvl-examples { margin-top: 8px; padding-left: 14px; }
+    .lvl-examples li { font-size: 13px; color: var(--gray-500); line-height: 1.5; margin-bottom: 3px; }
+
     /* Desktop 820px+: wider container + horizontal card layout + 2x text */
     @media (min-width: 820px) {
-      .main { max-width: 1200px; padding-left: 32px; padding-right: 32px; }
+      .main { max-width: 1400px; padding-left: 32px; padding-right: 32px; }
       /* Card layout */
-      .level-card { display: flex; flex-direction: row; align-items: flex-start; gap: 10px; padding: 16px 52px 16px 20px; }
+      .level-card { display: flex; flex-direction: row; align-items: flex-start; gap: 10px; padding: 24px 52px 24px 24px; }
       .lvl-card-left { flex-shrink: 0; width: 140px; }
       .lvl-badge { white-space: nowrap; font-size: 16px; padding: 5px 14px; }
       .lvl-card-right { flex: 1; min-width: 0; }
-      /* Card text 2x */
-      .lvl-name { font-size: 26px; }
-      .lvl-desc { font-size: 22px; line-height: 1.35; }
-      .lvl-examples { margin-top: 4px; }
-      .lvl-examples li { font-size: 22px; }
+      /* Card text — escala dinámicamente con ancho Y alto de pantalla */
+      .lvl-name { font-size: clamp(16px, min(3vh, 2vw), 26px); }
+      .lvl-desc { font-size: clamp(14px, min(2.5vh, 1.6vw), 22px); line-height: 1.5; }
+      .lvl-examples { margin-top: clamp(4px, 0.6vh, 10px); }
+      .lvl-examples li { font-size: clamp(14px, min(2.5vh, 1.6vw), 22px); line-height: 1.6; }
     }
-    .lvl-examples { margin-top: 8px; padding-left: 14px; }
-    .lvl-examples li { font-size: 13px; color: var(--gray-500); line-height: 1.5; margin-bottom: 3px; }
     .step-nav { display: flex; gap: 8px; align-items: stretch; }
     .step-nav .btn-primary { flex: 1; }
     @media (max-width: 480px) {
@@ -135,9 +139,6 @@
     .lvl-badge.n2 { background: var(--n2-bg); color: var(--n2-text); }
     .lvl-badge.n3 { background: var(--n3-bg); color: var(--n3-text); }
     .lvl-badge.n4 { background: var(--n4-bg); color: var(--n4-text); }
-    .lvl-name { font-size: 14px; font-weight: 700; color: var(--gray-900); margin-bottom: 3px; }
-    .lvl-desc { font-size: 13px; color: var(--gray-700); line-height: 1.45; }
-
     /* ── Results ── */
     .score-hero { background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary) 100%); color: #fff; border-radius: 20px; padding: 28px 24px 24px; text-align: center; margin-bottom: 16px; box-shadow: 0 4px 20px rgba(15,61,110,0.25); }
     .score-eyebrow { font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; opacity: 0.72; margin-bottom: 6px; }
