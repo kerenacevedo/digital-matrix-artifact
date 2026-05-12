@@ -1060,6 +1060,45 @@ async function buildPDF() {
   });
 
 
+  // ── Preguntas adicionales ─────────────────────────────────────
+  const q1Val = ($('q1-input').value || '').trim();
+  const q2Val = ($('q2-input').value || '').trim();
+  if (q1Val || q2Val) {
+    ensure(20);
+    bold(10.5); color(...C.g900);
+    doc.text('Tus necesidades', ML, y);
+    fill(...C.primary);
+    doc.rect(ML, y + 3, 32, 1.5, 'F');
+    y += 12;
+
+    const questions = [
+      { q: '¿Qué tarea te consume más tiempo?', a: q1Val },
+      { q: 'Si tuvieras una varita mágica para eliminar una tarea de tu día a día, ¿cuál sería?', a: q2Val },
+    ].filter(item => item.a);
+
+    questions.forEach(item => {
+      normal(9);
+      const aLines = doc.splitTextToSize(item.a, USW - 18);
+      const qLines = doc.splitTextToSize(item.q, USW - 18);
+      const cardH  = 6 + qLines.length * 4 + 4 + aLines.length * LH + 6;
+      ensure(cardH + 3);
+
+      fill(...C.g50); stroke(...C.g200); doc.setLineWidth(0.2);
+      doc.roundedRect(ML, y, USW, cardH, 3, 3, 'FD');
+      fill(...C.primary);
+      doc.roundedRect(ML, y, 4, cardH, 2, 2, 'F');
+      doc.rect(ML + 2, y, 2, cardH, 'F');
+
+      let cy = y + 6;
+      bold(8.5); color(...C.g500);
+      qLines.forEach(l => { doc.text(l, ML + 9, cy); cy += 4; });
+      cy += 2;
+      normal(9); color(...C.g900);
+      aLines.forEach(l => { doc.text(l, ML + 9, cy); cy += LH; });
+      y = cy + 7;
+    });
+  }
+
   // ── Footer on last page ───────────────────────────────────────
   drawFooter(pageNum);
 
