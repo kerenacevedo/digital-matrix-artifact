@@ -270,6 +270,7 @@
         </div>
         <span class="email-section-label">Recibe tus resultados por correo</span>
         <div class="email-row">
+          <input type="text" id="name-input" autocomplete="name" placeholder="Tu nombre completo" />
           <input type="email" id="email-input" autocomplete="email" />
           <button class="btn btn-secondary" id="btn-email" onclick="sendEmail()"></button>
         </div>
@@ -610,8 +611,9 @@ function restartAssessment() {
   $('form-block').style.display = 'block';
   $('thank-you-block').style.display = 'none';
   $('cfg-restart-btn').style.display = '';
-  $('q1-input').value = '';
-  $('q2-input').value = '';
+  $('q1-input').value   = '';
+  $('q2-input').value   = '';
+  $('name-input').value = '';
   $('email-input').value = '';
   currentStep = 0;
   selections  = new Array(DIMS.length).fill(null);
@@ -849,8 +851,9 @@ async function buildPDF() {
   const appScores  = selections.filter(s => s !== 'na').map(s => s + 1);
   const avg        = appScores.length ? appScores.reduce((a, b) => a + b, 0) / appScores.length : 0;
   const chartImg   = await getHighResChartImage();
-  const displayOrg = orgName || 'Mi organizacion';
-  const dateStr    = new Date().toLocaleDateString('es-MX', { year:'numeric', month:'long', day:'numeric' });
+  const displayOrg  = orgName || 'Mi organizacion';
+  const displayName = ($('name-input').value || '').trim();
+  const dateStr     = new Date().toLocaleDateString('es-MX', { year:'numeric', month:'long', day:'numeric' });
 
   let y = 0;
   let pageNum = 1;
@@ -877,7 +880,8 @@ async function buildPDF() {
   bold(17); color(...C.white);
   doc.text(CONFIG.pdfTitle, PW / 2, 26, { align: 'center' });
   normal(10); color(195, 220, 248);
-  doc.text(displayOrg, PW / 2, 38, { align: 'center' });
+  const bannerLine = displayName ? `${displayName}  ·  ${displayOrg}` : displayOrg;
+  doc.text(bannerLine, PW / 2, 38, { align: 'center' });
 
   y = BANNER_H + 12;
 
@@ -1082,7 +1086,8 @@ async function downloadPDF() {
 // ── Email ─────────────────────────────────────────────────────────
 async function sendEmail() {
   const emailInput = $('email-input');
-  const email = (emailInput.value || '').trim();
+  const email      = (emailInput.value || '').trim();
+  const userName   = ($('name-input').value || '').trim();
   if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
     showToast('⚠️ Ingresa un correo electrónico válido'); return;
   }
@@ -1097,9 +1102,10 @@ async function sendEmail() {
     const doc       = await buildPDF();
     const pdfBase64 = doc.output('datauristring').split(',')[1];
 
-    const displayOrg = orgName || 'Mi organización';
-    const stageLabel = getStageLabel(avg);
-    const naCount    = selections.filter(s => s === 'na').length;
+    const displayOrg  = orgName || 'Mi organización';
+    const displayName = userName || '';
+    const stageLabel  = getStageLabel(avg);
+    const naCount     = selections.filter(s => s === 'na').length;
 
     const dimRows = DIMS.map((d, i) => {
       const sel = selections[i];
@@ -1141,6 +1147,7 @@ async function sendEmail() {
   </td></tr>
   <!-- Score hero -->
   <tr><td style="background:#fff;padding:28px 32px 20px;text-align:center;">
+    ${displayName ? `<p style="margin:0 0 4px;font-size:15px;color:#6B7280;">Hola, <strong style="color:#111827;">${displayName}</strong></p>` : ''}
     <p style="margin:0 0 6px;font-size:13px;color:#6B7280;">Resultado para <strong style="color:#111827;">${displayOrg}</strong></p>
     <div style="display:inline-block;background:#EAF3FC;border-radius:16px;padding:20px 40px;margin:8px 0;">
       <span style="font-size:52px;font-weight:800;color:#18407A;line-height:1;">${avg.toFixed(1)}</span>
@@ -1178,6 +1185,7 @@ async function sendEmail() {
 
     const payload = {
       email:     email,
+      userName:  displayName,
       orgName:   displayOrg,
       score:     avg.toFixed(1),
       stage:     stageLabel,
