@@ -2,1271 +2,1759 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-  <meta name="theme-color" content="#0F3D6E" />
-  <title>Diagnóstico de Madurez Digital y AI — Fundación V2A</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Fundación V2A fortalece la capacidad organizacional de las OSFLs en Puerto Rico mediante consultoría estratégica, transformación digital y talento especializado." />
+  <title>Fundación V2A | Fortalecemos el sector sin fines de lucro en Puerto Rico</title>
+
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,800;1,700&family=Open+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      --primary:       #185FA5;
-      --primary-dark:  #0F3D6E;
-      --primary-light: #EAF3FC;
-      --n1-text: #B34826; --n1-bg: #FEF0EB;
-      --n2-text: #8A5210; --n2-bg: #FEF7EC;
-      --n3-text: #356010; --n3-bg: #F0F8E6;
-      --n4-text: #0F4D8A; --n4-bg: #EAF3FC;
-      --gray-50:  #F9FAFB; --gray-100: #F3F4F6; --gray-200: #E5E7EB;
-      --gray-400: #9CA3AF; --gray-500: #6B7280; --gray-700: #374151; --gray-900: #111827;
+      --bahia:       #1D4289;
+      --bahia-dark:  #12295a;
+      --celeste:     #29ABE2;
+      --celeste-bg:  #e8f5fc;
+      --accent:      #FF8C6B;
+      --accent-hov:  #e5724f;
+      --accent-bg:   #fff1ed;
+      --paper:       #F4F4F4;
+      --white:       #FFFFFF;
+      --soft:        #4a5568;
+      --muted:       #718096;
+      --line:        #e2e8f0;
+      --line-soft:   #f7fafc;
+      --gray-500:    #6B7280;
+      --gray-700:    #374151;
+      --gray-900:    #1a202c;
     }
 
     html { scroll-behavior: smooth; }
+
     body {
-      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-      font-size: 16px; line-height: 1.55; color: var(--gray-900);
-      background: var(--gray-50); min-height: 100vh; -webkit-text-size-adjust: 100%;
+      font-family: 'Open Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      font-size: 16px;
+      line-height: 1.6;
+      color: var(--gray-900);
+      background: var(--white);
+      -webkit-text-size-adjust: 100%;
     }
 
-    /* ── Header ── */
-    .app-header {
-      background: var(--primary-dark); color: #fff;
-      padding: 20px 20px 14px; position: sticky; top: 0; z-index: 100;
-      box-shadow: 0 2px 12px rgba(0,0,0,0.25);
-    }
-    .header-inner { text-align: center; }
-    .header-logo { font-size: 12px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; opacity: 0.72; margin-bottom: 3px; }
-    .header-title { font-size: 17px; font-weight: 700; line-height: 1.25; }
-    @media (min-width: 480px) { .header-title { font-size: 19px; } }
+    /* ── BILINGUAL ── */
+    html[lang="es"] [data-en],
+    html[lang="en"] [data-es] { display: none !important; }
 
-    /* Progress */
-    .progress-wrap { margin-top: 10px; padding-bottom: 12px; display: none; }
-    .progress-track { background: rgba(255,255,255,0.25); height: 5px; border-radius: 3px; overflow: hidden; }
-    .progress-fill { height: 100%; background: #fff; border-radius: 3px; transition: width 0.4s cubic-bezier(.4,0,.2,1); width: 0%; }
-    .progress-text { font-size: 11px; opacity: 0.68; margin-top: 5px; text-align: right; }
+    /* ── LAYOUT ── */
+    .container { max-width: 1160px; margin: 0 auto; padding: 0 32px; }
 
-    /* ── Layout ── */
-    .main { max-width: 620px; margin: 0 auto; padding: 24px 16px 56px; }
-    .screen { display: none; }
-    .screen.active { display: block; }
+    section { padding: 96px 0; }
 
-    /* ── Welcome ── */
-    .welcome-card { background: #fff; border-radius: 20px; padding: 32px 24px 28px; box-shadow: 0 2px 16px rgba(0,0,0,0.08); text-align: center; }
-    .welcome-emoji { display: none; }
-    .welcome-card h2 { font-size: 21px; font-weight: 800; color: var(--primary); line-height: 1.3; margin-bottom: 12px; }
-    .welcome-card > p { font-size: 15px; color: var(--gray-700); margin-bottom: 18px; }
-    .dim-list { background: var(--gray-50); border: 1px solid var(--gray-200); border-radius: 12px; padding: 14px 18px; margin: 0 0 20px; text-align: left; }
-    .dim-list li { list-style: none; padding: 5px 0; font-size: 15px; color: var(--gray-700); display: flex; align-items: center; gap: 10px; }
-    .dim-list li::before { content: '→'; color: var(--primary); font-weight: 700; flex-shrink: 0; }
-    .welcome-meta { font-size: 13px; color: var(--gray-400); margin-bottom: 18px; }
-    .org-input-wrap { margin-bottom: 18px; text-align: left; }
-    .org-input-label { font-size: 13px; font-weight: 700; color: var(--gray-700); margin-bottom: 6px; display: block; }
-    .org-input { width: 100%; padding: 14px 16px; border: 2px solid var(--gray-200); border-radius: 12px; font-size: 16px; outline: none; transition: border-color 0.18s; background: #fff; color: var(--gray-900); }
-    .org-input:focus { border-color: var(--primary); }
-
-    /* ── Buttons ── */
-    .btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; padding: 15px 28px; border-radius: 12px; font-size: 16px; font-weight: 700; cursor: pointer; border: none; transition: background 0.18s, transform 0.15s; min-height: 52px; width: 100%; text-decoration: none; -webkit-tap-highlight-color: transparent; user-select: none; }
-    .btn:active { transform: scale(0.97); }
-    .btn-primary { background: var(--primary); color: #fff; }
-    .btn-primary:not(:disabled):hover { background: var(--primary-dark); }
-    .btn-primary:disabled { background: var(--gray-200); color: var(--gray-400); cursor: not-allowed; transform: none; }
-    .btn-secondary { background: #fff; color: var(--primary); border: 2px solid var(--primary); }
-    .btn-secondary:not(:disabled):hover { background: var(--primary-light); }
-    .btn-ghost { background: #fff; color: var(--gray-700); border: 2px solid var(--gray-200); width: auto; padding: 15px 20px; flex-shrink: 0; }
-
-    /* ── Step ── */
-    .step-header { margin-bottom: 18px; }
-    .step-pill { display: inline-flex; align-items: center; gap: 6px; background: var(--primary-light); color: var(--primary); padding: 5px 12px; border-radius: 20px; font-size: 13px; font-weight: 700; margin-bottom: 10px; }
-    .step-header h2 { font-size: 22px; font-weight: 800; color: var(--gray-900); line-height: 1.25; margin-bottom: 4px; }
-    .step-hint { font-size: 14px; color: var(--gray-500); }
-    /* Mobile: 1 column stacked */
-    .levels-grid { display: grid; grid-template-columns: 1fr; gap: 10px; margin-bottom: 22px; }
-
-    /* Tablet 560px+: 2 columns */
-    @media (min-width: 560px) {
-      .levels-grid { grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 16px; }
+    .label {
+      display: block;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--celeste);
+      margin-bottom: 8px;
     }
 
-    /* Base (mobile) card text sizes — must come BEFORE the desktop media query */
-    .lvl-name { font-size: 14px; font-weight: 700; color: var(--gray-900); margin-bottom: 3px; }
-    .lvl-desc { font-size: 13px; color: var(--gray-700); line-height: 1.45; }
-    .lvl-examples { margin-top: 8px; padding-left: 14px; }
-    .lvl-examples li { font-size: 13px; color: var(--gray-500); line-height: 1.5; margin-bottom: 3px; }
-
-    /* Desktop 820px+: wider container + horizontal card layout + 2x text */
-    @media (min-width: 820px) {
-      .main { max-width: 1400px; padding-left: 32px; padding-right: 32px; }
-      /* Card layout */
-      .level-card { display: flex; flex-direction: row; align-items: flex-start; gap: 10px; padding: 24px 52px 24px 24px; }
-      .lvl-card-left { flex-shrink: 0; width: 140px; }
-      .lvl-badge { white-space: nowrap; font-size: 16px; padding: 5px 14px; }
-      .lvl-card-right { flex: 1; min-width: 0; }
-      /* Card text — escala dinámicamente con ancho Y alto de pantalla */
-      .lvl-name { font-size: clamp(16px, min(3vh, 2vw), 26px); }
-      .lvl-desc { font-size: clamp(14px, min(2.5vh, 1.6vw), 22px); line-height: 1.5; }
-      .lvl-examples { margin-top: clamp(4px, 0.6vh, 10px); }
-      .lvl-examples li { font-size: clamp(14px, min(2.5vh, 1.6vw), 22px); line-height: 1.6; }
+    h2.title {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: clamp(28px, 3.6vw, 42px);
+      font-weight: 700;
+      letter-spacing: -0.01em;
+      line-height: 1.15;
+      color: var(--bahia-dark);
+      margin-bottom: 14px;
     }
-    .step-nav { display: flex; gap: 8px; align-items: stretch; }
-    .step-nav .btn-primary { flex: 1; }
-    @media (max-width: 480px) {
-      .step-nav .btn { padding: 12px 12px; font-size: 14px; min-height: 44px; }
-      .step-nav .btn-ghost { padding: 12px 12px; }
-      .step-nav .btn-na { padding: 12px 10px !important; font-size: 14px !important; min-height: 44px !important; }
+
+    /* Orange underline decoration under section titles — V2A style */
+    .section-head h2.title::after {
+      content: '';
+      display: block;
+      width: 56px;
+      height: 4px;
+      background: var(--accent);
+      margin-top: 14px;
+      border-radius: 0;
     }
-    .btn-na { background:#fff; border:2px solid var(--gray-200); color:var(--gray-500); border-radius:12px; font-size:16px; font-weight:700; padding:15px 16px; min-height:52px; cursor:pointer; white-space:nowrap; transition:background 0.15s,border-color 0.15s,color 0.15s; display:inline-flex; align-items:center; justify-content:center; flex-shrink:0; }
-    .btn-na.active-na { background:var(--gray-100); border-color:var(--gray-400); color:var(--gray-700); }
-    .level-card.na-dimmed { opacity:0.3; pointer-events:none; }
-    .dim-result.na-result { background:#F9FAFB; border:1.5px dashed var(--gray-200); }
-    .na-badge { display:inline-block; background:var(--gray-100); color:var(--gray-500); border-radius:20px; font-size:11px; font-weight:700; padding:2px 10px; letter-spacing:0.05em; }
+    .section-head.center h2.title::after { margin-left: auto; margin-right: auto; }
 
-    /* ── Level cards ── */
-    .level-card { background: #fff; border: 2.5px solid var(--gray-200); border-radius: 14px; padding: 12px 36px 12px 13px; cursor: pointer; transition: border-color 0.18s, box-shadow 0.18s, background 0.18s; position: relative; -webkit-tap-highlight-color: transparent; user-select: none; }
-    .level-card:hover { border-color: var(--primary); box-shadow: 0 3px 12px rgba(24,95,165,0.12); }
-    .level-card.sel-n1 { background: var(--n1-bg); border-color: var(--n1-text); }
-    .level-card.sel-n2 { background: var(--n2-bg); border-color: var(--n2-text); }
-    .level-card.sel-n3 { background: var(--n3-bg); border-color: var(--n3-text); }
-    .level-card.sel-n4 { background: var(--n4-bg); border-color: var(--n4-text); }
-    .check-circle { position: absolute; top: 14px; right: 14px; width: 26px; height: 26px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 800; color: #fff; opacity: 0; transition: opacity 0.15s; }
-    .level-card.sel-n1 .check-circle { background: var(--n1-text); opacity: 1; }
-    .level-card.sel-n2 .check-circle { background: var(--n2-text); opacity: 1; }
-    .level-card.sel-n3 .check-circle { background: var(--n3-text); opacity: 1; }
-    .level-card.sel-n4 .check-circle { background: var(--n4-text); opacity: 1; }
-    .lvl-badge { display: inline-flex; align-items: center; padding: 3px 10px; border-radius: 20px; font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.07em; margin-bottom: 6px; }
-    .lvl-badge.n1 { background: var(--n1-bg); color: var(--n1-text); }
-    .lvl-badge.n2 { background: var(--n2-bg); color: var(--n2-text); }
-    .lvl-badge.n3 { background: var(--n3-bg); color: var(--n3-text); }
-    .lvl-badge.n4 { background: var(--n4-bg); color: var(--n4-text); }
-    /* ── Results ── */
-    .score-hero { background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary) 100%); color: #fff; border-radius: 20px; padding: 28px 24px 24px; text-align: center; margin-bottom: 16px; box-shadow: 0 4px 20px rgba(15,61,110,0.25); }
-    .score-eyebrow { font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; opacity: 0.72; margin-bottom: 6px; }
-    .score-number { font-size: 62px; font-weight: 900; line-height: 1; }
-    .score-denom  { font-size: 22px; font-weight: 600; opacity: 0.65; }
-    .score-stage { display: inline-block; background: rgba(255,255,255,0.2); font-size: 18px; font-weight: 800; padding: 7px 20px; border-radius: 24px; margin-top: 10px; }
-    .score-brand { font-size: 12px; opacity: 0.55; margin-top: 10px; }
-    .chart-card { background: #fff; border-radius: 16px; padding: 20px 16px; margin-bottom: 16px; box-shadow: 0 2px 8px rgba(0,0,0,0.06); }
-    .card-title { font-size: 15px; font-weight: 700; color: var(--gray-900); margin-bottom: 14px; text-align: center; }
-    .chart-inner { position: relative; width: 100%; margin: 0 auto; height: 300px; }
-    .section-heading { font-size: 17px; font-weight: 800; color: var(--gray-900); margin-bottom: 12px; }
-    .dim-result { background: #fff; border-radius: 14px; padding: 16px; margin-bottom: 10px; box-shadow: 0 2px 6px rgba(0,0,0,0.05); }
-    .dim-result-top { display: flex; align-items: flex-start; justify-content: space-between; gap: 10px; margin-bottom: 12px; }
-    .dim-result-name { font-size: 15px; font-weight: 700; color: var(--gray-900); line-height: 1.3; }
-    .dim-score-chip { flex-shrink: 0; padding: 4px 11px; border-radius: 20px; font-size: 12px; font-weight: 800; white-space: nowrap; }
-    .mini-label { font-size: 10px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.08em; color: var(--gray-400); margin-bottom: 3px; }
-    .mini-text { font-size: 14px; color: var(--gray-700); line-height: 1.5; }
-    .mini-divider { height: 1px; background: var(--gray-100); margin: 10px 0; }
-    .callout-block { background: var(--primary-light); border-left: 4px solid var(--primary); border-radius: 0 12px 12px 0; padding: 16px 18px; margin: 20px 0 4px; }
-    .callout-block p { font-size: 15px; font-style: italic; color: var(--primary-dark); line-height: 1.55; font-weight: 600; }
+    /* Left orange bar accent on subheadings — V2A style */
+    h3.accent-bar, h4.accent-bar {
+      border-left: 4px solid var(--accent);
+      padding-left: 14px;
+      color: var(--bahia-dark);
+      font-family: 'Playfair Display', Georgia, serif;
+    }
 
-    /* ── Actions ── */
-    .actions-section { margin-top: 24px; padding-top: 24px; border-top: 1px solid var(--gray-200); }
-    .actions-heading { font-size: 15px; font-weight: 700; margin-bottom: 14px; color: var(--gray-900); }
-    .email-row { display: flex; flex-direction: column; gap: 10px; }
-    .email-row input { padding: 15px 16px; border: 2px solid var(--gray-200); border-radius: 12px; font-size: 16px; outline: none; transition: border-color 0.18s; width: 100%; background: #fff; }
-    .email-row input:focus { border-color: var(--primary); }
-    .question-block { margin-bottom: 18px; }
-    .question-label { font-size: 14px; font-weight: 700; color: var(--gray-700); margin-bottom: 8px; display: block; line-height: 1.4; }
-    .question-textarea { width: 100%; padding: 14px 16px; border: 2px solid var(--gray-200); border-radius: 12px; font-size: 15px; font-family: inherit; outline: none; resize: vertical; min-height: 90px; transition: border-color 0.18s; background: #fff; color: var(--gray-900); }
-    .question-textarea:focus { border-color: var(--primary); }
-    .email-section-label { font-size: 13px; font-weight: 700; color: var(--gray-500); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 10px; display: block; }
-    .branding-footer { text-align: center; margin-top: 28px; padding: 16px; color: var(--gray-400); font-size: 13px; line-height: 1.7; }
+    .subtitle {
+      font-size: 16px;
+      color: var(--soft);
+      line-height: 1.7;
+      max-width: 580px;
+    }
 
-    /* ── Thank-you ── */
-    .thankyou-card { background: var(--primary-light); border-radius: 20px; padding: 36px 24px 32px; text-align: center; }
-    .thankyou-icon { font-size: 52px; line-height: 1; margin-bottom: 14px; }
-    .thankyou-title { font-size: 22px; font-weight: 800; color: var(--primary-dark); margin-bottom: 10px; }
-    .thankyou-msg { font-size: 15px; color: var(--gray-700); line-height: 1.65; margin-bottom: 28px; }
+    .section-head          { margin-bottom: 56px; }
+    .section-head.center   { text-align: center; }
+    .section-head.center .subtitle { margin: 0 auto; }
 
-    /* ── Toast & Loading ── */
-    .toast { position: fixed; bottom: 28px; left: 50%; transform: translateX(-50%) translateY(8px); background: #1a1a2e; color: #fff; padding: 13px 24px; border-radius: 14px; font-size: 15px; font-weight: 600; z-index: 9999; opacity: 0; transition: opacity 0.28s ease, transform 0.28s ease; max-width: 88vw; text-align: center; pointer-events: none; box-shadow: 0 8px 32px rgba(0,0,0,0.3); }
-    .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
-    .loading-overlay { display: none; position: fixed; inset: 0; background: rgba(15,61,110,0.55); z-index: 500; align-items: center; justify-content: center; flex-direction: column; gap: 16px; color: #fff; font-size: 16px; font-weight: 700; }
-    .loading-overlay.show { display: flex; }
-    .spinner { width: 40px; height: 40px; border: 4px solid rgba(255,255,255,0.3); border-top-color: #fff; border-radius: 50%; animation: spin 0.8s linear infinite; }
-    @keyframes spin { to { transform: rotate(360deg); } }
+    /* ── BUTTONS ── */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 12px 28px;
+      border-radius: 2px;
+      font-family: 'Open Sans', sans-serif;
+      font-size: 14px;
+      font-weight: 700;
+      text-decoration: none;
+      cursor: pointer;
+      border: none;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      transition: background .2s, transform .2s, box-shadow .2s, color .2s, border-color .2s;
+    }
+    .btn-lg { padding: 14px 32px; font-size: 14px; }
+
+    .btn-primary {
+      background: var(--accent);
+      color: #fff;
+    }
+    .btn-primary:hover {
+      background: var(--accent-hov);
+      transform: translateY(-1px);
+      box-shadow: 0 4px 16px rgba(232,104,40,.3);
+    }
+
+    .btn-ghost {
+      background: transparent;
+      color: var(--bahia-dark);
+      border: 2px solid var(--bahia-dark);
+    }
+    .btn-ghost:hover { background: var(--bahia-dark); color: #fff; }
+
+    /* Ghost blanco para usar sobre fondos oscuros (hero) */
+    .btn-ghost-white {
+      background: transparent;
+      color: #fff;
+      border: 2px solid rgba(255,255,255,0.7);
+    }
+    .btn-ghost-white:hover { background: rgba(255,255,255,0.15); border-color: #fff; }
+
+    .btn-navy { background: var(--bahia); color: #fff; }
+    .btn-navy:hover { background: var(--bahia-dark); transform: translateY(-1px); }
+
+    /* ── LANG TOGGLE ── */
+    .lang-btn {
+      background: transparent;
+      border: 1px solid var(--line);
+      border-radius: 2px;
+      padding: 5px 13px;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      color: var(--soft);
+      cursor: pointer;
+      font-family: 'Open Sans', sans-serif;
+      transition: border-color .2s, color .2s;
+    }
+    .lang-btn:hover { border-color: var(--bahia); color: var(--bahia); }
+
+    /* ── NAV ── */
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 200;
+      height: 68px;
+      display: flex;
+      align-items: center;
+      background: rgba(255,255,255,.93);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--line);
+    }
+
+    .nav-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 32px;
+      width: 100%;
+    }
+
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+    }
+    .nav-logo-text {
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--bahia);
+      letter-spacing: -.01em;
+      line-height: 1.2;
+    }
+    .nav-logo-text em { font-style: normal; color: var(--accent); }
+    .nav-logo-img { mix-blend-mode: multiply; }
+    nav { isolation: isolate; }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 26px;
+      list-style: none;
+    }
+    .nav-links a {
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--soft);
+      text-decoration: none;
+      transition: color .2s;
+    }
+    .nav-links a:hover { color: var(--bahia); }
+
+    .nav-right {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .nav-v2a {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--muted);
+      text-decoration: none;
+      letter-spacing: .07em;
+      text-transform: uppercase;
+      transition: color .2s;
+    }
+    .nav-v2a:hover { color: var(--bahia); }
+
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 4px;
+    }
+    .hamburger span {
+      display: block;
+      width: 22px;
+      height: 2px;
+      background: var(--bahia);
+      border-radius: 2px;
+      transition: all .25s;
+    }
+
+    .mobile-nav {
+      display: none;
+      position: fixed;
+      inset: 68px 0 0;
+      background: var(--white);
+      z-index: 199;
+      flex-direction: column;
+      padding: 16px 32px 32px;
+      border-top: 1px solid var(--line);
+      overflow-y: auto;
+    }
+    .mobile-nav.open { display: flex; }
+    .mobile-nav a {
+      font-size: 16px;
+      font-weight: 500;
+      color: var(--bahia-dark);
+      text-decoration: none;
+      padding: 14px 0;
+      border-bottom: 1px solid var(--line-soft);
+      transition: color .2s;
+    }
+    .mobile-nav a:hover { color: var(--accent); }
+    .mobile-nav .btn { margin-top: 20px; justify-content: center; width: 100%; }
+
+    /* ── TOP BAR (V2A style) ── */
+    body::before {
+      content: '';
+      display: block;
+      height: 5px;
+      background: linear-gradient(90deg, var(--bahia-dark) 60%, var(--accent) 100%);
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 999;
+    }
+    nav { top: 5px; }
+
+    /* ── HERO ── */
+    .hero {
+      padding: 100px 0 90px;
+      background:
+        linear-gradient(135deg, rgba(18,41,90,0.96) 0%, rgba(18,41,90,0.90) 50%, rgba(29,66,137,0.93) 100%),
+        url('https://images.unsplash.com/photo-1552664730-d307ca884978?w=1600&q=80') center/cover no-repeat;
+      color: #fff;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 72px;
+      align-items: center;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 5px 14px;
+      background: rgba(255,255,255,0.12);
+      border: 1px solid rgba(255,255,255,0.3);
+      border-radius: 2px;
+      font-size: 11px;
+      font-weight: 700;
+      color: #fff;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      margin-bottom: 24px;
+    }
+    .hero-badge a {
+      color: var(--celeste);
+      text-decoration: underline;
+      text-underline-offset: 2px;
+      transition: color .2s;
+    }
+    .hero-badge a:hover { color: #fff; }
+
+    .hero h1 {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: clamp(36px, 5.5vw, 64px);
+      font-weight: 800;
+      line-height: 1.08;
+      letter-spacing: -.01em;
+      color: #fff;
+      margin-bottom: 24px;
+    }
+    .hero h1 em { font-style: italic; color: var(--celeste); }
+
+    .hero-sub {
+      font-size: 17px;
+      color: rgba(255,255,255,0.82);
+      line-height: 1.7;
+      max-width: 520px;
+      margin-bottom: 36px;
+    }
+
+    .hero-actions { display: flex; gap: 12px; flex-wrap: wrap; }
+
+    .hero-stats {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-top: 56px;
+    }
+
+    .stat-card {
+      background: rgba(255,255,255,0.1);
+      border: 1px solid rgba(255,255,255,0.2);
+      border-radius: 2px;
+      padding: 20px 22px;
+    }
+    .stat-card .num {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: 30px;
+      font-weight: 700;
+      color: #fff;
+      line-height: 1;
+      margin-bottom: 4px;
+    }
+    .stat-card .num sup { font-size: 16px; color: var(--celeste); }
+    .stat-card .lbl { font-size: 13px; color: rgba(255,255,255,0.7); font-weight: 500; }
+
+    /* Hero visual cards */
+    .hero-visual { display: grid; gap: 12px; }
+
+    .hero-card {
+      border-radius: 10px;
+      padding: 28px;
+      text-decoration: none;
+      display: block;
+      transition: transform .18s, box-shadow .18s;
+    }
+    .hero-card:hover { transform: translateY(-3px); box-shadow: 0 12px 32px rgba(0,0,0,.18); }
+    .hero-card.blue  { background: linear-gradient(135deg, var(--bahia) 0%, #1a5ba8 100%); }
+    .hero-card.navy  { background: linear-gradient(135deg, #12295a 0%, #1D4289 100%); }
+    .hero-card.coral { background: var(--accent-bg); }
+
+    .hc-label {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+    }
+    .hero-card.blue .hc-label  { color: rgba(255,255,255,.65); }
+    .hero-card.navy .hc-label  { color: rgba(255,255,255,.65); }
+    .hero-card.coral .hc-label { color: var(--accent); }
+
+    .hc-title {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: 19px;
+      font-weight: 600;
+      line-height: 1.3;
+      margin-bottom: 14px;
+    }
+    .hero-card.blue .hc-title  { color: #fff; }
+    .hero-card.navy .hc-title  { color: #fff; }
+    .hero-card.coral .hc-title { color: var(--bahia-dark); }
+
+    .hc-chips { display: flex; flex-wrap: wrap; gap: 7px; }
+    .hc-chip {
+      padding: 4px 11px;
+      border-radius: 4px;
+      font-size: 12px;
+      font-weight: 600;
+    }
+    .hero-card.blue .hc-chip  { background: rgba(255,255,255,.15); color: rgba(255,255,255,.9); }
+    .hero-card.navy .hc-chip  { background: rgba(255,255,255,.15); color: rgba(255,255,255,.9); }
+    .hero-card.coral .hc-chip { background: rgba(255,141,109,.15); color: #B34826; }
+
+    /* ── HEXAGON ICON (V2A style) ── */
+    .hex-icon {
+      width: 64px;
+      height: 64px;
+      background: var(--celeste);
+      clip-path: polygon(50% 0%, 93% 25%, 93% 75%, 50% 100%, 7% 75%, 7% 25%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      flex-shrink: 0;
+      margin-bottom: 16px;
+    }
+    .hex-icon svg { width: 28px; height: 28px; }
+
+    /* ── ABOUT ── */
+    .about { background: var(--paper); }
+
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: start;
+    }
+
+    .about-text p {
+      color: var(--gray-700);
+      line-height: 1.75;
+      margin-bottom: 16px;
+    }
+    .about-text p:last-of-type { margin-bottom: 0; }
+
+    .about-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      margin-top: 24px;
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--bahia);
+      text-decoration: none;
+      border-bottom: 1.5px solid var(--celeste);
+      padding-bottom: 2px;
+      transition: color .2s, border-color .2s;
+    }
+    .about-link:hover { color: var(--accent); border-color: var(--accent); }
+
+    .focus-areas { margin: 20px 0 24px; }
+    .focus-label { font-size: 11px; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); margin-bottom: 10px; }
+    .focus-chips { display: flex; flex-wrap: wrap; gap: 8px; }
+    .focus-chip {
+      font-size: 13px; font-weight: 500;
+      color: var(--bahia-dark);
+      background: var(--celeste-bg);
+      border: 1px solid rgba(65,182,230,.25);
+      border-radius: 999px;
+      padding: 4px 14px;
+    }
+
+    .model-box {
+      background: var(--paper);
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 32px;
+    }
+    .model-box .label { margin-bottom: 24px; }
+
+    .model-step {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      padding: 16px;
+      border-radius: 8px;
+      transition: background .2s;
+    }
+    .model-step:hover { background: var(--white); }
+    .model-step + .model-step { margin-top: 4px; }
+
+    .step-icon {
+      width: 40px; height: 40px;
+      border-radius: 8px;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+    }
+    .step-icon.blue  { background: var(--celeste-bg);          color: var(--celeste); }
+    .step-icon.coral { background: var(--accent-bg);            color: var(--accent);  }
+    .step-icon.navy  { background: rgba(29,66,137,.08);         color: var(--bahia);   }
+
+    .step-text h4 { font-size: 15px; font-weight: 600; color: var(--bahia-dark); margin-bottom: 4px; }
+    .step-text p  { font-size: 13px; color: var(--gray-500); line-height: 1.55; }
+
+    /* ── PROGRAMS STRIP (below hero) ── */
+    .programs-strip {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin-top: 40px;
+    }
+    .prog-pill {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      background: var(--white);
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 18px 20px;
+      text-decoration: none;
+      box-shadow: 0 2px 8px rgba(29,66,137,.05);
+      transition: box-shadow .2s, border-color .2s, transform .18s;
+    }
+    .prog-pill:hover {
+      border-color: var(--celeste);
+      box-shadow: 0 6px 20px rgba(29,66,137,.10);
+      transform: translateY(-2px);
+    }
+    .prog-pill-icon { width: 22px; height: 22px; flex-shrink: 0; color: var(--bahia); }
+    .prog-pill-name {
+      font-weight: 700;
+      font-size: 14px;
+      color: var(--bahia-dark);
+      margin-bottom: 2px;
+    }
+    .prog-pill-desc { font-size: 12px; color: var(--gray-500); }
+
+    /* ── DIAGNOSTIC CTA ── */
+    .diag-cta { background: var(--celeste-bg); padding: 64px 0; }
+    .diag-cta-inner {
+      display: flex;
+      align-items: center;
+      gap: 28px;
+      background: var(--white);
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      padding: 40px 44px;
+      box-shadow: 0 4px 20px rgba(29,66,137,.07);
+    }
+    .diag-cta-icon { width: 48px; height: 48px; flex-shrink: 0; color: var(--bahia); }
+    .diag-cta-body { flex: 1; }
+    .diag-cta-body h3 {
+      font-family: 'Source Serif 4', Georgia, serif;
+      font-size: clamp(18px, 2.2vw, 24px);
+      font-weight: 600;
+      color: var(--bahia-dark);
+      margin-bottom: 8px;
+      line-height: 1.2;
+    }
+    .diag-cta-body p { font-size: 15px; color: var(--gray-700); max-width: 560px; }
+    .diag-btn { white-space: nowrap; flex-shrink: 0; }
+
+    /* ── IMPACT ── */
+    .impact { background: var(--bahia-dark); padding: 80px 0; }
+    .impact .label    { color: var(--celeste); }
+    .impact h2.title  { color: #fff; }
+    .impact .subtitle { color: rgba(255,255,255,.62); }
+
+    .impact-numbers {
+      display: grid;
+      grid-template-columns: repeat(4,1fr);
+      gap: 2px;
+      background: rgba(255,255,255,.08);
+      border-radius: 12px;
+      overflow: hidden;
+      margin: 48px 0 64px;
+    }
+    .impact-num { background: var(--bahia-dark); padding: 40px 24px; text-align: center; }
+    .impact-num .big {
+      font-family: 'Source Serif 4', Georgia, serif;
+      font-size: clamp(38px,5vw,54px);
+      font-weight: 700;
+      color: var(--celeste);
+      line-height: 1;
+      margin-bottom: 8px;
+    }
+    .impact-num .big sup { font-size: 22px; vertical-align: super; }
+    .impact-num .lbl { font-size: 14px; color: rgba(255,255,255,.62); font-weight: 500; }
+
+    .partners-label {
+      font-size: 11px; font-weight: 600; letter-spacing: .18em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,.38);
+      text-align: center; margin-bottom: 24px;
+    }
+    .partners-wrap { display: flex; flex-wrap: wrap; gap: 16px; justify-content: center; align-items: center; }
+    .partner-chip {
+      background: #fff;
+      border: 1px solid #e5e7eb;
+      border-radius: 8px;
+      padding: 10px 18px;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .partner-chip img { display: block; max-height: 48px; width: auto; object-fit: contain; }
+
+    /* ── PROGRAMS ── */
+    .programs { background: var(--paper); }
+
+    .programs-grid {
+      display: grid;
+      grid-template-columns: repeat(3,1fr);
+      gap: 24px;
+    }
+
+    .prog-card {
+      background: var(--white);
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      padding: 36px 30px;
+      position: relative;
+      transition: box-shadow .2s, transform .2s;
+    }
+    .prog-card:hover {
+      box-shadow: 0 12px 36px rgba(29,66,137,.09);
+      transform: translateY(-2px);
+    }
+    .prog-card.featured { border-color: var(--celeste); }
+
+    .new-badge {
+      position: absolute; top: 16px; right: 16px;
+      background: var(--accent); color: #fff;
+      font-size: 10px; font-weight: 700;
+      letter-spacing: .1em; text-transform: uppercase;
+      padding: 4px 10px; border-radius: 999px;
+    }
+
+    .prog-icon {
+      width: 48px; height: 48px; border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+      margin-bottom: 20px;
+    }
+    .prog-icon.fellows  { background: var(--celeste-bg);        color: var(--celeste); }
+    .prog-icon.projects { background: rgba(29,66,137,.08);      color: var(--bahia);   }
+    .prog-icon.partners { background: var(--accent-bg);         color: var(--accent);  }
+
+    .prog-sub {
+      font-size: 11px; font-weight: 600;
+      letter-spacing: .14em; text-transform: uppercase;
+      color: var(--celeste); margin-bottom: 10px;
+    }
+
+    .prog-card h3 {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: 21px; font-weight: 600;
+      color: var(--bahia-dark);
+      margin-bottom: 12px;
+      letter-spacing: -.01em; line-height: 1.25;
+    }
+
+    .prog-card p { font-size: 14px; color: var(--gray-500); line-height: 1.65; margin-bottom: 22px; }
+
+    .prog-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 26px; }
+    .tag {
+      background: var(--line-soft); border: 1px solid var(--line);
+      border-radius: 4px; padding: 4px 10px;
+      font-size: 12px; font-weight: 500; color: var(--bahia);
+    }
+
+    .prog-link {
+      display: inline-flex; align-items: center; gap: 5px;
+      font-size: 14px; font-weight: 600;
+      color: var(--bahia); text-decoration: none;
+      transition: color .2s, gap .2s;
+    }
+    .prog-link:hover { color: var(--accent); gap: 9px; }
+
+    /* fellows timeline */
+    .timeline {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      margin: 28px 0 24px;
+    }
+    .tl-item {
+      display: flex;
+      gap: 12px;
+      padding: 10px 0;
+      border-left: 2px solid var(--line);
+      padding-left: 16px;
+      position: relative;
+    }
+    .tl-item::before {
+      content: '';
+      position: absolute;
+      left: -5px; top: 16px;
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      background: var(--celeste);
+    }
+    .tl-month { font-size: 11px; font-weight: 700; color: var(--celeste); min-width: 52px; text-transform: uppercase; letter-spacing: .06em; padding-top: 1px; }
+    .tl-desc  { font-size: 13px; color: var(--gray-500); line-height: 1.45; }
+
+    /* ── SERVICES ── */
+    .services { background: var(--white); }
+
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(3,1fr);
+      gap: 2px;
+      background: var(--line);
+      border-radius: 12px;
+      overflow: hidden;
+    }
+
+    .svc-item { background: var(--white); padding: 30px 26px; transition: background .2s, box-shadow .2s; }
+    .svc-item:hover { background: var(--paper); box-shadow: 0 4px 20px rgba(0,0,0,.07); }
+
+    /* Hexagon icon for services — V2A style */
+    .svc-icon {
+      width: 52px;
+      height: 52px;
+      background: var(--celeste);
+      clip-path: polygon(50% 0%, 93% 25%, 93% 75%, 50% 100%, 7% 75%, 7% 25%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 16px;
+      color: #fff;
+      padding: 12px;
+    }
+    .svc-item h4 { font-size: 15px; font-weight: 700; color: var(--bahia-dark); margin-bottom: 10px; }
+    .svc-item ul { list-style: none; display: flex; flex-direction: column; gap: 5px; }
+    .svc-item ul li { font-size: 13px; color: var(--gray-500); padding-left: 14px; position: relative; }
+    .svc-item ul li::before { content: '›'; position: absolute; left: 0; color: var(--celeste); font-weight: 700; }
+
+    /* ── PARTICIPATE ── */
+    .participate {
+      background: var(--accent);
+    }
+    .participate .section-head h2.title { color: #fff; }
+    .participate .section-head h2.title::after { background: rgba(255,255,255,0.5); }
+    .participate .label { color: rgba(255,255,255,0.7); }
+
+    .participate-grid {
+      display: grid;
+      grid-template-columns: repeat(3,1fr);
+      gap: 24px;
+    }
+
+    .part-card {
+      background: var(--white);
+      border: none;
+      border-radius: 2px;
+      display: flex; flex-direction: column; align-items: center;
+      padding: 40px 28px;
+      text-align: center;
+      transition: box-shadow .2s, transform .2s;
+    }
+    .part-card:hover {
+      box-shadow: 0 12px 36px rgba(29,66,137,.09);
+      transform: translateY(-2px);
+    }
+
+    .part-icon { width: 40px; height: 40px; margin-bottom: 16px; display: block; color: var(--bahia); }
+    .part-card h3 {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: 20px; font-weight: 600;
+      color: var(--bahia-dark); margin-bottom: 12px;
+    }
+    .part-card p { font-size: 14px; color: var(--gray-500); line-height: 1.65; margin-bottom: 28px; flex: 1; }
+    .part-card .btn { margin-top: auto; }
+
+    /* ── CONTACT ── */
+    .contact { background: var(--white); }
+
+    .contact-inner {
+      display: grid;
+      grid-template-columns: 0.85fr 1.15fr;
+      gap: 80px;
+      align-items: start;
+    }
+
+    .contact-lead > p {
+      color: var(--gray-500);
+      line-height: 1.7;
+      margin-bottom: 32px;
+      font-size: 16px;
+    }
+
+    .contact-avatar {
+      width: 64px; height: 64px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--bahia) 0%, var(--celeste) 100%);
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Source Serif 4', Georgia, serif;
+      font-size: 22px; font-weight: 600;
+      color: #fff; flex-shrink: 0;
+    }
+
+    .contact-person-card {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      background: var(--paper);
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      padding: 20px;
+      margin-bottom: 16px;
+    }
+    .contact-person-name {
+      font-family: 'Source Serif 4', Georgia, serif;
+      font-size: 18px; font-weight: 600;
+      color: var(--bahia-dark); margin-bottom: 3px;
+    }
+    .contact-person-role { font-size: 13px; color: var(--gray-500); }
+
+    .contact-meta { display: flex; flex-direction: column; gap: 10px; }
+    .contact-meta-row {
+      display: flex; align-items: center; gap: 10px;
+      font-size: 14px; color: var(--gray-500);
+    }
+    .contact-meta-icon {
+      width: 32px; height: 32px;
+      background: var(--celeste-bg); border-radius: 6px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 14px; flex-shrink: 0;
+    }
+    .contact-meta-row a { color: var(--bahia); text-decoration: none; transition: color .2s; }
+    .contact-meta-row a:hover { color: var(--accent); }
+
+    /* Form card */
+    .form-card {
+      background: var(--paper);
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 36px;
+    }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .form-group { margin-bottom: 18px; }
+    .form-group label {
+      display: block; font-size: 13px; font-weight: 600;
+      color: var(--bahia-dark); margin-bottom: 6px;
+    }
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+      width: 100%; padding: 11px 14px;
+      border: 1px solid var(--line); border-radius: 4px;
+      font-size: 14px; font-family: 'Inter', sans-serif;
+      color: var(--gray-900); background: var(--white);
+      outline: none; transition: border-color .2s, box-shadow .2s;
+      appearance: none;
+    }
+    .form-group input:focus,
+    .form-group select:focus,
+    .form-group textarea:focus {
+      border-color: var(--celeste);
+      box-shadow: 0 0 0 3px rgba(65,182,230,.15);
+    }
+    .form-group textarea { resize: vertical; min-height: 110px; }
+
+    /* ── FOOTER ── */
+    footer { background: var(--bahia-dark); color: #fff; padding: 64px 0 36px; }
+
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 1.5fr 1fr 1fr;
+      gap: 64px;
+      padding-bottom: 48px;
+      border-bottom: 1px solid rgba(255,255,255,.10);
+      margin-bottom: 28px;
+    }
+
+    .footer-brand-name {
+      display: flex; align-items: center; gap: 10px;
+      font-size: 15px; font-weight: 700; color: #fff;
+      margin-bottom: 16px;
+    }
+    .footer-brand p { font-size: 14px; color: rgba(255,255,255,.52); line-height: 1.7; max-width: 280px; }
+
+    .footer-v2a {
+      display: inline-flex; align-items: center; gap: 6px;
+      margin-top: 20px; font-size: 13px; font-weight: 600;
+      color: var(--celeste); text-decoration: none;
+      transition: color .2s;
+    }
+    .footer-v2a:hover { color: #fff; }
+
+    footer h5 {
+      font-size: 11px; font-weight: 600;
+      letter-spacing: .14em; text-transform: uppercase;
+      color: rgba(255,255,255,.38); margin-bottom: 16px;
+    }
+    .footer-links { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+    .footer-links a { font-size: 14px; color: rgba(255,255,255,.62); text-decoration: none; transition: color .2s; }
+    .footer-links a:hover { color: #fff; }
+
+    .footer-bottom {
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .footer-bottom p   { font-size: 13px; color: rgba(255,255,255,.32); }
+    .footer-bottom a   { color: rgba(255,255,255,.32); text-decoration: none; transition: color .2s; }
+    .footer-bottom a:hover { color: rgba(255,255,255,.7); }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 1024px) {
+      .hero-grid        { grid-template-columns: 1fr; }
+      .hero-visual      { display: none; }
+      .about-grid       { grid-template-columns: 1fr; gap: 48px; }
+      .programs-grid    { grid-template-columns: 1fr 1fr; }
+      .services-grid    { grid-template-columns: 1fr 1fr; }
+      .programs-strip   { gap: 8px; }
+      .prog-pill        { padding: 12px 10px; gap: 8px; }
+      .prog-pill-desc   { display: none; }
+      .prog-pill-name   { font-size: 12px; }
+      .participate-grid { grid-template-columns: 1fr 1fr; }
+      .contact-inner    { grid-template-columns: 1fr; gap: 40px; }
+      .impact-numbers   { grid-template-columns: 1fr 1fr; }
+      .footer-grid      { grid-template-columns: 1fr 1fr; gap: 40px; }
+    }
+
+    @media (max-width: 768px) {
+      .container { padding: 0 20px; }
+      section    { padding: 72px 0; }
+      .hero      { padding: 64px 0 56px; }
+      .nav-inner        { gap: 12px; }
+      .nav-logo-text    { font-size: 13px; }
+      .nav-logo-img     { height: 40px; width: auto; flex-shrink: 0; mix-blend-mode: normal; }
+
+      .nav-links, .nav-v2a { display: none; }
+      .nav-right .btn      { display: none; }
+      .hamburger           { display: flex; }
+
+      .programs-grid    { grid-template-columns: 1fr; }
+      .services-grid    { grid-template-columns: 1fr; }
+      .participate-grid { grid-template-columns: 1fr; }
+      .footer-grid      { grid-template-columns: 1fr; gap: 32px; }
+      .footer-bottom    { flex-direction: column; gap: 10px; text-align: center; }
+      .diag-cta-inner   { flex-direction: column; padding: 28px 24px; text-align: center; }
+      .diag-btn         { width: 100%; text-align: center; }
+      .impact-numbers   { grid-template-columns: 1fr 1fr; }
+      .form-card        { padding: 24px 20px; }
+      .form-row         { grid-template-columns: 1fr; }
+    }
   </style>
 </head>
 <body>
 
-<header class="app-header">
-  <div class="header-inner">
-    <div class="header-logo" id="cfg-header-logo"></div>
-    <h1 class="header-title">Diagnóstico de Madurez Digital y AI</h1>
-  </div>
-  <div class="progress-wrap" id="progress-wrap">
-    <div class="progress-track"><div class="progress-fill" id="progress-fill"></div></div>
-    <div class="progress-text" id="progress-text"></div>
-  </div>
-</header>
+<!-- ══════════════════════════════════
+     NAV
+══════════════════════════════════ -->
+<nav>
+  <div class="container">
+    <div class="nav-inner">
 
-<main class="main">
+      <a href="#" class="nav-logo">
+        <img src="logo-v2.JPG" alt="Fundación V2A" height="52" class="nav-logo-img"
+             onerror="this.style.display='none';" />
+        <span class="nav-logo-text">Fundación <em>V2A</em></span>
+      </a>
 
-  <!-- WELCOME -->
-  <div id="screen-welcome" class="screen active">
-    <div class="welcome-card">
-      <div class="welcome-emoji" id="cfg-welcome-emoji"></div>
-      <h2 id="cfg-welcome-title"></h2>
-      <p id="cfg-welcome-subtitle"></p>
-      <ul class="dim-list" id="cfg-dim-list"></ul>
-      <p class="welcome-meta" id="cfg-welcome-meta"></p>
-      <div class="org-input-wrap">
-        <label class="org-input-label" id="cfg-org-label" for="org-name-input"></label>
-        <input type="text" id="org-name-input" class="org-input" maxlength="60" autocomplete="organization" />
+      <ul class="nav-links">
+        <li><a href="#nosotros"  data-es>Nosotros</a>  <a href="#nosotros"  data-en>About</a></li>
+        <li><a href="#programas" data-es>Programas</a> <a href="#programas" data-en>Programs</a></li>
+        <li><a href="#impacto"   data-es>Impacto</a>   <a href="#impacto"   data-en>Impact</a></li>
+        <li><a href="#servicios" data-es>Servicios</a>  <a href="#servicios" data-en>Services</a></li>
+        <li><a href="#contacto"  data-es>Contacto</a>  <a href="#contacto"  data-en>Contact</a></li>
+      </ul>
+
+      <div class="nav-right">
+        <a href="https://v2aconsulting.com" target="_blank" rel="noopener" class="nav-v2a" data-es>V2A Consulting ↗</a>
+        <a href="https://v2aconsulting.com" target="_blank" rel="noopener" class="nav-v2a" data-en>V2A Consulting ↗</a>
+        <a href="#contacto" class="btn btn-primary" data-es>Solicitar apoyo</a>
+        <a href="#contacto" class="btn btn-primary" data-en>Get support</a>
+        <button class="lang-btn" id="langBtn" aria-label="Switch language">EN</button>
+        <button class="hamburger" id="hamburger" aria-label="Open menu" aria-expanded="false">
+          <span></span><span></span><span></span>
+        </button>
       </div>
-      <button class="btn btn-primary" id="cfg-start-btn" onclick="startAssessment()"></button>
+
     </div>
   </div>
+</nav>
 
-  <!-- ASSESSMENT -->
-  <div id="screen-assessment" class="screen">
-    <div class="step-header">
-      <div class="step-pill">
-        <span id="step-icon">📋</span>
-        <span id="step-counter"></span>
-      </div>
-      <h2 id="step-title"></h2>
-      <p class="step-hint" id="cfg-step-hint"></p>
-    </div>
-    <div class="levels-grid" id="levels-grid"></div>
-    <div class="step-nav">
-      <button class="btn btn-ghost" id="btn-back" onclick="goBack()"></button>
-      <button class="btn-na" id="btn-na" onclick="selectNA()">No aplica</button>
-      <button class="btn btn-primary" id="btn-next" onclick="goNext()" disabled></button>
-    </div>
-  </div>
-
-  <!-- RESULTS -->
-  <div id="screen-results" class="screen">
-    <div id="results-section">
-      <div class="score-hero">
-        <div class="score-eyebrow" id="cfg-score-eyebrow"></div>
-        <div>
-          <span class="score-number" id="overall-score">0.0</span>
-          <span class="score-denom"> / 4.0</span>
-        </div>
-        <div class="score-stage" id="stage-label">—</div>
-      </div>
-      <div class="chart-card">
-        <div class="card-title" id="cfg-chart-title"></div>
-        <div class="chart-inner"><canvas id="radar-chart"></canvas></div>
-      </div>
-      <div class="section-heading" id="cfg-dim-heading"></div>
-      <div id="dimension-results"></div>
-      <div class="callout-block"><p id="cfg-quote"></p></div>
-    </div>
-
-    <div class="actions-section">
-      <div id="form-block">
-        <div class="actions-heading" id="cfg-actions-heading"></div>
-        <div class="question-block">
-          <label class="question-label" for="q1-input">1. ¿Qué tarea te consume más tiempo?</label>
-          <textarea id="q1-input" class="question-textarea" rows="3"></textarea>
-        </div>
-        <div class="question-block">
-          <label class="question-label" for="q2-input">2. Si tuvieras una varita mágica para eliminar una tarea de tu día a día, ¿cuál sería?</label>
-          <textarea id="q2-input" class="question-textarea" rows="3"></textarea>
-        </div>
-        <span class="email-section-label">Recibe tus resultados por correo</span>
-        <div class="email-row">
-          <input type="text" id="name-input" autocomplete="name" placeholder="Tu nombre completo" />
-          <input type="email" id="email-input" autocomplete="email" />
-          <button class="btn btn-secondary" id="btn-email" onclick="sendEmail()"></button>
-        </div>
-      </div>
-      <div id="thank-you-block" style="display:none;">
-        <div class="thankyou-card">
-          <div class="thankyou-icon">✅</div>
-          <h3 class="thankyou-title">¡Gracias por participar!</h3>
-          <p class="thankyou-msg">Tu reporte de madurez digital fue enviado a tu correo electrónico. Revisa tu bandeja en los próximos minutos.</p>
-          <button class="btn btn-primary" onclick="restartAssessment()">🔄 Nuevo diagnóstico</button>
-        </div>
-      </div>
-      <button class="btn btn-ghost" id="cfg-restart-btn" onclick="restartAssessment()" style="width:100%;margin-top:14px;"></button>
-    </div>
-    <div class="branding-footer" id="cfg-branding"></div>
-  </div>
-
-</main>
-
-<div class="toast" id="toast"></div>
-<div class="loading-overlay" id="loading-overlay">
-  <div class="spinner"></div>
-  <div id="loading-text">Generando PDF…</div>
+<!-- Mobile nav -->
+<div class="mobile-nav" id="mobileNav">
+  <a href="#nosotros"  class="mob-link" data-es>Nosotros</a>
+  <a href="#nosotros"  class="mob-link" data-en>About</a>
+  <a href="#programas" class="mob-link" data-es>Programas</a>
+  <a href="#programas" class="mob-link" data-en>Programs</a>
+  <a href="#impacto"   class="mob-link" data-es>Impacto</a>
+  <a href="#impacto"   class="mob-link" data-en>Impact</a>
+  <a href="#servicios" class="mob-link" data-es>Servicios</a>
+  <a href="#servicios" class="mob-link" data-en>Services</a>
+  <a href="#contacto"  class="mob-link" data-es>Contacto</a>
+  <a href="#contacto"  class="mob-link" data-en>Contact</a>
+  <a href="https://v2aconsulting.com" target="_blank" rel="noopener" class="mob-link">V2A Consulting ↗</a>
+  <a href="#contacto" class="btn btn-primary" data-es>Solicitar apoyo</a>
+  <a href="#contacto" class="btn btn-primary" data-en>Get support</a>
 </div>
 
-<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 
-<script>
-// ════════════════════════════════════════════════════════════════
-//  ✏️  CONFIGURACIÓN — edita aquí todos los textos de la app
-// ════════════════════════════════════════════════════════════════
-const CONFIG = {
+<!-- ══════════════════════════════════
+     HERO
+══════════════════════════════════ -->
+<section class="hero">
+  <div class="container">
+    <div class="hero-grid">
 
-  // ── Identidad ────────────────────────────────────────────────
-  brand:    'Fundación V2A',
-  workshop: 'AI for Nonprofits Workshop 2026',
-
-  // ── Pantalla de bienvenida ───────────────────────────────────
-  welcomeEmoji:    '🔍',
-  welcomeTitle:    '¿Qué tan digital y preparada para AI está tu organización?',
-  welcomeSubtitle: 'Este diagnóstico evalúa el nivel de madurez digital y de inteligencia artificial de tu organización sin fines de lucro en 6 dimensiones clave.',
-  welcomeMeta:     '⏱ Menos de 5 minutos · Resultados inmediatos · Sin registro',
-  orgLabel:        'Nombre de tu organización',
-  orgPlaceholder:  'Ej. Fundación Esperanza',
-  startBtn:        'Comenzar diagnóstico →',
-
-  // ── Navegación del diagnóstico ───────────────────────────────
-  stepHint:    'Selecciona el nivel que mejor describe a tu organización hoy',
-  btnBack0:    '← Inicio',
-  btnBackN:    '← Atrás',
-  btnNext:     'Siguiente →',
-  btnFinish:   'Ver resultados →',
-
-  // ── Pantalla de resultados ───────────────────────────────────
-  resultsEyebrow:  'Tu nivel de madurez digital y AI',
-  chartTitle:      '📊 Resultados de Madurez Digital',
-  dimSectionTitle: '📋 Detalle por dimensión',
-  todayLabel:      'Dónde estás hoy',
-  nextStepLabel:   'Próximo paso',
-  maxLevelMsg:     'Ya alcanzaste el nivel máximo en esta dimensión. ¡Excelente trabajo!',
-  footerQuote:     '"No necesitas transformar toda tu organización hoy. Empieza con un caso de uso que genere valor."',
-
-  // ── Etiquetas de etapa (avg debe ser MENOR que max para aplicar) ──
-  stages: [
-    { max: 2,   label: 'Etapa inicial' },
-    { max: 3,   label: 'En desarrollo' },
-    { max: 3.5, label: 'Avanzando' },
-    { max: 5,   label: 'Organización inteligente' },
-  ],
-
-  // ── Acciones / botones ───────────────────────────────────────
-  actionsTitle: '¿Cuáles son tus necesidades?',
-  btnPDF:       '⬇️ Descargar PDF',
-  orText:       'o recíbelo por correo electrónico',
-  emailPH:      'tu@correo.com',
-  btnEmail:     '✉️ Enviar por email',
-  btnRestart:   '🔄 Reiniciar diagnóstico',
-
-  // ── Textos del PDF ───────────────────────────────────────────
-  pdfTitle:      'Diagnóstico de Madurez Digital y AI',
-  pdfEyebrow:    'TU NIVEL DE MADUREZ',
-  pdfChartTitle: 'Radar de Madurez Digital',
-  pdfDimTitle:   'Detalle por dimensión',
-  pdfTodayLabel: 'DÓNDE ESTÁS HOY',
-  pdfNextLabel:  'PRÓXIMO PASO',
-  pdfMaxLevel:   'Ya alcanzaste el nivel máximo en esta dimensión.',
-
-  // ════════════════════════════════════════════════════════════
-  //  ✏️  DIMENSIONES — edita títulos, niveles y descriptores
-  // ════════════════════════════════════════════════════════════
-  dimensions: [
-    {
-      id: 'programas', icon: '🎯', title: 'Desarrollo de programas',
-      levels: [
-        { name: 'Manual',      desc: 'Diseño y ejecución no estandarizados, info de beneficiarios dispersa.',
-          detail: 'Tus programas se planifican y ejecutan sin procesos estándar ni sistemas digitales.',
-          ejemplos: ['Listas de beneficiarios en papel o Excel sin actualizar', 'Cada staff hace seguimiento a su manera'] },
-        { name: 'Digital',     desc: 'Herramientas básicas para seguimiento, documentación parcial.',
-          detail: 'Usas herramientas digitales básicas pero aún hay silos de información.',
-          ejemplos: ['Google Forms para registro de participantes', 'Carpetas compartidas en Drive'] },
-        { name: 'Integrado',   desc: 'Sistemas para gestión de programas, datos organizados y accesibles.',
-          detail: 'Tienes sistemas conectados que permiten ver el estado de tus programas en tiempo real.',
-          ejemplos: ['CRM o plataforma de gestión de casos', 'Integración y manejo automatizado de inventario o activos'] },
-        { name: 'Inteligente', desc: 'Predicción de necesidades, personalización de servicios, simulación de resultados.',
-          detail: 'AI y datos avanzados guían el diseño y ajuste de tus programas.',
-          ejemplos: ['Modelos predictivos de necesidades de beneficiarios y simulación de resultados', 'Personalización de servicios con AI'] },
-      ]
-    },
-    {
-      id: 'impacto', icon: '📊', title: 'Medición de impacto',
-      levels: [
-        { name: 'Manual',      desc: 'Datos no estructurados, reportes esporádicos.',
-          detail: 'La medición de impacto se genera cuando la solicitan.',
-          ejemplos: ['Reportes anuales escritos a mano', 'Sin indicadores definidos'] },
-        { name: 'Digital',     desc: 'Datos en Excel o herramientas básicas, reportes manuales.',
-          detail: 'Recopilas datos digitalmente pero el análisis todavía es manual.',
-          ejemplos: ['Encuestas por Google Forms', 'Dashboards básicos en Excel'] },
-        { name: 'Integrado',   desc: 'Dashboards y métricas definidas, seguimiento continuo.',
-          detail: 'Tienes un framework de métricas claro con herramientas que lo refuerzan.',
-          ejemplos: ['Dashboard en tiempo real con KPIs', 'Reuniones mensuales basadas en datos'] },
-        { name: 'Inteligente', desc: 'Modelos predictivos, identificación de patrones, automatización de reportes.',
-          detail: 'AI analiza tus datos de impacto para encontrar patrones y anticipar resultados.',
-          ejemplos: ['Análisis de correlación entre actividades y resultados', 'AI identifica qué programas producen mayor impacto y produce reportes automáticos'] },
-      ]
-    },
-    {
-      id: 'campanas', icon: '💙', title: 'Fundraising: Campañas y donantes',
-      levels: [
-        { name: 'Manual',      desc: 'Base de datos básica o inexistente, relación reactiva.',
-          detail: 'La relación con donantes es informal y no hay sistema para gestionarla.',
-          ejemplos: ['Contactos en correo personal', 'Campañas por llamadas o emails masivos sin segmentar'] },
-        { name: 'Digital',     desc: 'CRM o listas organizadas, segmentación básica.',
-          detail: 'Tienes un CRM y puedes segmentar tus comunicaciones.',
-          ejemplos: ['CRM como Salesforce Nonprofit o HubSpot', 'Emails segmentados por tipo de donante'] },
-        { name: 'Integrado',   desc: 'Automatización de campañas, estrategias segmentadas.',
-          detail: 'Tus campañas están automatizadas y basadas en el comportamiento del donante.',
-          ejemplos: ['Flujos automáticos de bienvenida y recurrencia', 'A/B testing en campañas de email'] },
-        { name: 'Inteligente', desc: 'Scoring predictivo, predicción de retención, "next best ask".',
-          detail: 'AI predice el mejor momento, monto y canal para cada donante.',
-          ejemplos: ['Scoring de probabilidad de donación', 'Recomendaciones personalizadas de monto'] },
-      ]
-    },
-    {
-      id: 'grants', icon: '📝', title: 'Fundraising: Propuestas y grants',
-      levels: [
-        { name: 'Manual',      desc: 'Proceso artesanal, sin sistema para rastrear convocatorias.',
-          detail: 'Las propuestas se escriben manualmente.',
-          ejemplos: ['Se hacen ad hoc cuando surgen oportunidades y cada propuesta es un esfuerzo aislado.', 'Gestión de cumplimiento es manual'] },
-        { name: 'Digital',     desc: 'Base de datos de convocatorias, plantillas básicas.',
-          detail: 'Tienes plantillas y un seguimiento básico de convocatorias y cumplimiento.',
-          ejemplos: ['Hoja de seguimiento en Excel y biblioteca de textos institucionales en Drive', 'Uso básico de ChatGPT o Claude para redacción de propuestas individuales'] },
-        { name: 'Integrado',   desc: 'Pipeline de grants con herramientas colaborativas.',
-          detail: 'Gestionas el ciclo completo de grants con herramientas colaborativas.',
-          ejemplos: ['Software de gestión de grants (Submittable, Fluxx)', 'Dashboard de métricas de propuestas y requerimientos de cumplimiento'] },
-        { name: 'Inteligente', desc: 'AI para identificar convocatorias, redactar y personalizar propuestas.',
-          detail: 'AI acelera la búsqueda, redacción y cumplimiento de propuestas con alta tasa de éxito.',
-          ejemplos: ['AI para identificar convocatorias afines a tu misión', 'Asistente de escritura para narrativas de impacto'] },
-      ]
-    },
-    {
-      id: 'voluntarios', icon: '🫱', title: 'Participación y gestión de voluntarios',
-      levels: [
-        { name: 'Manual',      desc: 'Asignación manual, información limitada.',
-          detail: 'La coordinación de voluntarios depende de contactos personales y hojas de cálculo.',
-          ejemplos: ['Lista de voluntarios en Excel', 'Coordinación por WhatsApp o llamadas'] },
-        { name: 'Digital',     desc: 'Registro digital básico, seguimiento limitado.',
-          detail: 'Tienes un registro digital pero la gestión sigue siendo en gran parte manual.',
-          ejemplos: ['Formulario de registro en línea', 'Base de datos básica de voluntarios'] },
-        { name: 'Integrado',   desc: 'Sistemas de gestión de voluntarios, comunicación estructurada.',
-          detail: 'Plataformas dedicadas gestionan el ciclo completo del voluntario.',
-          ejemplos: ['Plataforma como VolunteerHub o Better Impact', 'Comunicaciones automáticas y auto-gestión de voluntarios'] },
-        { name: 'Inteligente', desc: 'Matching automático voluntario-proyecto, predicción de deserción.',
-          detail: 'AI optimiza la asignación y retención de voluntarios.',
-          ejemplos: ['Matching automático por habilidades y disponibilidad', 'Alertas de voluntarios en riesgo de deserción'] },
-      ]
-    },
-    {
-      id: 'mercadeo', icon: '📣', title: 'Mercadeo y comunicaciones',
-      levels: [
-        { name: 'Manual',      desc: 'Comunicación reactiva, sin estrategia.',
-          detail: 'La comunicación es ad-hoc y no está alineada a objetivos organizacionales.',
-          ejemplos: ['Posts en redes sin calendario', 'Sin métricas de alcance o engagement'] },
-        { name: 'Digital',     desc: 'Presencia en redes, contenido básico.',
-          detail: 'Tienes presencia digital activa pero sin estrategia integrada.',
-          ejemplos: ['Cuentas activas en 1-2 redes sociales', 'Newsletter mensual básico'] },
-        { name: 'Integrado',   desc: 'Estrategia digital, uso de métricas.',
-          detail: 'Tu comunicación tiene estrategia, calendario y métricas de seguimiento.',
-          ejemplos: ['Plan de contenido trimestral', 'Reportes mensuales de alcance y conversión'] },
-        { name: 'Inteligente', desc: 'Segmentación avanzada, optimización basada en datos, generación asistida.',
-          detail: 'AI genera, personaliza y optimiza contenido para cada audiencia.',
-          ejemplos: ['Uso de AI para segmentación de audiencias y optimización de mensajes por audiencia, personalizados por segmento y canal', 'Optimización automática de tiempo de publicación'] },
-      ]
-    },
-    {
-      id: 'operaciones', icon: '⚙️', title: 'Administración y operaciones',
-      levels: [
-        { name: 'Manual',      desc: 'Procesos manuales, documentación dispersa.',
-          detail: 'Los procesos administrativos son repetitivos y consumen tiempo del equipo.',
-          ejemplos: ['Aprobaciones por email o WhatsApp', 'Sin sistema centralizado de documentos'] },
-        { name: 'Digital',     desc: 'Herramientas básicas, procesos parcialmente digitalizados.',
-          detail: 'Tienes herramientas digitales básicas pero sin integración entre ellas.',
-          ejemplos: ['Google Workspace para colaboración', 'Contabilidad en software básico'] },
-        { name: 'Integrado',   desc: 'Sistemas conectados (finanzas, HR, etc.), procesos definidos.',
-          detail: 'Tus sistemas operativos están integrados y los procesos están documentados.',
-          ejemplos: ['ERP o suite integrada (QuickBooks + HR platform)', 'Flujos de aprobación automatizados'] },
-        { name: 'Inteligente', desc: 'Automatización administrativa, análisis para toma de decisiones.',
-          detail: 'AI automatiza tareas repetitivas y provee inteligencia operativa.',
-          ejemplos: ['Automatización de informes financieros', 'Agentes de AI automatizando tareas repetitivas'] },
-      ]
-    },
-  ],
-};
-// ════════════════════════════════════════════════════════════════
-//  Fin de CONFIG — no es necesario editar debajo de esta línea
-// ════════════════════════════════════════════════════════════════
-
-// ── URL de Google Sheets (pega aquí la URL de tu Apps Script) ────
-const SHEETS_URL = 'https://script.google.com/macros/s/AKfycbxj0v-H9ILtKQurkJ3jh1gfK2lljKT20k2K_BZCPQ8mTY1tsPUBSS2QB_XSu5fjLlcL/exec';
-
-const DIMS = CONFIG.dimensions;
-
-const LEVEL_CLS  = ['n1','n2','n3','n4'];
-const LEVEL_COLS = {
-  n1: { text: '#B34826', bg: '#FEF0EB' },
-  n2: { text: '#8A5210', bg: '#FEF7EC' },
-  n3: { text: '#356010', bg: '#F0F8E6' },
-  n4: { text: '#0F4D8A', bg: '#EAF3FC' },
-};
-
-// ── Estado ───────────────────────────────────────────────────────
-let currentStep = 0;
-let selections  = new Array(DIMS.length).fill(null);
-let radarChart  = null;
-let orgName     = '';
-
-// ── Helpers ──────────────────────────────────────────────────────
-function $(id) { return document.getElementById(id); }
-
-function showScreen(id) {
-  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
-  $('screen-' + id).classList.add('active');
-  window.scrollTo({ top: 0, behavior: 'smooth' });
-}
-
-function setProgress(step) {
-  $('progress-fill').style.width = (step / DIMS.length * 100) + '%';
-  const groups = [0, 1, 2, 2, 3, 4, 5, 6][step] ?? 6;
-  $('progress-text').textContent = `${groups} de 6 completadas`;
-}
-
-function showToast(msg, ms = 3200) {
-  const t = $('toast');
-  t.textContent = msg;
-  t.classList.add('show');
-  setTimeout(() => t.classList.remove('show'), ms);
-}
-
-function showLoading(msg = 'Generando PDF…') { $('loading-text').textContent = msg; $('loading-overlay').classList.add('show'); }
-function hideLoading() { $('loading-overlay').classList.remove('show'); }
-
-function getStageLabel(avg) {
-  for (const s of CONFIG.stages) { if (avg < s.max) return s.label; }
-  return CONFIG.stages[CONFIG.stages.length - 1].label;
-}
-
-// ── Aplicar CONFIG al HTML estático ──────────────────────────────
-function applyConfig() {
-  $('cfg-header-logo').textContent   = `${CONFIG.brand} · ${CONFIG.workshop}`;
-  $('cfg-welcome-emoji').textContent = CONFIG.welcomeEmoji;
-  $('cfg-welcome-title').textContent = CONFIG.welcomeTitle;
-  $('cfg-welcome-subtitle').textContent = CONFIG.welcomeSubtitle;
-  $('cfg-welcome-meta').textContent  = CONFIG.welcomeMeta;
-  $('cfg-org-label').textContent     = CONFIG.orgLabel;
-  $('org-name-input').placeholder    = CONFIG.orgPlaceholder;
-  $('cfg-start-btn').textContent     = CONFIG.startBtn;
-  $('cfg-step-hint').textContent     = CONFIG.stepHint;
-  $('cfg-score-eyebrow').textContent = CONFIG.resultsEyebrow;
-  $('cfg-chart-title').textContent   = CONFIG.chartTitle;
-  $('cfg-dim-heading').textContent   = CONFIG.dimSectionTitle;
-  $('cfg-quote').textContent         = '';
-  $('cfg-quote').closest('.callout-block').style.display = 'none';
-  $('cfg-actions-heading').textContent = CONFIG.actionsTitle;
-  $('email-input').placeholder       = CONFIG.emailPH;
-  $('btn-email').textContent         = CONFIG.btnEmail;
-  $('cfg-restart-btn').textContent   = CONFIG.btnRestart;
-  $('cfg-branding').innerHTML        = `<strong>${CONFIG.brand}</strong> · v2afoundation.org<br>${CONFIG.workshop}`;
-
-  // Lista de dimensiones en bienvenida (6 grupos, fusionando 3a y 3b)
-  const ul = $('cfg-dim-list');
-  ul.innerHTML = '';
-  let fundraisingAdded = false;
-  DIMS.forEach(d => {
-    if (d.id === 'campanas' || d.id === 'grants') {
-      if (!fundraisingAdded) {
-        const li = document.createElement('li');
-        li.textContent = `💙 Fundraising`;
-        ul.appendChild(li);
-        fundraisingAdded = true;
-      }
-    } else {
-      const li = document.createElement('li');
-      li.textContent = `${d.icon} ${d.title}`;
-      ul.appendChild(li);
-    }
-  });
-}
-
-// ── Navegación ───────────────────────────────────────────────────
-function startAssessment() {
-  orgName     = ($('org-name-input').value || '').trim();
-  currentStep = 0;
-  selections  = new Array(DIMS.length).fill(null);
-  $('progress-wrap').style.display = 'block';
-  showScreen('assessment');
-  renderStep();
-}
-
-function goBack() {
-  if (currentStep === 0) {
-    $('progress-wrap').style.display = 'none';
-    showScreen('welcome');
-  } else {
-    currentStep--;
-    renderStep();
-  }
-}
-
-function goNext() {
-  if (selections[currentStep] === null) return;
-  if (currentStep < DIMS.length - 1) { currentStep++; renderStep(); }
-  else showResultsScreen();
-  window.scrollTo({ top: 0, behavior: 'smooth' });
-}
-
-function restartAssessment() {
-  if (radarChart) { radarChart.destroy(); radarChart = null; }
-  $('form-block').style.display = 'block';
-  $('thank-you-block').style.display = 'none';
-  $('cfg-restart-btn').style.display = '';
-  $('q1-input').value   = '';
-  $('q2-input').value   = '';
-  $('name-input').value = '';
-  $('email-input').value = '';
-  currentStep = 0;
-  selections  = new Array(DIMS.length).fill(null);
-  $('progress-wrap').style.display = 'none';
-  showScreen('welcome');
-}
-
-// ── Render step ──────────────────────────────────────────────────
-function renderStep() {
-  const dim = DIMS[currentStep];
-  $('step-icon').textContent    = dim.icon;
-  $('step-counter').textContent = `Dimensión ${getStepLabel(currentStep)}`;
-  $('step-title').textContent   = dim.title;
-  $('btn-back').textContent     = currentStep === 0 ? CONFIG.btnBack0 : CONFIG.btnBackN;
-
-  setProgress(currentStep);
-
-  const isNA = selections[currentStep] === 'na';
-  const grid = $('levels-grid');
-  grid.innerHTML = '';
-  dim.levels.forEach((lvl, idx) => {
-    const cls      = LEVEL_CLS[idx];
-    const selected = selections[currentStep] === idx;
-    const card     = document.createElement('div');
-    card.className = `level-card${selected ? ' sel-' + cls : ''}${isNA ? ' na-dimmed' : ''}`;
-    card.setAttribute('role', 'radio');
-    card.setAttribute('aria-checked', selected ? 'true' : 'false');
-    card.setAttribute('tabindex', '0');
-    card.innerHTML = `
-      <div class="check-circle">✓</div>
-      <div class="lvl-card-left">
-        <div class="lvl-badge ${cls}">N${idx+1} · ${lvl.name}</div>
-        <div class="lvl-name">${lvl.name}</div>
-      </div>
-      <div class="lvl-card-right">
-        <div class="lvl-desc">${lvl.detail || lvl.desc}</div>
-        ${lvl.ejemplos && lvl.ejemplos.length ? `<ul class="lvl-examples">${lvl.ejemplos.map(e => `<li>${e}</li>`).join('')}</ul>` : ''}
-      </div>
-    `;
-    card.addEventListener('click', () => selectLevel(idx));
-    card.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') selectLevel(idx); });
-    grid.appendChild(card);
-  });
-
-  const naBtn = $('btn-na');
-  naBtn.classList.toggle('active-na', isNA);
-
-  const nb = $('btn-next');
-  nb.disabled    = selections[currentStep] === null;
-  nb.textContent = currentStep === DIMS.length - 1 ? CONFIG.btnFinish : CONFIG.btnNext;
-}
-
-function selectLevel(idx) { selections[currentStep] = idx; renderStep(); }
-
-function selectNA() {
-  selections[currentStep] = 'na';
-  renderStep();
-  goNext();
-}
-
-// ── Results ──────────────────────────────────────────────────────
-function showResultsScreen() {
-  $('progress-wrap').style.display = 'none';
-  showScreen('results');
-  renderResults();
-}
-
-function renderResults() {
-  const scores    = selections.map(s => s === 'na' ? 0 : s + 1);
-  const appScores = selections.filter(s => s !== 'na').map(s => s + 1);
-  const avg       = appScores.length ? appScores.reduce((a, b) => a + b, 0) / appScores.length : 0;
-  const naCount   = selections.filter(s => s === 'na').length;
-
-  $('overall-score').textContent = avg.toFixed(1);
-  $('stage-label').textContent   = getStageLabel(avg);
-  if (naCount > 0) {
-    const eyebrow = $('cfg-score-eyebrow');
-    if (eyebrow) eyebrow.textContent = `Basado en ${appScores.length} de ${DIMS.length} dimensiones evaluadas`;
-  }
-
-  const container = $('dimension-results');
-  container.innerHTML = '';
-  DIMS.forEach((dim, i) => {
-    const lvlIdx = selections[i];
-    const card   = document.createElement('div');
-    if (lvlIdx === 'na') {
-      card.className = 'dim-result na-result';
-      card.innerHTML = `
-        <div class="dim-result-top">
-          <div class="dim-result-name">${dim.icon} ${dim.title}</div>
-          <span class="na-badge">No aplica</span>
+      <div>
+        <div class="hero-badge">
+          <span data-es>Iniciativa social de&nbsp;<a href="https://v2aconsulting.com" target="_blank" rel="noopener">V2A Consulting</a></span>
+          <span data-en>Social initiative by&nbsp;<a href="https://v2aconsulting.com" target="_blank" rel="noopener">V2A Consulting</a></span>
         </div>
-        <div class="mini-text" style="color:var(--gray-400);margin-top:6px;">Esta dimensión no aplica a tu organización y fue excluida del cálculo.</div>
-      `;
-    } else {
-      const cls     = LEVEL_COLS[LEVEL_CLS[lvlIdx]];
-      const hasNext = lvlIdx < 3;
-      const todayDesc = dim.levels[lvlIdx].detail || dim.levels[lvlIdx].desc;
-      const nextDesc  = hasNext
-        ? `<strong>N${lvlIdx+2} · ${dim.levels[lvlIdx+1].name}:</strong> ${dim.levels[lvlIdx+1].detail || dim.levels[lvlIdx+1].desc}`
-        : CONFIG.maxLevelMsg;
-      card.className = 'dim-result';
-      card.innerHTML = `
-        <div class="dim-result-top">
-          <div class="dim-result-name">${dim.icon} ${dim.title}</div>
-          <div class="dim-score-chip" style="background:${cls.bg};color:${cls.text};">
-            N${lvlIdx+1} · ${dim.levels[lvlIdx].name}
+
+        <h1>
+          <span data-es>Multiplicamos el <em>impacto</em> de las organizaciones sin fines de lucro</span>
+          <span data-en>Multiplying the <em>impact</em> of nonprofit organizations</span>
+        </h1>
+
+        <p class="hero-sub" data-es>Fortalecemos la capacidad organizacional de las OSFLs en Puerto Rico mediante consultoría estratégica, transformación digital y acceso a talento especializado.</p>
+        <p class="hero-sub" data-en>We strengthen the organizational capacity of nonprofits in Puerto Rico through strategic consulting, digital transformation, and access to specialized talent.</p>
+
+        <div class="hero-actions">
+          <a href="#contacto" class="btn btn-primary btn-lg" data-es>Solicitar apoyo</a>
+          <a href="#contacto" class="btn btn-primary btn-lg" data-en>Get support</a>
+          <a href="#programas" class="btn btn-ghost-white btn-lg" data-es>Ver programas</a>
+          <a href="#programas" class="btn btn-ghost-white btn-lg" data-en>Our programs</a>
+        </div>
+
+      </div>
+
+      <div class="hero-visual">
+        <a href="#programas" class="hero-card blue">
+          <div class="hc-label" data-es>WeServe Fellows · Verano 2026 · Pro bono</div>
+          <div class="hc-label" data-en>WeServe Fellows · Summer 2026 · Pro bono</div>
+          <div class="hc-title" data-es>Consultoría estratégica pro bono para OSFLs en Puerto Rico, con el apoyo de estudiantes universitarios</div>
+          <div class="hc-title" data-en>Pro bono strategic consulting for nonprofits in Puerto Rico, supported by university students</div>
+        </a>
+        <a href="#programas" class="hero-card navy">
+          <div class="hc-label" data-es>WeServe Projects · Todo el año</div>
+          <div class="hc-label" data-en>WeServe Projects · Year-round</div>
+          <div class="hc-title" data-es>Proyectos de consultoría estratégica con profesionales V2A</div>
+          <div class="hc-title" data-en>Strategic consulting projects with V2A professionals</div>
+        </a>
+        <a href="#programas" class="hero-card coral">
+          <div class="hc-label" data-es>WeServe Partners · Primer cliente activo</div>
+          <div class="hc-label" data-en>WeServe Partners · First client active</div>
+          <div class="hc-title" data-es>Acompañamiento estratégico continuo para tu transformación</div>
+          <div class="hc-title" data-en>Ongoing strategic support for your organizational transformation</div>
+        </a>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════
+     NOSOTROS / ABOUT
+══════════════════════════════════ -->
+<section class="about" id="nosotros">
+  <div class="container">
+    <div class="about-grid">
+
+      <div>
+        <span class="label" data-es>Nuestra historia</span>
+        <span class="label" data-en>Our story</span>
+        <h2 class="title" data-es>Cuando las OSFLs crecen,<br>Puerto Rico crece</h2>
+        <h2 class="title" data-en>When nonprofits grow,<br>Puerto Rico grows</h2>
+        <div class="about-text">
+          <p data-es>Fundación V2A es el brazo de responsabilidad social de <strong>V2A Consulting</strong>, firma de servicios profesionales fundada en 2004, dedicada a ayudar a organizaciones a definir y alcanzar sus metas mediante planificación estratégica, desarrollo organizacional y transformación digital.</p>
+          <p data-en>Fundación V2A is the social responsibility arm of <strong>V2A Consulting</strong>, a professional services firm founded in 2004, dedicated to helping organizations define and achieve their goals through strategic planning, organizational development, and digital transformation.</p>
+          <p data-es>Creemos que las organizaciones sin fines de lucro en Puerto Rico tienen un rol vital en sus comunidades, y que cuando reciben el apoyo estratégico correcto, su impacto se multiplica. Por eso unimos conocimiento profesional con talento universitario emergente para fortalecer la capacidad organizacional, la sostenibilidad y el alcance de las OSFLs.</p>
+          <p data-en>We believe that nonprofits in Puerto Rico play a vital role in their communities, and that when they receive the right strategic support, their impact multiplies. That's why we combine professional expertise with emerging university talent to strengthen the organizational capacity, sustainability, and reach of nonprofits.</p>
+          <div class="focus-areas">
+            <p class="focus-label" data-es>Áreas de enfoque</p>
+            <p class="focus-label" data-en>Focus areas</p>
+            <div class="focus-chips">
+              <span class="focus-chip" data-es><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg> Salud</span>
+              <span class="focus-chip" data-en><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg> Health</span>
+              <span class="focus-chip" data-es><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg> Educación</span>
+              <span class="focus-chip" data-en><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg> Education</span>
+              <span class="focus-chip" data-es><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 3a20 20 0 0 1-20 18 20 20 0 0 1 20-18z"/><path d="M2 21l10-10"/></svg> Ambiente</span>
+              <span class="focus-chip" data-en><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 3a20 20 0 0 1-20 18 20 20 0 0 1 20-18z"/><path d="M2 21l10-10"/></svg> Environment</span>
+              <span class="focus-chip" data-es><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg> Social</span>
+              <span class="focus-chip" data-en><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg> Social</span>
+            </div>
+          </div>
+          <a href="https://v2aconsulting.com" target="_blank" rel="noopener" class="about-link" data-es>Conoce V2A Consulting →</a>
+          <a href="https://v2aconsulting.com" target="_blank" rel="noopener" class="about-link" data-en>Visit V2A Consulting →</a>
+        </div>
+      </div>
+
+
+    </div>
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════
+     SERVICIOS / SERVICES
+══════════════════════════════════ -->
+<section class="services" id="servicios">
+  <div class="container">
+    <div class="section-head center">
+      <span class="label" data-es>Áreas de servicio</span>
+      <span class="label" data-en>Service areas</span>
+      <h2 class="title" data-es>¿En qué podemos apoyarte?</h2>
+      <h2 class="title" data-en>How can we support you?</h2>
+      <p class="subtitle" data-es>Combinamos experiencia en gestión estratégica, tecnología e inteligencia artificial para fortalecer la capacidad operacional de las OSFLs.</p>
+      <p class="subtitle" data-en>We combine expertise in strategic management, technology, and AI to strengthen the operational capacity of nonprofits.</p>
+    </div>
+
+    <div class="services-grid">
+      <div class="svc-item">
+        <svg class="svc-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>
+        <h4 data-es>Gestión Estratégica e Impacto</h4>
+        <h4 data-en>Strategic Management &amp; Impact</h4>
+        <ul>
+          <li><span data-es>Modelo lógico y teoría de cambio</span><span data-en>Logic model and theory of change</span></li>
+          <li><span data-es>Sistemas de medición: KPIs y OKRs</span><span data-en>Measurement systems: KPIs and OKRs</span></li>
+          <li><span data-es>Gestión de proyectos</span><span data-en>Project management</span></li>
+          <li><span data-es>Planes estratégicos accionables</span><span data-en>Actionable strategic plans</span></li>
+        </ul>
+      </div>
+      <div class="svc-item">
+        <svg class="svc-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+        <h4 data-es>Optimización y Transformación Digital</h4>
+        <h4 data-en>Optimization &amp; Digital Transformation</h4>
+        <ul>
+          <li><span data-es>Diagnóstico y estrategia digital</span><span data-en>Digital diagnosis and strategy</span></li>
+          <li><span data-es>Herramientas de productividad</span><span data-en>Productivity tools</span></li>
+          <li><span data-es>Presencia digital y redes sociales</span><span data-en>Digital presence and social media</span></li>
+          <li><span data-es>Automatización de procesos</span><span data-en>Process automation</span></li>
+        </ul>
+      </div>
+      <div class="svc-item">
+        <svg class="svc-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="4" width="16" height="16" rx="2"/><rect x="9" y="9" width="6" height="6"/><line x1="9" y1="1" x2="9" y2="4"/><line x1="15" y1="1" x2="15" y2="4"/><line x1="9" y1="20" x2="9" y2="23"/><line x1="15" y1="20" x2="15" y2="23"/><line x1="20" y1="9" x2="23" y2="9"/><line x1="20" y1="14" x2="23" y2="14"/><line x1="1" y1="9" x2="4" y2="9"/><line x1="1" y1="14" x2="4" y2="14"/></svg>
+        <h4 data-es>Inteligencia Artificial para OSFLs</h4>
+        <h4 data-en>Artificial Intelligence for Nonprofits</h4>
+        <ul>
+          <li><span data-es>IA para tareas administrativas</span><span data-en>AI for administrative tasks</span></li>
+          <li><span data-es>IA para fundraising y comunicaciones</span><span data-en>AI for fundraising and communications</span></li>
+          <li><span data-es>Agentes de IA y chatbots</span><span data-en>AI agents and chatbots</span></li>
+          <li><span data-es>Analítica aplicada</span><span data-en>Applied analytics</span></li>
+        </ul>
+      </div>
+      <div class="svc-item">
+        <svg class="svc-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+        <h4 data-es>Comunicación y Narrativas de Impacto</h4>
+        <h4 data-en>Communication &amp; Impact Narratives</h4>
+        <ul>
+          <li><span data-es>Storytelling y narrativas de impacto</span><span data-en>Storytelling and impact narratives</span></li>
+          <li><span data-es>Uso de datos para contar historias</span><span data-en>Data-driven storytelling</span></li>
+          <li><span data-es>Estrategia de contenido</span><span data-en>Content strategy</span></li>
+          <li><span data-es>Reportes de impacto</span><span data-en>Impact reports</span></li>
+        </ul>
+      </div>
+      <div class="svc-item">
+        <svg class="svc-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+        <h4 data-es>Sostenibilidad Financiera</h4>
+        <h4 data-en>Financial Sustainability</h4>
+        <ul>
+          <li><span data-es>Gestión financiera y presupuestal</span><span data-en>Financial and budget management</span></li>
+          <li><span data-es>Estrategias de fundraising</span><span data-en>Fundraising strategies</span></li>
+          <li><span data-es>Diversificación de ingresos</span><span data-en>Revenue diversification</span></li>
+          <li><span data-es>Planificación financiera</span><span data-en>Financial planning</span></li>
+        </ul>
+      </div>
+      <div class="svc-item">
+        <svg class="svc-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+        <h4 data-es>Recursos Humanos</h4>
+        <h4 data-en>Human Resources</h4>
+        <ul>
+          <li><span data-es>Reclutamiento y retención de talento</span><span data-en>Talent recruitment and retention</span></li>
+          <li><span data-es>Gestión de desempeño</span><span data-en>Performance management</span></li>
+          <li><span data-es>Gestión de voluntarios</span><span data-en>Volunteer management</span></li>
+          <li><span data-es>Cultura organizacional</span><span data-en>Organizational culture</span></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════
+     PROGRAMAS / PROGRAMS
+══════════════════════════════════ -->
+<section class="programs" id="programas">
+  <div class="container">
+    <div class="section-head">
+      <span class="label" data-es>Nuestros programas</span>
+      <span class="label" data-en>Our programs</span>
+      <h2 class="title" data-es>Un modelo progresivo de<br>fortalecimiento organizacional</h2>
+      <h2 class="title" data-en>A progressive model of<br>organizational strengthening</h2>
+      <p class="subtitle" data-es>Acompañamos a las OSFLs en distintas etapas de su desarrollo, combinando formación, experiencia práctica e implementación estratégica.</p>
+      <p class="subtitle" data-en>We accompany nonprofits at different stages of their development, combining training, hands-on experience, and strategic implementation.</p>
+    </div>
+
+    <div class="programs-grid">
+
+      <!-- WeServe Fellows -->
+      <div class="prog-card">
+        <div class="prog-icon fellows"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg></div>
+        <p class="prog-sub">WeServe Fellows</p>
+        <h3 data-es>Programa de Verano Pro Bono</h3>
+        <h3 data-en>Summer Pro Bono Program</h3>
+        <p data-es>Equipos de estudiantes universitarios, bajo la mentoría directa de consultores V2A, desarrollan proyectos de consultoría pro bono de 8 semanas para OSFLs en Puerto Rico. Los Fellows reciben más de 40 horas de entrenamiento intensivo antes de trabajar directamente con las organizaciones.</p>
+        <p data-en>University student teams, under direct mentorship from V2A consultants, develop 8-week pro bono consulting projects for nonprofits in Puerto Rico. Fellows receive over 40 hours of intensive training before working directly with organizations.</p>
+
+        <div class="prog-tags">
+          <span class="tag" data-es>Pro bono</span>
+          <span class="tag" data-en>Pro bono</span>
+          <span class="tag" data-es>8 semanas · Verano</span>
+          <span class="tag" data-en>8 weeks · Summer</span>
+          <span class="tag" data-es>Mentoría V2A</span>
+          <span class="tag" data-en>V2A mentorship</span>
+        </div>
+        <a href="#contacto" class="prog-link" data-es>Solicitar información →</a>
+        <a href="#contacto" class="prog-link" data-en>Solicitar información →</a>
+      </div>
+
+      <!-- WeServe Projects -->
+      <div class="prog-card">
+        <div class="prog-icon projects"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/><line x1="2" y1="20" x2="22" y2="20"/></svg></div>
+        <p class="prog-sub">WeServe Projects</p>
+        <h3 data-es>Proyectos de Consultoría</h3>
+        <h3 data-en>Consulting Projects</h3>
+        <p data-es>Proyectos de consultoría estratégica durante todo el año, ejecutados por consultores actuales y ex-consultores de V2A. Supervisados por directores de V2A y con el respaldo de toda la red de expertos de la firma.</p>
+        <p data-en>Year-round strategic consulting projects executed by current and former V2A consultants. Supervised by V2A directors and backed by the firm's full expert network.</p>
+
+        <div class="prog-tags">
+          <span class="tag" data-es>Todo el año</span>
+          <span class="tag" data-en>Year-round</span>
+          <span class="tag" data-es>Consultores profesionales</span>
+          <span class="tag" data-en>Professional consultants</span>
+        </div>
+
+        <p style="font-size:13px; color:var(--gray-500); margin-bottom:8px; font-weight:600;" data-es>Tipos de proyectos:</p>
+        <p style="font-size:13px; color:var(--gray-500); margin-bottom:8px; font-weight:600;" data-en>Project types:</p>
+        <ul style="list-style:none; display:flex; flex-direction:column; gap:4px; margin-bottom:24px;">
+          <li style="font-size:13px; color:var(--gray-500); padding-left:14px; position:relative;">
+            <span style="position:absolute;left:0;color:var(--celeste);font-weight:700;">›</span>
+            <span data-es>Planificación Estratégica</span>
+            <span data-en>Strategic Planning</span>
+          </li>
+          <li style="font-size:13px; color:var(--gray-500); padding-left:14px; position:relative;">
+            <span style="position:absolute;left:0;color:var(--celeste);font-weight:700;">›</span>
+            <span data-es>Mejora Operacional</span>
+            <span data-en>Operational Improvement</span>
+          </li>
+          <li style="font-size:13px; color:var(--gray-500); padding-left:14px; position:relative;">
+            <span style="position:absolute;left:0;color:var(--celeste);font-weight:700;">›</span>
+            <span data-es>Planificación Financiera</span>
+            <span data-en>Financial Planning</span>
+          </li>
+          <li style="font-size:13px; color:var(--gray-500); padding-left:14px; position:relative;">
+            <span style="position:absolute;left:0;color:var(--celeste);font-weight:700;">›</span>
+            <span data-es>Estrategia de Mercadeo</span>
+            <span data-en>Marketing Strategy</span>
+          </li>
+          <li style="font-size:13px; color:var(--gray-500); padding-left:14px; position:relative;">
+            <span style="position:absolute;left:0;color:var(--celeste);font-weight:700;">›</span>
+            <span data-es>Planes de Negocio</span>
+            <span data-en>Business Plans</span>
+          </li>
+          <li style="font-size:13px; color:var(--gray-500); padding-left:14px; position:relative;">
+            <span style="position:absolute;left:0;color:var(--celeste);font-weight:700;">›</span>
+            <span data-es>Transformación Digital</span>
+            <span data-en>Digital Transformation</span>
+          </li>
+        </ul>
+        <a href="#contacto" class="prog-link" data-es>Conoce más →</a>
+        <a href="#contacto" class="prog-link" data-en>Learn more →</a>
+      </div>
+
+      <!-- WeServe Partners -->
+      <div class="prog-card featured">
+        <span class="new-badge" data-es>Nuevo</span>
+        <span class="new-badge" data-en>New</span>
+        <div class="prog-icon partners"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></div>
+        <p class="prog-sub">WeServe Partners</p>
+        <h3 data-es>Acompañamiento Estratégico Continuo</h3>
+        <h3 data-en>Ongoing Strategic Accompaniment</h3>
+        <p data-es>Modelo de capacity building progresivo que combina evaluación de madurez digital, diseño de roadmap organizacional y acompañamiento continuo para implementar la transformación. Ya acompañamos a nuestro primer cliente.</p>
+        <p data-en>A progressive capacity building model that combines digital maturity assessment, organizational roadmap design, and ongoing support for implementation. We are already working with our first client.</p>
+
+        <div class="prog-tags">
+          <span class="tag" data-es>Capacity building</span>
+          <span class="tag" data-en>Capacity building</span>
+          <span class="tag" data-es>Transformación digital</span>
+          <span class="tag" data-en>Digital transformation</span>
+          <span class="tag" data-es>IA para OSFLs</span>
+          <span class="tag" data-en>AI for nonprofits</span>
+        </div>
+
+        <p style="font-size:13px; color:var(--gray-500); margin-bottom:8px; font-weight:600;" data-es>El proceso incluye:</p>
+        <p style="font-size:13px; color:var(--gray-500); margin-bottom:8px; font-weight:600;" data-en>The process includes:</p>
+        <ul style="list-style:none; display:flex; flex-direction:column; gap:4px; margin-bottom:24px;">
+          <li style="font-size:13px; color:var(--gray-500); padding-left:14px; position:relative;">
+            <span style="position:absolute;left:0;color:var(--celeste);font-weight:700;">›</span>
+            <span data-es>Educación y desarrollo de destrezas digitales</span>
+            <span data-en>Education and digital skills development</span>
+          </li>
+          <li style="font-size:13px; color:var(--gray-500); padding-left:14px; position:relative;">
+            <span style="position:absolute;left:0;color:var(--celeste);font-weight:700;">›</span>
+            <span data-es>Descubrimiento y evaluación organizacional</span>
+            <span data-en>Organizational discovery and assessment</span>
+          </li>
+          <li style="font-size:13px; color:var(--gray-500); padding-left:14px; position:relative;">
+            <span style="position:absolute;left:0;color:var(--celeste);font-weight:700;">›</span>
+            <span data-es>Acompañamiento estratégico personalizado</span>
+            <span data-en>Personalized strategic accompaniment</span>
+          </li>
+        </ul>
+        <a href="#contacto" class="prog-link" data-es>Solicitar información →</a>
+        <a href="#contacto" class="prog-link" data-en>Request information →</a>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════
+     IMPACTO / IMPACT
+══════════════════════════════════ -->
+<section class="impact" id="impacto">
+  <div class="container">
+    <div class="section-head center">
+      <span class="label" data-es>WeServe Fellows · Resultados 2020–2025</span>
+      <span class="label" data-en>WeServe Fellows · Results 2020–2025</span>
+      <h2 class="title" data-es>Cinco años de talento universitario al servicio del bien común</h2>
+      <h2 class="title" data-en>Five years of university talent in service of the common good</h2>
+      <p class="subtitle" data-es>A través del programa WeServe Fellows, estudiantes universitarios han generado impacto real para organizaciones sin fines de lucro en Puerto Rico y República Dominicana.</p>
+      <p class="subtitle" data-en>Through the WeServe Fellows program, university students have created real impact for nonprofits across Puerto Rico and the Dominican Republic.</p>
+    </div>
+
+    <div class="impact-numbers">
+      <div class="impact-num">
+        <div class="big">33</div>
+        <div class="lbl" data-es>OSFLs apoyadas</div>
+        <div class="lbl" data-en>Nonprofits supported</div>
+      </div>
+      <div class="impact-num">
+        <div class="big">121</div>
+        <div class="lbl" data-es>Estudiantes universitarios</div>
+        <div class="lbl" data-en>University students</div>
+      </div>
+      <div class="impact-num">
+        <div class="big">25K<sup>+</sup></div>
+        <div class="lbl" data-es>Horas profesionales pro bono</div>
+        <div class="lbl" data-en>Pro bono professional hours</div>
+      </div>
+      <div class="impact-num">
+        <div class="big">$3.75M<sup>+</sup></div>
+        <div class="lbl" data-es>Valor equivalente de mercado</div>
+        <div class="lbl" data-en>Equivalent market value</div>
+      </div>
+    </div>
+
+    <p class="partners-label" data-es>Algunas organizaciones que hemos apoyado</p>
+    <p class="partners-label" data-en>Some organizations we have supported</p>
+    <div class="partners-wrap">
+      <div class="partner-chip"><img src="./LogosOrganizaciones/ColaborativoPR.png" alt="ColaborativoPR" height="48"></div>
+      <div class="partner-chip"><img src="./LogosOrganizaciones/FundBancoPopular.png" alt="Fundación Banco Popular" height="48"></div>
+      <div class="partner-chip"><img src="./LogosOrganizaciones/IPPR.png" alt="IPPR" height="48"></div>
+      <div class="partner-chip"><img src="./LogosOrganizaciones/BancodeAlimentos.png" alt="Banco de Alimentos PR" height="48"></div>
+      <div class="partner-chip"><img src="./LogosOrganizaciones/Ecoexploratorio.png.jpg" alt="Ecoexploratorio" height="48"></div>
+      <div class="partner-chip"><img src="./LogosOrganizaciones/Kinesis.png" alt="Kinesis" height="48"></div>
+      <div class="partner-chip"><img src="./LogosOrganizaciones/Vimenti.png" alt="Vimenti" height="48"></div>
+      <div class="partner-chip"><img src="./LogosOrganizaciones/paralaNaturaleza.png.jpg" alt="Para la Naturaleza" height="48"></div>
+      <div class="partner-chip"><img src="./LogosOrganizaciones/FiendsofPR.png" alt="Friends of Puerto Rico" height="48"></div>
+      <div class="partner-chip"><img src="./LogosOrganizaciones/INE.png" alt="Instituto Nueva Escuela" height="48"></div>
+      <div class="partner-chip"><img src="./LogosOrganizaciones/FHP.png" alt="Fundación Hospital Pediátrico" height="48"></div>
+      <div class="partner-chip"><img src="./LogosOrganizaciones/ComedorKennedy.png" alt="El Comedor de la Kennedy" height="48"></div>
+      <div class="partner-chip"><img src="./LogosOrganizaciones/CorodeNinosMFJ.png" alt="Coro de Niños MFJ" height="48"></div>
+      <div class="partner-chip"><img src="./LogosOrganizaciones/CarasconCausa.png.jpg" alt="Caras con Causa" height="48"></div>
+      <div class="partner-chip"><img src="./LogosOrganizaciones/LeadColab.png" alt="LEAD Colab" height="48"></div>
+      <div class="partner-chip"><img src="./LogosOrganizaciones/InstDesJuventud.png" alt="Instituto del Desarrollo de la Juventud" height="48"></div>
+      <div class="partner-chip"><img src="./LogosOrganizaciones/SERPR.png" alt="SER de Puerto Rico" height="48"></div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════
+     DIAGNÓSTICO CTA
+══════════════════════════════════ -->
+<section class="diag-cta">
+  <div class="container">
+    <div class="diag-cta-inner">
+      <svg class="diag-cta-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"/></svg>
+      <div class="diag-cta-body">
+        <h3 data-es>¿Qué tan lista está tu organización para la era digital?</h3>
+        <h3 data-en>How ready is your organization for the digital age?</h3>
+        <p data-es>Completa nuestro diagnóstico gratuito de madurez digital e inteligencia artificial. En 10 minutos obtendrás una radiografía de tu organización y recomendaciones concretas para avanzar.</p>
+        <p data-en>Complete our free digital maturity and AI diagnostic. In 10 minutes you'll get a full picture of your organization and concrete recommendations to move forward.</p>
+      </div>
+      <a href="https://diagnostico.v2afoundation.org" target="_blank" rel="noopener" class="btn btn-accent diag-btn" data-es>Hacer el diagnóstico gratis ↗</a>
+      <a href="https://diagnostico.v2afoundation.org" target="_blank" rel="noopener" class="btn btn-accent diag-btn" data-en>Take the free diagnostic ↗</a>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════
+     PARTICIPA / PARTICIPATE
+══════════════════════════════════ -->
+<section class="participate" id="participa">
+  <div class="container">
+    <div class="section-head center">
+      <span class="label" data-es>¿Cómo participar?</span>
+      <span class="label" data-en>How to participate</span>
+      <h2 class="title" data-es>Únete al movimiento</h2>
+      <h2 class="title" data-en>Join the movement</h2>
+      <p class="subtitle" data-es>Hay un lugar para ti en Fundación V2A, ya seas una organización sin fines de lucro, un estudiante universitario, o una entidad que quiere amplificar su impacto social.</p>
+      <p class="subtitle" data-en>There is a place for you in Fundación V2A, whether you are a nonprofit, a university student, or an entity that wants to amplify its social impact.</p>
+    </div>
+
+    <div class="participate-grid">
+      <div class="part-card">
+        <svg class="part-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="10" width="18" height="12" rx="1"/><path d="M3 10l9-7 9 7"/><line x1="9" y1="22" x2="9" y2="15"/><line x1="15" y1="22" x2="15" y2="15"/><line x1="9" y1="15" x2="15" y2="15"/></svg>
+        <h3 data-es>Soy una OSFL</h3>
+        <h3 data-en>I represent a nonprofit</h3>
+        <p data-es>¿Tu organización necesita apoyo estratégico, tecnológico o de comunicación? Solicita apoyo de Fundación V2A a través de nuestros programas.</p>
+        <p data-en>Does your organization need strategic, technological, or communication support? Apply to the WeServe Fellows summer program (pro bono) or work with us through WeServe Projects or WeServe Partners.</p>
+        <a href="#contacto" class="btn btn-navy" data-es>Solicitar información</a>
+        <a href="#contacto" class="btn btn-navy" data-en>Request information</a>
+      </div>
+      <div class="part-card">
+        <svg class="part-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>
+        <h3 data-es>Soy estudiante universitario</h3>
+        <h3 data-en>I'm a university student</h3>
+        <p data-es>¿Quieres ganar experiencia profesional real mientras generas impacto social? Únete como WeServe Fellow en nuestro programa de verano 2026. Buscamos estudiantes enérgicos, analíticos y con vocación de servicio.</p>
+        <p data-en>Do you want to gain real professional experience while creating social impact? Join as a WeServe Fellow in our Summer 2026 program. We look for energetic, analytical students with a calling to serve.</p>
+        <a href="https://v2aconsulting.com/we-serve-fellows/" target="_blank" rel="noopener" class="btn btn-navy" data-es>Solicitar a Fellows ↗</a>
+        <a href="https://v2aconsulting.com/we-serve-fellows/" target="_blank" rel="noopener" class="btn btn-navy" data-en>Apply to Fellows ↗</a>
+      </div>
+      <div class="part-card">
+        <svg class="part-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+        <h3 data-es>Quiero apoyar la misión</h3>
+        <h3 data-en>I want to support the mission</h3>
+        <p data-es>¿Tu fundación o empresa quiere fortalecer el sector sin fines de lucro en Puerto Rico? Conversemos sobre cómo colaborar para multiplicar el impacto en nuestras comunidades.</p>
+        <p data-en>Does your foundation or company want to strengthen the nonprofit sector in Puerto Rico? Let's talk about how to collaborate and multiply impact in our communities.</p>
+        <a href="#contacto" class="btn btn-navy" data-es>Conversemos</a>
+        <a href="#contacto" class="btn btn-navy" data-en>Let's talk</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════
+     CONTACTO / CONTACT
+══════════════════════════════════ -->
+<section class="contact" id="contacto">
+  <div class="container">
+    <div class="contact-inner">
+
+      <!-- Left: header + contact info -->
+      <div class="contact-lead">
+        <span class="label" data-es>Contacto</span>
+        <span class="label" data-en>Contact</span>
+        <h2 class="title" data-es>¿Listo para fortalecer tu organización?</h2>
+        <h2 class="title" data-en>Ready to strengthen your organization?</h2>
+        <p data-es>Completa el formulario y nuestro equipo estará en contacto contigo pronto.</p>
+        <p data-en>Fill out the form and our team will be in touch with you shortly.</p>
+
+        <div class="contact-meta">
+          <div class="contact-meta-row">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;color:var(--bahia)" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+            <span data-es>Iniciativa de <a href="https://v2aconsulting.com" target="_blank" rel="noopener">V2A Consulting</a>, firma de servicios profesionales en Puerto Rico</span>
+            <span data-en>An initiative of <a href="https://v2aconsulting.com" target="_blank" rel="noopener">V2A Consulting</a>, a professional services firm in Puerto Rico</span>
+          </div>
+          <div class="contact-meta-row">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;color:var(--bahia)" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            <span>San Juan, Puerto Rico</span>
           </div>
         </div>
-        <div class="mini-label">${CONFIG.todayLabel}</div>
-        <div class="mini-text">${todayDesc}</div>
-        <div class="mini-divider"></div>
-        <div class="mini-label">${CONFIG.nextStepLabel}</div>
-        <div class="mini-text">${nextDesc}</div>
-      `;
-    }
-    container.appendChild(card);
-  });
+      </div>
 
-  if (radarChart) { radarChart.destroy(); }
-  const ctx = $('radar-chart').getContext('2d');
-  const lvlColors = ['rgba(179,72,38,0.85)','rgba(138,82,16,0.85)','rgba(53,96,16,0.85)','rgba(15,77,138,0.85)'];
-  radarChart = new Chart(ctx, {
-    type: 'bar',
-    data: {
-      labels: DIMS.map(d => d.title),
-      datasets: [{
-        data: scores,
-        backgroundColor: scores.map((s, i) => selections[i] === 'na' ? 'rgba(209,213,219,0.7)' : lvlColors[s - 1]),
-        borderRadius: 5,
-        borderSkipped: false,
-      }]
-    },
-    options: {
-      indexAxis: 'y',
-      responsive: true,
-      maintainAspectRatio: false,
-      animation: { duration: 700, easing: 'easeOutQuart' },
-      scales: {
-        x: {
-          min: 0, max: 4,
-          ticks: { stepSize: 1, font: { size: 11 }, color: '#9CA3AF', callback: v => v === 0 ? '' : `N${v}` },
-          grid: { color: 'rgba(0,0,0,0.07)' },
-        },
-        y: {
-          ticks: { font: { size: 11, weight: '700' }, color: '#374151' },
-          grid: { display: false },
-        }
-      },
-      plugins: { legend: { display: false } }
-    }
-  });
-}
+      <!-- Right: form -->
+      <div class="form-card">
 
-// ── Step label helper ─────────────────────────────────────────────
-function getStepLabel(step) {
-  const dim = DIMS[step];
-  if (dim.id === 'campanas') return '3a de 6';
-  if (dim.id === 'grants')   return '3b de 6';
-  const n = step < 2 ? step + 1 : step;
-  return `${n} de 6`;
-}
+        <!-- Fellows redirect panel (hidden by default) -->
+        <div id="fellowsPanel" style="display:none; text-align:center; padding:40px 24px;">
+          <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="var(--bahia)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="margin-bottom:16px;" aria-hidden="true"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>
+          <h3 style="font-family:'Source Serif 4',Georgia,serif; font-size:22px; color:var(--bahia-dark); margin-bottom:12px;" data-es>Programa WeServe Fellows</h3>
+          <h3 style="font-family:'Source Serif 4',Georgia,serif; font-size:22px; color:var(--bahia-dark); margin-bottom:12px;" data-en>WeServe Fellows Program</h3>
+          <p style="font-size:14px; color:var(--gray-500); line-height:1.65; margin-bottom:28px;" data-es>Para aplicar al programa de verano o conocer más información, visita la página oficial de WeServe Fellows.</p>
+          <p style="font-size:14px; color:var(--gray-500); line-height:1.65; margin-bottom:28px;" data-en>To apply for the summer program or learn more, visit the official WeServe Fellows page.</p>
+          <a href="https://v2aconsulting.com/we-serve-fellows/" target="_blank" rel="noopener" class="btn btn-primary btn-lg" data-es>Ir a WeServe Fellows ↗</a>
+          <a href="https://v2aconsulting.com/we-serve-fellows/" target="_blank" rel="noopener" class="btn btn-primary btn-lg" data-en>Go to WeServe Fellows ↗</a>
+          <br><br>
+          <button onclick="showForm()" style="background:none;border:none;font-size:13px;color:var(--gray-500);cursor:pointer;text-decoration:underline;" data-es>← Volver al formulario</button>
+          <button onclick="showForm()" style="background:none;border:none;font-size:13px;color:var(--gray-500);cursor:pointer;text-decoration:underline;" data-en>← Back to form</button>
+        </div>
 
-// ── Chart helpers ─────────────────────────────────────────────────
-function wrapLabel(title, maxChars) {
-  if (title.length <= maxChars) return title;
-  const words = title.split(' ');
-  const half  = Math.ceil(words.length / 2);
-  return [words.slice(0, half).join(' '), words.slice(half).join(' ')];
-}
+        <!-- Main form -->
+        <form id="contactForm">
+          <div class="form-row">
+            <div class="form-group">
+              <label for="ctName" data-es>Nombre *</label>
+              <label for="ctName" data-en>Name *</label>
+              <input type="text" id="ctName" name="name" required
+                     data-placeholder-es="Tu nombre" data-placeholder-en="Your name" />
+            </div>
+            <div class="form-group">
+              <label for="ctEmail">Email *</label>
+              <input type="email" id="ctEmail" name="email" required
+                     data-placeholder-es="tu@email.com" data-placeholder-en="you@email.com" />
+            </div>
+          </div>
 
-function getHighResChartImage() {
-  return new Promise(resolve => {
-    const off  = document.createElement('canvas');
-    off.width  = 900; off.height = 420;
-    const scores = selections.map(s => s === 'na' ? 0 : s + 1);
-    const lvlColors = ['rgba(179,72,38,0.85)','rgba(138,82,16,0.85)','rgba(53,96,16,0.85)','rgba(15,77,138,0.85)'];
-    const tmp = new Chart(off.getContext('2d'), {
-      type: 'bar',
-      data: {
-        labels: DIMS.map((d, i) => selections[i] === 'na' ? d.title + ' (N/A)' : d.title),
-        datasets: [{
-          data: scores,
-          backgroundColor: scores.map((s, i) => selections[i] === 'na' ? 'rgba(209,213,219,0.7)' : lvlColors[s - 1]),
-          borderRadius: 8,
-          borderSkipped: false,
-        }]
-      },
-      options: {
-        indexAxis: 'y',
-        responsive: false, animation: false,
-        maintainAspectRatio: false,
-        scales: {
-          x: {
-            min: 0, max: 4,
-            ticks: { stepSize: 1, font: { size: 18 }, color: '#9CA3AF', callback: v => v === 0 ? '' : `N${v}` },
-            grid: { color: 'rgba(0,0,0,0.07)' },
-          },
-          y: {
-            ticks: { font: { size: 18, weight: '700' }, color: '#374151' },
-            grid: { display: false },
-          }
-        },
-        plugins: { legend: { display: false } }
-      }
-    });
-    requestAnimationFrame(() => requestAnimationFrame(() => {
-      const dataURL = off.toDataURL('image/png', 1.0);
-      tmp.destroy();
-      resolve(dataURL);
-    }));
-  });
-}
+          <div class="form-group">
+            <label for="ctOrg" data-es>Organización</label>
+            <label for="ctOrg" data-en>Organization</label>
+            <input type="text" id="ctOrg" name="organization"
+                   data-placeholder-es="Nombre de tu organización (opcional)"
+                   data-placeholder-en="Your organization name (optional)" />
+          </div>
 
-// ── PDF programático ──────────────────────────────────────────────
-async function buildPDF() {
-  const { jsPDF } = window.jspdf;
-  const doc = new jsPDF({ orientation: 'portrait', unit: 'mm', format: 'a4' });
+          <div class="form-group">
+            <label for="ctType" data-es>¿Cómo quieres participar? *</label>
+            <label for="ctType" data-en>How do you want to participate? *</label>
+            <select id="ctType" name="type" required>
+              <option value="" disabled selected>Selecciona una opción</option>
+              <option value="osfl-fellows">OSFL - Apoyo vía WeServe Fellows</option>
+              <option value="osfl-projects">OSFL - Apoyo vía WeServe Projects</option>
+              <option value="osfl-partners">OSFL - WeServe Partners (acompañamiento)</option>
+              <option value="fellow">Estudiante universitario - Ser WeServe Fellow</option>
+              <option value="funder">Fundación o empresa - Apoyar la misión</option>
+              <option value="otro">Otro</option>
+            </select>
+          </div>
 
-  const PW = 210, PH = 297, ML = 14, MR = 14, MB = 14;
-  const USW = PW - ML - MR, BLIMIT = PH - MB;
+          <div class="form-group">
+            <label for="ctMsg" data-es>Mensaje *</label>
+            <label for="ctMsg" data-en>Message *</label>
+            <textarea id="ctMsg" name="message" rows="4" required
+                      data-placeholder-es="Cuéntanos sobre tu organización y los retos que enfrentas..."
+                      data-placeholder-en="Tell us about your organization and the challenges you face..."></textarea>
+          </div>
 
-  const C = {
-    primary: [24,95,165], primaryDark: [15,61,110], primaryLight: [234,243,252],
-    white: [255,255,255], g900: [17,24,39], g700: [55,65,81],
-    g500: [107,114,128], g400: [156,163,175], g200: [229,231,235],
-    g100: [243,244,246], g50: [249,250,251],
-  };
-  const LVL = [
-    { t:[179,72,38], b:[254,240,235] }, { t:[138,82,16], b:[254,247,236] },
-    { t:[53,96,16],  b:[240,248,230] }, { t:[15,77,138], b:[234,243,252] },
-  ];
+          <button type="submit" class="btn btn-primary" id="submitBtn"
+                  style="width:100%;justify-content:center;padding:14px;">
+            <span data-es>Enviar mensaje →</span>
+            <span data-en>Send message →</span>
+          </button>
+        </form>
 
-  const scores     = selections.map(s => s === 'na' ? 0 : s + 1);
-  const appScores  = selections.filter(s => s !== 'na').map(s => s + 1);
-  const avg        = appScores.length ? appScores.reduce((a, b) => a + b, 0) / appScores.length : 0;
-  const chartImg   = await getHighResChartImage();
-  const displayOrg  = orgName || 'Mi organizacion';
-  const displayName = ($('name-input').value || '').trim();
-  const dateStr     = new Date().toLocaleDateString('es-MX', { year:'numeric', month:'long', day:'numeric' });
+        <!-- Success state -->
+        <div id="formSuccess" style="display:none; text-align:center; padding:56px 24px;">
+          <svg width="56" height="56" viewBox="0 0 24 24" fill="none" stroke="var(--celeste)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="margin-bottom:16px;" aria-hidden="true"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+          <h3 style="font-family:'Source Serif 4',Georgia,serif; font-size:24px; color:var(--bahia-dark); margin-bottom:10px;" data-es>¡Mensaje recibido!</h3>
+          <h3 style="font-family:'Source Serif 4',Georgia,serif; font-size:24px; color:var(--bahia-dark); margin-bottom:10px;" data-en>Message received!</h3>
+          <p style="font-size:15px; color:var(--gray-500);" data-es>Gracias por contactarnos. Nuestro equipo estará en contacto contigo pronto.</p>
+          <p style="font-size:15px; color:var(--gray-500);" data-en>Thank you for reaching out. Our team will be in touch with you shortly.</p>
+        </div>
 
-  let y = 0;
-  let pageNum = 1;
+      </div>
 
-  const fill   = (...rgb) => doc.setFillColor(...rgb);
-  const stroke = (...rgb) => doc.setDrawColor(...rgb);
-  const color  = (...rgb) => doc.setTextColor(...rgb);
-  const bold   = sz => { doc.setFont('helvetica','bold');       doc.setFontSize(sz); };
-  const normal = sz => { doc.setFont('helvetica','normal');     doc.setFontSize(sz); };
-  const bital  = sz => { doc.setFont('helvetica','bolditalic'); doc.setFontSize(sz); };
-
-  // ── Cover banner (full bleed) ─────────────────────────────────
-  const BANNER_H = 50;
-  fill(...C.primaryDark);
-  doc.rect(0, 0, PW, BANNER_H, 'F');
-  fill(20, 82, 155);
-  doc.rect(0, BANNER_H - 5, PW, 5, 'F');
-
-  bold(6.5); color(160, 200, 240);
-  doc.text(
-    `${CONFIG.brand.toUpperCase()}  ·  ${CONFIG.workshop.toUpperCase()}`,
-    PW / 2, 13, { align: 'center' }
-  );
-  bold(17); color(...C.white);
-  doc.text(CONFIG.pdfTitle, PW / 2, 26, { align: 'center' });
-  normal(10); color(195, 220, 248);
-  const bannerLine = displayName ? `${displayName}  ·  ${displayOrg}` : displayOrg;
-  doc.text(bannerLine, PW / 2, 38, { align: 'center' });
-
-  y = BANNER_H + 12;
-
-  // ── Running header for pages 2+ ───────────────────────────────
-  function drawRunningHeader() {
-    bold(7.5); color(...C.primary);
-    doc.text(displayOrg, ML, 9);
-    normal(7); color(...C.g400);
-    doc.text(`${CONFIG.brand}  ·  ${CONFIG.workshop}`, PW - MR, 9, { align: 'right' });
-    stroke(...C.g200); doc.setLineWidth(0.25);
-    doc.line(ML, 12, PW - MR, 12);
-  }
-
-  // ── Page footer ───────────────────────────────────────────────
-  function drawFooter(pgNum) {
-    stroke(...C.g200); doc.setLineWidth(0.2);
-    doc.line(ML, PH - 10, PW - MR, PH - 10);
-    normal(7); color(...C.g400);
-    doc.text(`${CONFIG.brand}  ·  v2afoundation.org  ·  ${dateStr}`, ML, PH - 6);
-    doc.text(`${pgNum}`, PW - MR, PH - 6, { align: 'right' });
-  }
-
-  function newPage() {
-    drawFooter(pageNum);
-    doc.addPage();
-    pageNum++;
-    y = 18;
-    drawRunningHeader();
-  }
-
-  function ensure(h) { if (y + h > BLIMIT) newPage(); }
-
-  // ── Score summary card ────────────────────────────────────────
-  const avgLvlIdx = Math.min(3, Math.max(0, Math.round(avg) - 1));
-  const avgLvlC   = LVL[avgLvlIdx];
-  const scoreH    = 36;
-
-  fill(...C.g50); stroke(...C.g200); doc.setLineWidth(0.3);
-  doc.roundedRect(ML, y, USW, scoreH, 4, 4, 'FD');
-  fill(...avgLvlC.t);
-  doc.roundedRect(ML, y, 5, scoreH, 2, 2, 'F');
-  doc.rect(ML + 3, y, 2, scoreH, 'F');
-
-  bold(6); color(...C.g400);
-  doc.text('PUNTUACION GENERAL', ML + 11, y + 9);
-  bold(26); color(...C.primaryDark);
-  doc.text(avg.toFixed(1), ML + 11, y + 24);
-  const scoreW = doc.getTextWidth(avg.toFixed(1));
-  normal(11); color(...C.g500);
-  doc.text('/ 4.0', ML + 11 + scoreW + 2, y + 24);
-
-  const stageStr = getStageLabel(avg);
-  bold(9); color(...avgLvlC.t);
-  const stageW = doc.getTextWidth(stageStr) + 14;
-  const stageX = ML + USW - stageW - 2;
-  fill(...avgLvlC.b);
-  doc.roundedRect(stageX, y + scoreH / 2 - 5.5, stageW, 11, 3, 3, 'F');
-  doc.text(stageStr, stageX + stageW / 2, y + scoreH / 2 + 1.8, { align: 'center' });
-
-  y += scoreH + 14;
-
-  // ── Chart section ─────────────────────────────────────────────
-  ensure(60);
-  bold(10.5); color(...C.g900);
-  doc.text('Perfil de Madurez por Dimension', ML, y);
-  fill(...C.primary);
-  doc.rect(ML, y + 3, 46, 1.5, 'F');
-  y += 9;
-
-  const chartH = Math.round(USW * 420 / 900);
-  doc.addImage(chartImg, 'PNG', ML, y, USW, chartH);
-  y += chartH + 14;
-
-  // ── Dimension detail section ──────────────────────────────────
-  ensure(20);
-  bold(10.5); color(...C.g900);
-  doc.text('Detalle por dimension', ML, y);
-  fill(...C.primary);
-  doc.rect(ML, y + 3, 38, 1.5, 'F');
-  y += 12;
-
-  const LH = 4.4;
-
-  DIMS.forEach((dim, i) => {
-    const lvlIdx = selections[i];
-    const score  = scores[i];
-
-    // ── No aplica card ──────────────────────────────────────────
-    if (lvlIdx === 'na') {
-      const naCardH = 18;
-      ensure(naCardH + 3);
-      fill(...C.g100); stroke(...C.g200); doc.setLineWidth(0.2);
-      doc.roundedRect(ML, y, USW, naCardH, 3, 3, 'FD');
-      fill(...C.g400);
-      doc.roundedRect(ML, y, 4, naCardH, 2, 2, 'F');
-      doc.rect(ML + 2, y, 2, naCardH, 'F');
-      bold(9.5); color(...C.g500);
-      doc.text(dim.title, ML + 9, y + 7);
-      normal(8); color(...C.g400);
-      doc.text('No aplica — excluida del calculo de madurez', ML + 9, y + 13);
-      y += naCardH + 4;
-      return;
-    }
-
-    // ── Regular dimension card ──────────────────────────────────
-    const lc       = LVL[lvlIdx];
-    const lvlName  = dim.levels[lvlIdx].name;
-    const hasNext  = lvlIdx < 3;
-    const todayTxt = dim.levels[lvlIdx].detail || dim.levels[lvlIdx].desc;
-    const nextTxt  = hasNext
-      ? `N${lvlIdx + 2} - ${dim.levels[lvlIdx + 1].name}: ${dim.levels[lvlIdx + 1].detail || dim.levels[lvlIdx + 1].desc}`
-      : CONFIG.pdfMaxLevel;
-
-    normal(9);
-    const todayLines = doc.splitTextToSize(todayTxt, USW - 22);
-    const nextLines  = doc.splitTextToSize(nextTxt,  USW - 22);
-    const cardH = 8 + 5 + 5 + todayLines.length * LH + 4 + 4 + nextLines.length * LH + 7;
-
-    ensure(cardH + 3);
-
-    // Card background
-    fill(...C.g50); stroke(...C.g200); doc.setLineWidth(0.2);
-    doc.roundedRect(ML, y, USW, cardH, 3, 3, 'FD');
-
-    // Left accent bar
-    fill(...lc.t);
-    doc.roundedRect(ML, y, 4, cardH, 2, 2, 'F');
-    doc.rect(ML + 2, y, 2, cardH, 'F');
-
-    let cy = y + 8;
-
-    // Title
-    bold(9.5); color(...C.g900);
-    doc.text(dim.title, ML + 9, cy);
-
-    // Level chip
-    const chipTxt = `N${score} - ${lvlName}`;
-    bold(7);
-    const chipW = doc.getTextWidth(chipTxt) + 9;
-    const chipX = PW - MR - chipW;
-    fill(...lc.b); stroke(...lc.t); doc.setLineWidth(0.4);
-    doc.roundedRect(chipX, y + 2.5, chipW, 7.5, 2, 2, 'FD');
-    color(...lc.t);
-    doc.text(chipTxt, chipX + chipW / 2, y + 7.5, { align: 'center' });
-    cy += 5;
-
-    // Mini 4-segment progress bar
-    const segTotalW = 52, segGap = 1.5, segH = 3.5;
-    const segW = (segTotalW - segGap * 3) / 4;
-    for (let s = 0; s < 4; s++) {
-      fill(...(s < score ? lc.t : C.g200));
-      doc.roundedRect(ML + 9 + s * (segW + segGap), cy, segW, segH, 1, 1, 'F');
-    }
-    cy += segH + 5;
-
-    // Today
-    bold(6); color(...C.g400);
-    doc.text('DONDE ESTAS HOY', ML + 9, cy);
-    cy += 4;
-    normal(8.5); color(...C.g700);
-    todayLines.forEach(l => { doc.text(l, ML + 9, cy); cy += LH; });
-
-    cy += 2;
-    stroke(...C.g200); doc.setLineWidth(0.15);
-    doc.line(ML + 9, cy, PW - MR - 4, cy);
-    cy += 4;
-
-    // Next step
-    bold(6); color(...C.g400);
-    doc.text('PROXIMO PASO', ML + 9, cy);
-    cy += 4;
-    normal(8.5); color(...C.g700);
-    nextLines.forEach(l => { doc.text(l, ML + 9, cy); cy += LH; });
-
-    y = cy + 7;
-  });
-
-
-  // ── Preguntas adicionales ─────────────────────────────────────
-  const q1Val = ($('q1-input').value || '').trim();
-  const q2Val = ($('q2-input').value || '').trim();
-  if (q1Val || q2Val) {
-    ensure(20);
-    bold(10.5); color(...C.g900);
-    doc.text('Tus necesidades', ML, y);
-    fill(...C.primary);
-    doc.rect(ML, y + 3, 32, 1.5, 'F');
-    y += 12;
-
-    const questions = [
-      { q: '¿Qué tarea te consume más tiempo?', a: q1Val },
-      { q: 'Si tuvieras una varita mágica para eliminar una tarea de tu día a día, ¿cuál sería?', a: q2Val },
-    ].filter(item => item.a);
-
-    questions.forEach(item => {
-      normal(9);
-      const aLines = doc.splitTextToSize(item.a, USW - 18);
-      const qLines = doc.splitTextToSize(item.q, USW - 18);
-      const cardH  = 6 + qLines.length * 4 + 4 + aLines.length * LH + 6;
-      ensure(cardH + 3);
-
-      fill(...C.g50); stroke(...C.g200); doc.setLineWidth(0.2);
-      doc.roundedRect(ML, y, USW, cardH, 3, 3, 'FD');
-      fill(...C.primary);
-      doc.roundedRect(ML, y, 4, cardH, 2, 2, 'F');
-      doc.rect(ML + 2, y, 2, cardH, 'F');
-
-      let cy = y + 6;
-      bold(8.5); color(...C.g500);
-      qLines.forEach(l => { doc.text(l, ML + 9, cy); cy += 4; });
-      cy += 2;
-      normal(9); color(...C.g900);
-      aLines.forEach(l => { doc.text(l, ML + 9, cy); cy += LH; });
-      y = cy + 7;
-    });
-  }
-
-  // ── Footer on last page ───────────────────────────────────────
-  drawFooter(pageNum);
-
-  return doc;
-}
-
-async function downloadPDF() {
-  const btn = $('btn-pdf');
-  btn.disabled = true;
-  showLoading('Generando PDF…');
-  try {
-    const doc = await buildPDF();
-    doc.save('diagnostico-madurez-v2a.pdf');
-    showToast('✅ PDF descargado correctamente');
-  } catch (err) {
-    console.error(err);
-    showToast('❌ Error al generar el PDF. Intenta de nuevo.');
-  } finally {
-    hideLoading();
-    btn.disabled = false;
-  }
-}
-
-// ── Email ─────────────────────────────────────────────────────────
-async function sendEmail() {
-  const emailInput = $('email-input');
-  const email      = (emailInput.value || '').trim();
-  const userName   = ($('name-input').value || '').trim();
-  if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-    showToast('⚠️ Ingresa un correo electrónico válido'); return;
-  }
-  const btn = $('btn-email');
-  btn.disabled = true;
-  showLoading('Preparando resultados…');
-  try {
-    const scores    = selections.map(s => s === 'na' ? 0 : s + 1);
-    const appScores = selections.filter(s => s !== 'na').map(s => s + 1);
-    const avg       = appScores.length ? appScores.reduce((a, b) => a + b, 0) / appScores.length : 0;
-
-    const doc       = await buildPDF();
-    const pdfBase64 = doc.output('datauristring').split(',')[1];
-
-    const displayOrg  = orgName || 'Mi organización';
-    const displayName = userName || '';
-    const stageLabel  = getStageLabel(avg);
-    const naCount     = selections.filter(s => s === 'na').length;
-
-    const dimRows = DIMS.map((d, i) => {
-      const sel = selections[i];
-      if (sel === 'na') {
-        return `<tr>
-          <td style="padding:10px 14px;border-bottom:1px solid #E5E7EB;font-size:14px;color:#374151;">${d.icon} ${d.title}</td>
-          <td style="padding:10px 14px;border-bottom:1px solid #E5E7EB;text-align:center;">
-            <span style="background:#F3F4F6;color:#9CA3AF;border-radius:20px;padding:2px 10px;font-size:12px;font-weight:700;">No aplica</span>
-          </td>
-          <td style="padding:10px 14px;border-bottom:1px solid #E5E7EB;font-size:13px;color:#9CA3AF;">—</td>
-        </tr>`;
-      }
-      const lvl   = d.levels[sel];
-      const cls   = LEVEL_CLS[sel];
-      const cols  = LEVEL_COLS[cls];
-      return `<tr>
-        <td style="padding:10px 14px;border-bottom:1px solid #E5E7EB;font-size:14px;color:#374151;">${d.icon} ${d.title}</td>
-        <td style="padding:10px 14px;border-bottom:1px solid #E5E7EB;text-align:center;">
-          <span style="background:${cols.bg};color:${cols.text};border-radius:20px;padding:2px 10px;font-size:12px;font-weight:700;">N${sel+1} · ${lvl.name}</span>
-        </td>
-        <td style="padding:10px 14px;border-bottom:1px solid #E5E7EB;font-size:13px;color:#6B7280;">${lvl.detail || lvl.desc}</td>
-      </tr>`;
-    }).join('');
-
-    const naNote = naCount > 0
-      ? `<p style="font-size:13px;color:#9CA3AF;margin:0 0 20px;text-align:center;">* Puntuación basada en ${DIMS.length - naCount} de ${DIMS.length} dimensiones evaluadas</p>`
-      : '';
-
-    const preheader = `${displayOrg} obtuvo ${avg.toFixed(1)}/4.0 · ${stageLabel}. Tu reporte completo viene adjunto.`;
-    const emailHtml = `<!DOCTYPE html><html><body style="margin:0;padding:0;background:#F9FAFB;font-family:sans-serif;">
-<span style="display:none;font-size:1px;color:#F9FAFB;max-height:0;overflow:hidden;opacity:0;">${preheader}&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;</span>
-<table width="100%" cellpadding="0" cellspacing="0" style="background:#F9FAFB;padding:32px 16px;">
-<tr><td align="center">
-<table width="600" cellpadding="0" cellspacing="0" style="max-width:600px;width:100%;">
-  <!-- Header -->
-  <tr><td style="background:#18407A;border-radius:12px 12px 0 0;padding:28px 32px;text-align:center;">
-    <p style="margin:0 0 4px;font-size:11px;font-weight:700;color:#A0C8F0;letter-spacing:0.1em;text-transform:uppercase;">${CONFIG.brand.toUpperCase()} · ${CONFIG.workshop.toUpperCase()}</p>
-    <h1 style="margin:0;font-size:22px;font-weight:800;color:#fff;">${CONFIG.pdfTitle}</h1>
-  </td></tr>
-  <!-- Score hero -->
-  <tr><td style="background:#fff;padding:28px 32px 20px;text-align:center;">
-    ${displayName ? `<p style="margin:0 0 4px;font-size:15px;color:#6B7280;">Hola, <strong style="color:#111827;">${displayName}</strong></p>` : ''}
-    <p style="margin:0 0 6px;font-size:13px;color:#6B7280;">Resultado para <strong style="color:#111827;">${displayOrg}</strong></p>
-    <div style="display:inline-block;background:#EAF3FC;border-radius:16px;padding:20px 40px;margin:8px 0;">
-      <span style="font-size:52px;font-weight:800;color:#18407A;line-height:1;">${avg.toFixed(1)}</span>
-      <span style="font-size:20px;color:#9CA3AF;font-weight:400;"> / 4.0</span>
-      <p style="margin:8px 0 0;font-size:16px;font-weight:700;color:#185FAB;">${stageLabel}</p>
     </div>
-    ${naNote}
-  </td></tr>
-  <!-- Dimensions table -->
-  <tr><td style="background:#fff;padding:0 32px 28px;">
-    <p style="margin:0 0 12px;font-size:14px;font-weight:700;color:#111827;">Detalle por dimensión</p>
-    <table width="100%" cellpadding="0" cellspacing="0" style="border:1px solid #E5E7EB;border-radius:8px;overflow:hidden;">
-      <tr style="background:#F9FAFB;">
-        <th style="padding:10px 14px;text-align:left;font-size:12px;color:#6B7280;font-weight:600;border-bottom:1px solid #E5E7EB;">Dimensión</th>
-        <th style="padding:10px 14px;text-align:center;font-size:12px;color:#6B7280;font-weight:600;border-bottom:1px solid #E5E7EB;">Nivel</th>
-        <th style="padding:10px 14px;text-align:left;font-size:12px;color:#6B7280;font-weight:600;border-bottom:1px solid #E5E7EB;">Descripción</th>
-      </tr>
-      ${dimRows}
-    </table>
-  </td></tr>
-  <!-- Contact -->
-  <tr><td style="background:#fff;padding:20px 32px;text-align:center;border-top:1px solid #E5E7EB;">
-    <p style="margin:0 0 6px;font-size:14px;font-weight:700;color:#111827;">¿Tienes preguntas sobre tu diagnóstico?</p>
-    <p style="margin:0;font-size:13px;color:#6B7280;">Contáctanos: <a href="mailto:gracielasalcedo@v2aconsulting.com" style="color:#185FAB;font-weight:600;">gracielasalcedo@v2aconsulting.com</a></p>
-  </td></tr>
-  <!-- Footer -->
-  <tr><td style="background:#F3F4F6;border-radius:0 0 12px 12px;padding:16px 32px;text-align:center;">
-    <p style="margin:0;font-size:12px;color:#9CA3AF;">${CONFIG.brand} · <a href="https://v2afoundation.org" style="color:#9CA3AF;">v2afoundation.org</a></p>
-    <p style="margin:4px 0 0;font-size:11px;color:#D1D5DB;">El reporte completo en PDF viene adjunto a este correo.</p>
-  </td></tr>
-</table>
-</td></tr>
-</table>
-</body></html>`;
+  </div>
+</section>
 
-    const payload = {
-      email:     email,
-      userName:  displayName,
-      orgName:   displayOrg,
-      score:     avg.toFixed(1),
-      stage:     stageLabel,
-      htmlBody:  emailHtml,
-      dimensions: DIMS.map((d, i) => {
-        const sel = selections[i];
-        if (sel === 'na') return { title: d.title, level: 'No aplica', detail: '' };
-        const lvl = d.levels[sel];
-        return { title: d.title, level: lvl.name, detail: lvl.detail || lvl.desc };
-      }),
-      q1:        ($('q1-input').value || '').trim(),
-      q2:        ($('q2-input').value || '').trim(),
-      pdfBase64: pdfBase64,
-    };
-    await fetch(SHEETS_URL, {
-      method: 'POST',
-      mode: 'no-cors',
-      headers: { 'Content-Type': 'text/plain' },
-      body: JSON.stringify(payload),
+
+<!-- ══════════════════════════════════
+     FOOTER
+══════════════════════════════════ -->
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+
+      <div class="footer-brand">
+        <div class="footer-brand-name">
+          <img src="logo.jpg" alt="Fundación V2A" height="36" style="border-radius:4px;"
+               onerror="this.style.display='none'" />
+        </div>
+        <p data-es>Fortalecemos la capacidad organizacional de las OSFLs en Puerto Rico mediante consultoría estratégica, transformación digital y acceso a talento especializado.</p>
+        <p data-en>We strengthen the organizational capacity of nonprofits in Puerto Rico through strategic consulting, digital transformation, and access to specialized talent.</p>
+        <a href="https://v2aconsulting.com" target="_blank" rel="noopener" class="footer-v2a">
+          <span data-es>Una iniciativa de V2A Consulting →</span>
+          <span data-en>An initiative of V2A Consulting →</span>
+        </a>
+      </div>
+
+      <div>
+        <h5 data-es>Programas</h5>
+        <h5 data-en>Programs</h5>
+        <ul class="footer-links">
+          <li><a href="#programas">WeServe Fellows</a></li>
+          <li><a href="#programas">WeServe Projects</a></li>
+          <li><a href="#programas">WeServe Partners</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h5 data-es>Organización</h5>
+        <h5 data-en>Organization</h5>
+        <ul class="footer-links">
+          <li><a href="#nosotros" data-es>Nosotros</a><a href="#nosotros" data-en>About</a></li>
+          <li><a href="#impacto" data-es>Impacto</a><a href="#impacto" data-en>Impact</a></li>
+          <li><a href="#servicios" data-es>Servicios</a><a href="#servicios" data-en>Services</a></li>
+          <li><a href="#contacto" data-es>Contacto</a><a href="#contacto" data-en>Contact</a></li>
+          <li><a href="https://v2aconsulting.com" target="_blank" rel="noopener">V2A Consulting ↗</a></li>
+        </ul>
+      </div>
+
+    </div>
+
+    <div class="footer-bottom">
+      <p>© <span id="copyrightYear"></span> Fundación V2A · Puerto Rico</p>
+      <p><span data-es>Una iniciativa de</span><span data-en>An initiative of</span> <a href="https://v2aconsulting.com" target="_blank" rel="noopener">V2A Consulting</a></p>
+    </div>
+  </div>
+</footer>
+
+
+<script>
+  // ── Copyright year (always current) ──
+  document.getElementById('copyrightYear').textContent = new Date().getFullYear();
+
+  const html    = document.documentElement;
+  const langBtn = document.getElementById('langBtn');
+
+  // ── Language toggle ──
+  function applyLang(lang) {
+    html.lang = lang;
+    langBtn.textContent = lang === 'es' ? 'EN' : 'ES';
+    langBtn.setAttribute('aria-label', lang === 'es' ? 'Switch to English' : 'Cambiar a español');
+    // Update bilingual placeholders
+    document.querySelectorAll('[data-placeholder-es]').forEach(el => {
+      el.placeholder = lang === 'es'
+        ? el.dataset.placeholderEs
+        : el.dataset.placeholderEn;
     });
-    $('form-block').style.display = 'none';
-    $('thank-you-block').style.display = 'block';
-    $('cfg-restart-btn').style.display = 'none';
-  } catch (err) {
-    console.error(err);
-    showToast('❌ No se pudo guardar. Intenta de nuevo.', 4000);
-  } finally {
-    hideLoading();
-    btn.disabled = false;
+    // Sync select duplicated options: show only matching lang options
+    syncSelect();
   }
-}
 
-// ── Teclado ───────────────────────────────────────────────────────
-document.addEventListener('keydown', e => {
-  if (!$('screen-assessment').classList.contains('active')) return;
-  if (e.key >= '1' && e.key <= '4') selectLevel(parseInt(e.key) - 1);
-  if (e.key === 'Enter' && selections[currentStep] !== null) goNext();
-  if (e.key === 'ArrowLeft') goBack();
-});
+  langBtn.addEventListener('click', () => {
+    applyLang(html.lang === 'es' ? 'en' : 'es');
+  });
 
-// ── Init ──────────────────────────────────────────────────────────
-applyConfig();
+  // ── Select: deduplicate bilingual options ──
+  // The select has duplicate option values (one per lang). We hide the wrong-lang ones.
+  function syncSelect() {
+    const lang = html.lang;
+    const sel = document.getElementById('ctType');
+    if (!sel) return;
+    // Reset to placeholder
+    sel.value = '';
+    Array.from(sel.options).forEach(opt => {
+      if (!opt.value) {
+        // placeholder options:show only current lang
+        opt.hidden = opt.dataset && opt.dataset.en
+          ? lang !== 'en'
+          : lang !== 'es';
+      }
+    });
+  }
+
+  // ── Fellows redirect ──
+  const ctType = document.getElementById('ctType');
+  if (ctType) {
+    ctType.addEventListener('change', () => {
+      if (ctType.value === 'fellow') {
+        document.getElementById('contactForm').style.display    = 'none';
+        document.getElementById('fellowsPanel').style.display   = 'block';
+        document.getElementById('formSuccess').style.display    = 'none';
+      }
+    });
+  }
+
+  function showForm() {
+    document.getElementById('contactForm').style.display   = '';
+    document.getElementById('fellowsPanel').style.display  = 'none';
+    document.getElementById('formSuccess').style.display   = 'none';
+    if (ctType) ctType.value = '';
+  }
+
+  // ── Form submission ──
+  const form       = document.getElementById('contactForm');
+  const submitBtn  = document.getElementById('submitBtn');
+  const successEl  = document.getElementById('formSuccess');
+
+  if (form) {
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const lang = html.lang;
+
+      submitBtn.disabled = true;
+      submitBtn.querySelector('[data-es]').textContent = lang === 'es' ? 'Enviando…' : 'Sending…';
+      submitBtn.querySelector('[data-en]').textContent = lang === 'es' ? 'Enviando…' : 'Sending…';
+
+      const payload = {
+        name:         document.getElementById('ctName').value.trim(),
+        email:        document.getElementById('ctEmail').value.trim(),
+        organization: document.getElementById('ctOrg').value.trim(),
+        type:         document.getElementById('ctType').value,
+        message:      document.getElementById('ctMsg').value.trim(),
+        lang,
+      };
+
+      try {
+        const res = await fetch('/.netlify/functions/contact-foundation', {
+          method:  'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body:    JSON.stringify(payload),
+        });
+        if (!res.ok) throw new Error();
+        form.style.display    = 'none';
+        successEl.style.display = 'block';
+      } catch {
+        submitBtn.disabled = false;
+        submitBtn.querySelector('[data-es]').textContent = lang === 'es' ? 'Error:intenta de nuevo' : 'Error:please try again';
+        submitBtn.querySelector('[data-en]').textContent = lang === 'es' ? 'Error:intenta de nuevo' : 'Error:please try again';
+      }
+    });
+  }
+
+  // ── Mobile nav ──
+  const hamburger = document.getElementById('hamburger');
+  const mobileNav = document.getElementById('mobileNav');
+
+  hamburger.addEventListener('click', () => {
+    const open = mobileNav.classList.toggle('open');
+    hamburger.setAttribute('aria-expanded', open);
+    hamburger.setAttribute('aria-label', open ? 'Cerrar menú' : 'Abrir menú');
+  });
+
+  document.querySelectorAll('.mob-link').forEach(link => {
+    link.addEventListener('click', () => {
+      mobileNav.classList.remove('open');
+      hamburger.setAttribute('aria-expanded', 'false');
+    });
+  });
+
+  // ── Init ──
+  applyLang('es');
 </script>
+
 </body>
 </html>
