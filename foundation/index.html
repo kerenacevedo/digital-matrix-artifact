@@ -8,7 +8,7 @@
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;0,8..60,700;1,8..60,400&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,800;1,700&family=Open+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -16,26 +16,26 @@
     :root {
       --bahia:       #1D4289;
       --bahia-dark:  #12295a;
-      --celeste:     #41B6E6;
+      --celeste:     #29ABE2;
       --celeste-bg:  #e8f5fc;
-      --accent:      #FF8D6D;
-      --accent-hov:  #FFA68B;
-      --accent-bg:   #fff3ef;
-      --paper:       #FAFBFC;
+      --accent:      #FF8C6B;
+      --accent-hov:  #e5724f;
+      --accent-bg:   #fff1ed;
+      --paper:       #F4F4F4;
       --white:       #FFFFFF;
-      --soft:        rgba(29,66,137,0.62);
-      --muted:       rgba(29,66,137,0.42);
-      --line:        rgba(29,66,137,0.12);
-      --line-soft:   rgba(29,66,137,0.06);
+      --soft:        #4a5568;
+      --muted:       #718096;
+      --line:        #e2e8f0;
+      --line-soft:   #f7fafc;
       --gray-500:    #6B7280;
       --gray-700:    #374151;
-      --gray-900:    #111827;
+      --gray-900:    #1a202c;
     }
 
     html { scroll-behavior: smooth; }
 
     body {
-      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      font-family: 'Open Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
       font-size: 16px;
       line-height: 1.6;
       color: var(--gray-900);
@@ -55,27 +55,47 @@
     .label {
       display: block;
       font-size: 11px;
-      font-weight: 600;
-      letter-spacing: 0.18em;
+      font-weight: 700;
+      letter-spacing: 0.22em;
       text-transform: uppercase;
-      color: var(--accent);
-      margin-bottom: 12px;
+      color: var(--celeste);
+      margin-bottom: 8px;
     }
 
     h2.title {
-      font-family: 'Source Serif 4', Georgia, serif;
-      font-size: clamp(28px, 3.6vw, 44px);
-      font-weight: 600;
-      letter-spacing: -0.015em;
-      line-height: 1.12;
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: clamp(28px, 3.6vw, 42px);
+      font-weight: 700;
+      letter-spacing: -0.01em;
+      line-height: 1.15;
       color: var(--bahia-dark);
-      margin-bottom: 16px;
+      margin-bottom: 14px;
+    }
+
+    /* Orange underline decoration under section titles — V2A style */
+    .section-head h2.title::after {
+      content: '';
+      display: block;
+      width: 56px;
+      height: 4px;
+      background: var(--accent);
+      margin-top: 14px;
+      border-radius: 0;
+    }
+    .section-head.center h2.title::after { margin-left: auto; margin-right: auto; }
+
+    /* Left orange bar accent on subheadings — V2A style */
+    h3.accent-bar, h4.accent-bar {
+      border-left: 4px solid var(--accent);
+      padding-left: 14px;
+      color: var(--bahia-dark);
+      font-family: 'Playfair Display', Georgia, serif;
     }
 
     .subtitle {
-      font-size: 17px;
+      font-size: 16px;
       color: var(--soft);
-      line-height: 1.65;
+      line-height: 1.7;
       max-width: 580px;
     }
 
@@ -88,35 +108,44 @@
       display: inline-flex;
       align-items: center;
       gap: 6px;
-      padding: 11px 22px;
-      border-radius: 4px;
-      font-family: 'Inter', sans-serif;
+      padding: 12px 28px;
+      border-radius: 2px;
+      font-family: 'Open Sans', sans-serif;
       font-size: 14px;
-      font-weight: 600;
+      font-weight: 700;
       text-decoration: none;
       cursor: pointer;
       border: none;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
       transition: background .2s, transform .2s, box-shadow .2s, color .2s, border-color .2s;
     }
-    .btn-lg { padding: 14px 28px; font-size: 15px; }
+    .btn-lg { padding: 14px 32px; font-size: 14px; }
 
     .btn-primary {
       background: var(--accent);
       color: #fff;
-      box-shadow: 0 1px 3px rgba(255,141,109,.25);
     }
     .btn-primary:hover {
       background: var(--accent-hov);
       transform: translateY(-1px);
-      box-shadow: 0 6px 20px rgba(255,141,109,.35);
+      box-shadow: 0 4px 16px rgba(232,104,40,.3);
     }
 
     .btn-ghost {
       background: transparent;
-      color: var(--bahia);
-      border: 1px solid var(--line);
+      color: var(--bahia-dark);
+      border: 2px solid var(--bahia-dark);
     }
-    .btn-ghost:hover { color: var(--accent); border-color: rgba(255,141,109,.4); }
+    .btn-ghost:hover { background: var(--bahia-dark); color: #fff; }
+
+    /* Ghost blanco para usar sobre fondos oscuros (hero) */
+    .btn-ghost-white {
+      background: transparent;
+      color: #fff;
+      border: 2px solid rgba(255,255,255,0.7);
+    }
+    .btn-ghost-white:hover { background: rgba(255,255,255,0.15); border-color: #fff; }
 
     .btn-navy { background: var(--bahia); color: #fff; }
     .btn-navy:hover { background: var(--bahia-dark); transform: translateY(-1px); }
@@ -125,14 +154,14 @@
     .lang-btn {
       background: transparent;
       border: 1px solid var(--line);
-      border-radius: 999px;
+      border-radius: 2px;
       padding: 5px 13px;
       font-size: 11px;
       font-weight: 700;
       letter-spacing: 0.12em;
       color: var(--soft);
       cursor: pointer;
-      font-family: 'Inter', sans-serif;
+      font-family: 'Open Sans', sans-serif;
       transition: border-color .2s, color .2s;
     }
     .lang-btn:hover { border-color: var(--bahia); color: var(--bahia); }
@@ -173,6 +202,8 @@
       line-height: 1.2;
     }
     .nav-logo-text em { font-style: normal; color: var(--accent); }
+    .nav-logo-img { mix-blend-mode: multiply; }
+    nav { isolation: isolate; }
 
     .nav-links {
       display: flex;
@@ -248,13 +279,27 @@
     .mobile-nav a:hover { color: var(--accent); }
     .mobile-nav .btn { margin-top: 20px; justify-content: center; width: 100%; }
 
+    /* ── TOP BAR (V2A style) ── */
+    body::before {
+      content: '';
+      display: block;
+      height: 5px;
+      background: linear-gradient(90deg, var(--bahia-dark) 60%, var(--accent) 100%);
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 999;
+    }
+    nav { top: 5px; }
+
     /* ── HERO ── */
     .hero {
-      padding: 96px 0 80px;
+      padding: 100px 0 90px;
       background:
-        radial-gradient(ellipse 70% 55% at 92% 25%, rgba(65,182,230,.13) 0%, transparent 60%),
-        radial-gradient(ellipse 50% 45% at 5%  90%, rgba(255,141,109,.09) 0%, transparent 55%),
-        var(--paper);
+        linear-gradient(135deg, rgba(18,41,90,0.96) 0%, rgba(18,41,90,0.90) 50%, rgba(29,66,137,0.93) 100%),
+        url('https://images.unsplash.com/photo-1552664730-d307ca884978?w=1600&q=80') center/cover no-repeat;
+      color: #fff;
     }
 
     .hero-grid {
@@ -269,40 +314,39 @@
       align-items: center;
       gap: 8px;
       padding: 5px 14px;
-      background: var(--celeste-bg);
-      border: 1px solid rgba(65,182,230,.3);
-      border-radius: 999px;
-      font-size: 12px;
-      font-weight: 600;
-      color: var(--bahia);
-      letter-spacing: .05em;
+      background: rgba(255,255,255,0.12);
+      border: 1px solid rgba(255,255,255,0.3);
+      border-radius: 2px;
+      font-size: 11px;
+      font-weight: 700;
+      color: #fff;
+      letter-spacing: .1em;
       text-transform: uppercase;
       margin-bottom: 24px;
     }
     .hero-badge a {
-      color: var(--bahia);
+      color: var(--celeste);
       text-decoration: underline;
-      text-decoration-color: var(--celeste);
       text-underline-offset: 2px;
       transition: color .2s;
     }
-    .hero-badge a:hover { color: var(--celeste); }
+    .hero-badge a:hover { color: #fff; }
 
     .hero h1 {
-      font-family: 'Source Serif 4', Georgia, serif;
-      font-size: clamp(36px, 5.5vw, 62px);
-      font-weight: 600;
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: clamp(36px, 5.5vw, 64px);
+      font-weight: 800;
       line-height: 1.08;
-      letter-spacing: -.022em;
-      color: var(--bahia-dark);
+      letter-spacing: -.01em;
+      color: #fff;
       margin-bottom: 24px;
     }
-    .hero h1 em { font-style: italic; color: var(--bahia); }
+    .hero h1 em { font-style: italic; color: var(--celeste); }
 
     .hero-sub {
-      font-size: 18px;
-      color: var(--soft);
-      line-height: 1.65;
+      font-size: 17px;
+      color: rgba(255,255,255,0.82);
+      line-height: 1.7;
       max-width: 520px;
       margin-bottom: 36px;
     }
@@ -317,22 +361,21 @@
     }
 
     .stat-card {
-      background: var(--white);
-      border: 1px solid var(--line);
-      border-radius: 8px;
+      background: rgba(255,255,255,0.1);
+      border: 1px solid rgba(255,255,255,0.2);
+      border-radius: 2px;
       padding: 20px 22px;
-      box-shadow: 0 2px 8px rgba(29,66,137,.04);
     }
     .stat-card .num {
-      font-family: 'Source Serif 4', Georgia, serif;
+      font-family: 'Playfair Display', Georgia, serif;
       font-size: 30px;
       font-weight: 700;
-      color: var(--bahia);
+      color: #fff;
       line-height: 1;
       margin-bottom: 4px;
     }
-    .stat-card .num sup { font-size: 16px; color: var(--accent); }
-    .stat-card .lbl { font-size: 13px; color: var(--gray-500); font-weight: 500; }
+    .stat-card .num sup { font-size: 16px; color: var(--celeste); }
+    .stat-card .lbl { font-size: 13px; color: rgba(255,255,255,0.7); font-weight: 500; }
 
     /* Hero visual cards */
     .hero-visual { display: grid; gap: 12px; }
@@ -361,7 +404,7 @@
     .hero-card.coral .hc-label { color: var(--accent); }
 
     .hc-title {
-      font-family: 'Source Serif 4', Georgia, serif;
+      font-family: 'Playfair Display', Georgia, serif;
       font-size: 19px;
       font-weight: 600;
       line-height: 1.3;
@@ -382,8 +425,23 @@
     .hero-card.navy .hc-chip  { background: rgba(255,255,255,.15); color: rgba(255,255,255,.9); }
     .hero-card.coral .hc-chip { background: rgba(255,141,109,.15); color: #B34826; }
 
+    /* ── HEXAGON ICON (V2A style) ── */
+    .hex-icon {
+      width: 64px;
+      height: 64px;
+      background: var(--celeste);
+      clip-path: polygon(50% 0%, 93% 25%, 93% 75%, 50% 100%, 7% 75%, 7% 25%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      flex-shrink: 0;
+      margin-bottom: 16px;
+    }
+    .hex-icon svg { width: 28px; height: 28px; }
+
     /* ── ABOUT ── */
-    .about { background: var(--white); }
+    .about { background: var(--paper); }
 
     .about-grid {
       display: grid;
@@ -549,15 +607,15 @@
       color: rgba(255,255,255,.38);
       text-align: center; margin-bottom: 24px;
     }
-    .partners-wrap { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; }
+    .partners-wrap { display: flex; flex-wrap: wrap; gap: 16px; justify-content: center; align-items: center; }
     .partner-chip {
-      background: rgba(255,255,255,.07);
-      border: 1px solid rgba(255,255,255,.12);
-      border-radius: 4px;
-      padding: 7px 15px;
-      font-size: 13px; font-weight: 500;
-      color: rgba(255,255,255,.70);
+      background: #fff;
+      border: 1px solid #e5e7eb;
+      border-radius: 8px;
+      padding: 10px 18px;
+      display: flex; align-items: center; justify-content: center;
     }
+    .partner-chip img { display: block; max-height: 48px; width: auto; object-fit: contain; }
 
     /* ── PROGRAMS ── */
     .programs { background: var(--paper); }
@@ -606,7 +664,7 @@
     }
 
     .prog-card h3 {
-      font-family: 'Source Serif 4', Georgia, serif;
+      font-family: 'Playfair Display', Georgia, serif;
       font-size: 21px; font-weight: 600;
       color: var(--bahia-dark);
       margin-bottom: 12px;
@@ -668,10 +726,22 @@
       overflow: hidden;
     }
 
-    .svc-item { background: var(--white); padding: 30px 26px; transition: background .2s; }
-    .svc-item:hover { background: var(--paper); }
+    .svc-item { background: var(--white); padding: 30px 26px; transition: background .2s, box-shadow .2s; }
+    .svc-item:hover { background: var(--paper); box-shadow: 0 4px 20px rgba(0,0,0,.07); }
 
-    .svc-icon { width: 26px; height: 26px; margin-bottom: 12px; display: block; color: var(--bahia); }
+    /* Hexagon icon for services — V2A style */
+    .svc-icon {
+      width: 52px;
+      height: 52px;
+      background: var(--celeste);
+      clip-path: polygon(50% 0%, 93% 25%, 93% 75%, 50% 100%, 7% 75%, 7% 25%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 16px;
+      color: #fff;
+      padding: 12px;
+    }
     .svc-item h4 { font-size: 15px; font-weight: 700; color: var(--bahia-dark); margin-bottom: 10px; }
     .svc-item ul { list-style: none; display: flex; flex-direction: column; gap: 5px; }
     .svc-item ul li { font-size: 13px; color: var(--gray-500); padding-left: 14px; position: relative; }
@@ -679,11 +749,11 @@
 
     /* ── PARTICIPATE ── */
     .participate {
-      background:
-        radial-gradient(ellipse 60% 50% at 50% 15%, rgba(255,141,109,.08) 0%, transparent 70%),
-        radial-gradient(ellipse 50% 40% at 50% 85%, rgba(65,182,230,.08) 0%, transparent 70%),
-        var(--paper);
+      background: var(--accent);
     }
+    .participate .section-head h2.title { color: #fff; }
+    .participate .section-head h2.title::after { background: rgba(255,255,255,0.5); }
+    .participate .label { color: rgba(255,255,255,0.7); }
 
     .participate-grid {
       display: grid;
@@ -693,8 +763,8 @@
 
     .part-card {
       background: var(--white);
-      border: 1px solid var(--line);
-      border-radius: 10px;
+      border: none;
+      border-radius: 2px;
       display: flex; flex-direction: column; align-items: center;
       padding: 40px 28px;
       text-align: center;
@@ -707,7 +777,7 @@
 
     .part-icon { width: 40px; height: 40px; margin-bottom: 16px; display: block; color: var(--bahia); }
     .part-card h3 {
-      font-family: 'Source Serif 4', Georgia, serif;
+      font-family: 'Playfair Display', Georgia, serif;
       font-size: 20px; font-weight: 600;
       color: var(--bahia-dark); margin-bottom: 12px;
     }
@@ -867,6 +937,9 @@
       .container { padding: 0 20px; }
       section    { padding: 72px 0; }
       .hero      { padding: 64px 0 56px; }
+      .nav-inner        { gap: 12px; }
+      .nav-logo-text    { font-size: 13px; }
+      .nav-logo-img     { height: 40px; width: auto; flex-shrink: 0; mix-blend-mode: normal; }
 
       .nav-links, .nav-v2a { display: none; }
       .nav-right .btn      { display: none; }
@@ -965,8 +1038,8 @@
         <div class="hero-actions">
           <a href="#contacto" class="btn btn-primary btn-lg" data-es>Solicitar apoyo</a>
           <a href="#contacto" class="btn btn-primary btn-lg" data-en>Get support</a>
-          <a href="#programas" class="btn btn-ghost btn-lg" data-es>Ver programas</a>
-          <a href="#programas" class="btn btn-ghost btn-lg" data-en>Our programs</a>
+          <a href="#programas" class="btn btn-ghost-white btn-lg" data-es>Ver programas</a>
+          <a href="#programas" class="btn btn-ghost-white btn-lg" data-en>Our programs</a>
         </div>
 
       </div>
@@ -1301,25 +1374,26 @@
       </div>
     </div>
 
-    <p class="partners-label" data-es>Organizaciones que hemos apoyado</p>
-    <p class="partners-label" data-en>Organizations we have supported</p>
+    <p class="partners-label" data-es>Algunas organizaciones que hemos apoyado</p>
+    <p class="partners-label" data-en>Some organizations we have supported</p>
     <div class="partners-wrap">
-      <div class="partner-chip">ColaborativoPR</div>
-      <div class="partner-chip">Fundación Banco Popular</div>
-      <div class="partner-chip">IPPR</div>
-      <div class="partner-chip">Banco de Alimentos PR</div>
-      <div class="partner-chip">Ecoexploratorio</div>
-      <div class="partner-chip">Kinesis</div>
-      <div class="partner-chip">Vimenti</div>
-      <div class="partner-chip">Para la Naturaleza</div>
-      <div class="partner-chip">Friends of Puerto Rico</div>
-      <div class="partner-chip">Instituto Nueva Escuela</div>
-      <div class="partner-chip">Fundación Hospital Pediátrico</div>
-      <div class="partner-chip">El Comedor de la Kennedy</div>
-      <div class="partner-chip">Causa Local</div>
-      <div class="partner-chip">Fundación Forjadores</div>
-      <div class="partner-chip">Coro de Niños de Puerto Rico</div>
-      <div class="partner-chip">Caras con Causa</div>
+      <div class="partner-chip"><img src="./LogosOrganizaciones/ColaborativoPR.png" alt="ColaborativoPR" height="48"></div>
+      <div class="partner-chip"><img src="./LogosOrganizaciones/FundBancoPopular.png" alt="Fundación Banco Popular" height="48"></div>
+      <div class="partner-chip"><img src="./LogosOrganizaciones/IPPR.png" alt="IPPR" height="48"></div>
+      <div class="partner-chip"><img src="./LogosOrganizaciones/BancodeAlimentos.png" alt="Banco de Alimentos PR" height="48"></div>
+      <div class="partner-chip"><img src="./LogosOrganizaciones/Ecoexploratorio.png.jpg" alt="Ecoexploratorio" height="48"></div>
+      <div class="partner-chip"><img src="./LogosOrganizaciones/Kinesis.png" alt="Kinesis" height="48"></div>
+      <div class="partner-chip"><img src="./LogosOrganizaciones/Vimenti.png" alt="Vimenti" height="48"></div>
+      <div class="partner-chip"><img src="./LogosOrganizaciones/paralaNaturaleza.png.jpg" alt="Para la Naturaleza" height="48"></div>
+      <div class="partner-chip"><img src="./LogosOrganizaciones/FiendsofPR.png" alt="Friends of Puerto Rico" height="48"></div>
+      <div class="partner-chip"><img src="./LogosOrganizaciones/INE.png" alt="Instituto Nueva Escuela" height="48"></div>
+      <div class="partner-chip"><img src="./LogosOrganizaciones/FHP.png" alt="Fundación Hospital Pediátrico" height="48"></div>
+      <div class="partner-chip"><img src="./LogosOrganizaciones/ComedorKennedy.png" alt="El Comedor de la Kennedy" height="48"></div>
+      <div class="partner-chip"><img src="./LogosOrganizaciones/CorodeNiosMFJ.png" alt="Coro de Niños MFJ" height="48"></div>
+      <div class="partner-chip"><img src="./LogosOrganizaciones/CarasconCausa.png.jpg" alt="Caras con Causa" height="48"></div>
+      <div class="partner-chip"><img src="./LogosOrganizaciones/LeadColab.png" alt="LEAD Colab" height="48"></div>
+      <div class="partner-chip"><img src="./LogosOrganizaciones/InstDesJuventud.png" alt="Instituto del Desarrollo de la Juventud" height="48"></div>
+      <div class="partner-chip"><img src="./LogosOrganizaciones/SERPR.png" alt="SER de Puerto Rico" height="48"></div>
     </div>
   </div>
 </section>
@@ -1466,11 +1540,11 @@
             <label for="ctType" data-en>How do you want to participate? *</label>
             <select id="ctType" name="type" required>
               <option value="" disabled selected>Selecciona una opción</option>
-              <option value="osfl-fellows">OSFL:Apoyo vía WeServe Fellows</option>
-              <option value="osfl-projects">OSFL:Apoyo vía WeServe Projects</option>
-              <option value="osfl-partners">OSFL:WeServe Partners (acompañamiento)</option>
-              <option value="fellow">Estudiante universitario:Ser WeServe Fellow</option>
-              <option value="funder">Fundación o empresa:Apoyar la misión</option>
+              <option value="osfl-fellows">OSFL - Apoyo vía WeServe Fellows</option>
+              <option value="osfl-projects">OSFL - Apoyo vía WeServe Projects</option>
+              <option value="osfl-partners">OSFL - WeServe Partners (acompañamiento)</option>
+              <option value="fellow">Estudiante universitario - Ser WeServe Fellow</option>
+              <option value="funder">Fundación o empresa - Apoyar la misión</option>
               <option value="otro">Otro</option>
             </select>
           </div>
