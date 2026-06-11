@@ -68,8 +68,8 @@ export const handler = async (event) => {
       'Content-Type': 'application/json',
     },
     body: JSON.stringify({
-      from: 'Fundación V2A <contacto@v2afoundation.org>',
-      to: ['gracielasalcedo@v2aconsulting.com', 'fundacionv2a@gmail.com'],
+      from: 'Fundación V2A <noreply@v2afoundation.org>',
+      to: ['v2afoundation@v2aconsulting.com'],
       reply_to: email,
       subject,
       html,
